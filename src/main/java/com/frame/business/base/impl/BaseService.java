@@ -30,7 +30,12 @@ public class BaseService<T> implements IBaseService<T> {
 
 	@Override
 	public int inserts(Collection<T> entitys) {
-		return iBaseDao.inserts(entitys);
+		int result = 0;
+		for (T entity : entitys) {
+			iBaseDao.insert(entity);
+			result = result + 1;
+		}
+		return result;
 	}
 
 	@Override

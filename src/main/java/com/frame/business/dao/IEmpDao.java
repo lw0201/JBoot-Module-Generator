@@ -9,6 +9,6 @@ import com.frame.business.entity.EmpVO;
  * @author liwen
  *
  */
-public interface IEmpDao extends IBaseDao<EmpVO>{
+public interface IEmpDao extends IBaseDao<EmpVO> {
 
 }

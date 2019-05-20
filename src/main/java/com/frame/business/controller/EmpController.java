@@ -86,7 +86,7 @@ public class EmpController {
 	 * @param entity   业务实体对象
 	 * @param pageNo   起始页
 	 * @param pageSize 显示数量
-	 * @return  返回实体的分页信息
+	 * @return 返回实体的分页信息
 	 */
 	@PostMapping("emp/page/{pageNo}/{pageSize}")
 	public PageInfo<EmpVO> findPage(@RequestBody EmpVO entity, @PathVariable("pageNo") int pageNo,
