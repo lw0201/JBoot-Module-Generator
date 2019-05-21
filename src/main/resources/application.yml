@@ -10,7 +10,7 @@ spring:
       type: com.alibaba.druid.pool.DruidDataSource
       url: jdbc:mysql://127.0.0.1:3306/scott?serverTimezone=UTC
       username: root
-      password: welcome@123
+      password: 123456
 #mybatis扫描配置
 mybatis:
    mapper-locations: classpath:mappers/*.xml

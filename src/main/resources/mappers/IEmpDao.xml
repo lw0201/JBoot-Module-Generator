@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.frame.generator.business.dao.IEmpDao">
+<mapper namespace="com.frame.business.dao.IEmpDao">
 
     <!-- 基础字段返回信息配置 -->
-    <resultMap id="BaseResultMap" type="com.frame.generator.business.entity.EmpVO">
+    <resultMap id="BaseResultMap" type="com.frame.business.entity.EmpVO">
         <id column="empno" jdbcType="INTEGER" property="empno" />
         <result column="ename" jdbcType="VARCHAR" property="ename" />
         <result column="job" jdbcType="VARCHAR" property="job" />
@@ -55,7 +55,7 @@
         select
         <include refid="Base_Column_List" />
         from emp
-        where empno = #{empno,jdbcType=INTEGER}
+        where empno = #{id,jdbcType=INTEGER}
     </select>
 
     <!-- 根据实体对象信息查询返回实体对象 -->
@@ -87,7 +87,7 @@
     </delete>
 
     <!-- 插入实体对象 -->
-    <insert id="insert" parameterType="com.frame.generator.business.entity.EmpVO">
+    <insert id="insert" parameterType="com.frame.business.entity.EmpVO">
         insert into emp
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="empno != null">
@@ -144,7 +144,7 @@
     </insert>
 
     <!-- 更新实体对象 -->
-    <update id="update" parameterType="com.frame.generator.business.entity.EmpVO">
+    <update id="update" parameterType="com.frame.business.entity.EmpVO">
         update emp
         <set>
             <if test="ename != null">
