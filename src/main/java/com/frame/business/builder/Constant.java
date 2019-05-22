@@ -11,7 +11,8 @@ public class Constant {
 	public static final String username = "root";
 
 	public static final String password = "123456";
-	
+
 	public static final String packageName = "";
+
 
 }

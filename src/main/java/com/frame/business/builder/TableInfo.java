@@ -7,6 +7,10 @@ import java.util.List;
  */
 public class TableInfo {
 
+	public static final String suffix = "";
+
+	public static final String prefix = "";
+
 	/**
 	 * 表名
 	 */
@@ -26,7 +30,7 @@ public class TableInfo {
 	 * 包名称
 	 */
 	private String packageName;
-	
+
 	/**
 	 * 表所有的字段信息
 	 */
@@ -71,5 +75,5 @@ public class TableInfo {
 	public void setFields(List<FieldInfo> fields) {
 		this.fields = fields;
 	}
-	
+
 }

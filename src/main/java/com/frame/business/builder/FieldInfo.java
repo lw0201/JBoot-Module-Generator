@@ -8,6 +8,10 @@ package com.frame.business.builder;
  */
 public class FieldInfo {
 
+	public static final String suffix = "";
+
+	public static final String prefix = "";
+
 	/**
 	 * 字段名称
 	 */
