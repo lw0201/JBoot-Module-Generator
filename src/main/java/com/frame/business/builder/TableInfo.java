@@ -1,5 +1,7 @@
 package com.frame.business.builder;
 
+import java.util.List;
+
 /**
  * 表信息
  */
@@ -24,6 +26,11 @@ public class TableInfo {
 	 * 包名称
 	 */
 	private String packageName;
+	
+	/**
+	 * 表所有的字段信息
+	 */
+	private List<FieldInfo> fields;
 
 	public String getTableName() {
 		return tableName;
@@ -55,6 +62,14 @@ public class TableInfo {
 
 	public void setPackageName(String packageName) {
 		this.packageName = packageName;
+	}
+
+	public List<FieldInfo> getFields() {
+		return fields;
+	}
+
+	public void setFields(List<FieldInfo> fields) {
+		this.fields = fields;
 	}
 	
 }
