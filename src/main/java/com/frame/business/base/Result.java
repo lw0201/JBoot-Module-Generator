@@ -22,7 +22,7 @@ public class Result<T extends Serializable> implements Serializable {
 		this.code = 200;
 		this.message = "Success!";
 	}
-	
+
 	public void fail() {
 		this.code = 500;
 		this.message = "Fail!";
