@@ -30,7 +30,12 @@ public class FieldInfo {
 	/**
 	 * 字段类型
 	 */
-	private String fieldType;
+	private EntityMapping em;
+
+	/**
+	 * 字段类型
+	 */
+	private FieldType fieldType;
 
 	public String getFieldName() {
 		return fieldName;
@@ -56,11 +61,27 @@ public class FieldInfo {
 		this.comments = comments;
 	}
 
-	public String getFieldType() {
+	public EntityMapping getEm() {
+		return em;
+	}
+
+	public void setEm(EntityMapping em) {
+		this.em = em;
+	}
+
+	public static String getSuffix() {
+		return suffix;
+	}
+
+	public static String getPrefix() {
+		return prefix;
+	}
+
+	public FieldType getFieldType() {
 		return fieldType;
 	}
 
-	public void setFieldType(String fieldType) {
+	public void setFieldType(FieldType fieldType) {
 		this.fieldType = fieldType;
 	}
 
