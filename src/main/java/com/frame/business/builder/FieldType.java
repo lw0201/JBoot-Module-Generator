@@ -1,5 +1,8 @@
 package com.frame.business.builder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 字段类型
  * 
@@ -18,18 +21,22 @@ public enum FieldType {
 	 */
 	CK("ck");
 
-	private String key;
+	public final String key;
 
 	FieldType(String key) {
 		this.key = key;
 	}
 
-	public String getKey() {
-		return key;
+	private static Map<String, FieldType> codeLookup = new HashMap<>();
+
+	static {
+		for (FieldType type : FieldType.values()) {
+			codeLookup.put(type.key, type);
+		}
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public static FieldType forCode(String code) {
+		return codeLookup.get(code);
 	}
 
 }

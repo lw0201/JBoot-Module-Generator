@@ -12,7 +12,10 @@ public class Constant {
 
 	public static final String password = "123456";
 
-	public static final String packageName = "";
+	public static final String packageName = "com.zhuoxun.it.business";
 
+	public static final String java = "src/main/java";
+
+	public static final String resources = "src/main/resources";
 
 }

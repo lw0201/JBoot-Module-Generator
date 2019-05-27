@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author liwen
  *
  */
-public class ResultBody implements Serializable {
+public class Result<T extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -16,7 +16,17 @@ public class ResultBody implements Serializable {
 
 	private String message;
 
-	private Object data;
+	private T data;
+
+	public void success() {
+		this.code = 200;
+		this.message = "Success!";
+	}
+	
+	public void fail() {
+		this.code = 500;
+		this.message = "Fail!";
+	}
 
 	public int getCode() {
 		return code;
@@ -34,11 +44,11 @@ public class ResultBody implements Serializable {
 		this.message = message;
 	}
 
-	public Object getData() {
+	public T getData() {
 		return data;
 	}
 
-	public void setData(Object data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 

@@ -1,6 +1,7 @@
 package com.frame.business.builder;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 表信息
@@ -27,7 +28,7 @@ public class TableInfo {
 	private String entityName;
 
 	/**
-	 * 包名称
+	 * 需要生产的实体对象包路径
 	 */
 	private String packageName;
 
@@ -35,6 +36,11 @@ public class TableInfo {
 	 * 表所有的字段信息
 	 */
 	private List<FieldInfo> fields;
+
+	/**
+	 * 需要导入的包
+	 */
+	private Set<String> importPackages;
 
 	public String getTableName() {
 		return tableName;
@@ -74,6 +80,14 @@ public class TableInfo {
 
 	public void setFields(List<FieldInfo> fields) {
 		this.fields = fields;
+	}
+
+	public Set<String> getImportPackages() {
+		return importPackages;
+	}
+
+	public void setImportPackages(Set<String> importPackages) {
+		this.importPackages = importPackages;
 	}
 
 }

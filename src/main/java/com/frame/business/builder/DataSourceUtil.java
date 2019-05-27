@@ -6,7 +6,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 
@@ -17,6 +21,8 @@ import com.alibaba.fastjson.JSON;
  */
 public class DataSourceUtil {
 
+	private final static Logger logger = LoggerFactory.getLogger(FreemarkerUtil.class);
+
 	/**
 	 * 注册数据库驱动
 	 */
@@ -24,7 +30,7 @@ public class DataSourceUtil {
 		try {
 			Class.forName(Constant.driverClassName);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.error("Load drive failure:", e);
 		}
 	}
 
@@ -33,8 +39,14 @@ public class DataSourceUtil {
 	 * 
 	 * @throws SQLException
 	 */
-	public static Connection getConnection(String url, String user, String password) throws SQLException {
-		return DriverManager.getConnection(url, user, password);
+	public static Connection getConnection(String url, String user, String password) {
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(url, user, password);
+		} catch (SQLException e) {
+			logger.error("Load drive failure:", e);
+		}
+		return conn;
 	}
 
 	/**
@@ -42,13 +54,17 @@ public class DataSourceUtil {
 	 * 
 	 * @throws SQLException
 	 */
-	public static void closeConnection(Connection conn) throws SQLException {
-		if (null != conn) {
-			conn.close();
+	public static void closeConnection(Connection conn) {
+		try {
+			if (null != conn) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			logger.error("close db conn error:", e);
 		}
 	}
 
-	public static List<TableInfo> getTables() throws SQLException {
+	public static List<TableInfo> getTables() {
 		List<TableInfo> tableInfos = new ArrayList<TableInfo>();
 		Connection connection = null;
 		try {
@@ -60,41 +76,44 @@ public class DataSourceUtil {
 				String table_name = tables.getString("TABLE_NAME");
 				String remarkes = tables.getString("REMARKS");
 				tableInfo.setTableName(table_name);
-				tableInfo.setEntityName(table_name);
+				tableInfo.setEntityName(StringUtils.toUpperCaseFirst(StringUtils.underlineToCamel(table_name)));
 				tableInfo.setPackageName("");
 				tableInfo.setComments(remarkes);
 				ResultSet columns = metaData.getColumns(null, null, table_name, "%");
 				List<FieldInfo> fieldInfos = new ArrayList<FieldInfo>();
 				while (columns.next()) {
-					String column_name = columns.getString("COLUMN_NAME");
-					String type_name = columns.getString("TYPE_NAME");
+					String colName = columns.getString("COLUMN_NAME");
 					String comments = columns.getString("REMARKS");
-					String sqlType = columns.getString("DATA_TYPE");
+					int dataType = columns.getInt("DATA_TYPE");
+					EntityMapping data = EntityMapping.forKey(dataType);
+					if (null == tableInfo.getImportPackages()) {
+						tableInfo.setImportPackages(new HashSet<String>());
+					}
+					tableInfo.setPackageName(Constant.packageName);
+					tableInfo.getImportPackages().add(data.getJavaType());
 					FieldInfo fieldInfo = new FieldInfo();
-					fieldInfo.setFieldName(column_name);
-					fieldInfo.setAttrName(column_name);
-					fieldInfo.setFieldType(type_name);
+					fieldInfo.setFieldName(colName);
+					fieldInfo.setAttrName(StringUtils.underlineToCamel(colName));
+					fieldInfo.setEm(data);
 					fieldInfo.setComments(comments);
 					fieldInfos.add(fieldInfo);
 				}
 				tableInfo.setFields(fieldInfos);
 				tableInfos.add(tableInfo);
 			}
+		} catch (SQLException e) {
+			System.err.println(e);
+			logger.error("db error:", e);
 		} finally {
 			closeConnection(connection);
 		}
-
 		return tableInfos;
 
 	}
-	
+
 	public static void main(String[] args) {
-		try {
-			List<TableInfo> tables = DataSourceUtil.getTables();
-			System.err.println(JSON.toJSONString(tables));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		List<TableInfo> tables = DataSourceUtil.getTables();
+		System.err.println(JSON.toJSONString(tables));
 	}
 
 }
