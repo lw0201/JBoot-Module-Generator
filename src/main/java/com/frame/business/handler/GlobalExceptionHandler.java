@@ -14,15 +14,29 @@ import com.frame.business.base.Result;
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
+	
+	/**
+	 * 
+	 * @param e
+	 * @return
+	 */
 	@ExceptionHandler(Exception.class)
-	public Result<String> exceptionHandle(Exception e) { // 处理方法参数的异常类型
-		return null;// 自己需要实现的异常处理
+	public Result<String> exceptionHandle(Exception e) { 
+		Result<String> result = new Result<String>();
+		result.fail();
+		return result;
 	}
 
+	/**
+	 * 
+	 * @param ex
+	 * @return
+	 */
 	@ExceptionHandler(RuntimeException.class)
 	public Result<String> handle(ApplicationException ex) {
-		return null; // 自己需要实现的异常处理
+		Result<String> result = new Result<String>();
+		result.fail();
+		return result; 
 	}
 
 }

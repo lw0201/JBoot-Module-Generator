@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuoxun.it.business.dao.IDeptDao">
+
+    <!-- 基础字段返回信息配置 -->
+    <resultMap id="BaseResultMap" type="com.zhuoxun.it.business.entity.DeptVO">
+        <id column="deptno" jdbcType="INTEGER" property="deptno" />
+        <result column="dname" jdbcType="VARCHAR" property="dname" />
+        <result column="loc" jdbcType="VARCHAR" property="loc" />
+    </resultMap>
+
+    <!-- 基础字段信息配置 -->
+    <sql id="Base_Column_List">
+        deptno,dname,loc,
+    </sql>
+
+    <!-- 基础条件查询配置 -->
+    <sql id="Base_Where_Clause">
+        <where>
+            <if test="deptno != null">
+                and deptno = #{entity.deptno,jdbcType=INTEGER}
+            </if>
+            <if test="dname != null">
+                and dname = #{entity.dname,jdbcType=VARCHAR}
+            </if>
+            <if test="loc != null">
+                and loc = #{entity.loc,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 根据主键信息查询返回实体对象 -->
+    <select id="findById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from emp
+        where deptno = #{deptno,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据实体对象信息查询返回实体对象 -->
+    <select id="select" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from dept
+        <if test="_parameter != null">
+            <include refid="Base_Where_Clause" />
+        </if>
+    </select>
+
+    <!-- 根据实体对象信息查询返回实体对象集合 -->
+    <select id="findList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from dept
+        where empno = #{id,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Base_Where_Clause" />
+        </if>
+    </select>
+
+    <!-- 根据主键信息删除实体对象 -->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from dept
+        where deptno = #{deptno,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 插入实体对象 -->
+    <insert id="insert" parameterType="com.frame.business.entity.DeptVO">
+        insert into dept
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deptno != null">
+                deptno,
+            </if>
+            <if test="dname != null">
+                dname,
+            </if>
+            <if test="loc != null">
+                loc,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deptno != null">
+                #{deptno,jdbcType=INTEGER},
+            </if>
+            <if test="dname != null">
+                #{dname,jdbcType=VARCHAR},
+            </if>
+            <if test="loc != null">
+                #{loc,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 更新实体对象 -->
+    <update id="update" parameterType="com.zhuoxun.it.business.entity.DeptVO">
+        update dept
+        <set>
+            <if test="deptno != null">
+                deptno = #{deptno,jdbcType=INTEGER},
+            </if>
+            <if test="dname != null">
+                dname = #{dname,jdbcType=VARCHAR},
+            </if>
+            <if test="loc != null">
+                loc = #{loc,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where deptno = #{deptno,jdbcType=INTEGER}
+    </update>
+
+</mapper>

@@ -2,54 +2,74 @@ package com.frame.business.base;
 
 import java.io.Serializable;
 
+import lombok.Data;
+
 /**
- * 统一返回值处理
+ * <li>统一返回值处理
  * 
  * @author liwen
  *
  */
-public class Result<T extends Serializable> implements Serializable {
+@Data
+public class Result<T> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private int code;
+    /**
+     * result code
+     */
+    private int code;
 
-	private String message;
+    /**
+     * result message
+     */
+    private String message;
 
-	private T data;
+    /**
+     * result data
+     */
+    private T data;
 
-	public void success() {
-		this.code = 200;
-		this.message = "Success!";
-	}
-	
-	public void fail() {
-		this.code = 500;
-		this.message = "Fail!";
-	}
+    public Result() {
+        super();
+    }
 
-	public int getCode() {
-		return code;
-	}
+    public Result(T data) {
+        success();
+        this.data = data;
+    }
 
-	public void setCode(int code) {
-		this.code = code;
-	}
+    public Result(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    /**
+     * success
+     */
+    public Result<T> success() {
+        this.code = 200;
+        this.message = "Success!";
+        return new Result<T>(code, message);
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    /**
+     * success
+     */
+    public Result<T> success(T data) {
+        this.code = 200;
+        this.message = "Success!";
+        this.data = data;
+        return new Result<T>(code, message);
+    }
 
-	public T getData() {
-		return data;
-	}
-
-	public void setData(T data) {
-		this.data = data;
-	}
+    /**
+     * success
+     */
+    public Result<T> fail() {
+        this.code = 500;
+        this.message = "Fail!";
+        return new Result<T>(code, message);
+    }
 
 }

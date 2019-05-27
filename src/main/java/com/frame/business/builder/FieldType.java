@@ -11,32 +11,32 @@ import java.util.Map;
  */
 public enum FieldType {
 
-	/**
-	 * 主键
-	 */
-	PK("pk"),
+    /**
+     * 主键
+     */
+    PK("pk"),
 
-	/**
-	 * 普通键
-	 */
-	CK("ck");
+    /**
+     * 普通键
+     */
+    CK("ck");
 
-	public final String key;
+    public final String key;
 
-	FieldType(String key) {
-		this.key = key;
-	}
+    FieldType(String key) {
+        this.key = key;
+    }
 
-	private static Map<String, FieldType> codeLookup = new HashMap<>();
+    private static Map<String, FieldType> codeLookup = new HashMap<>();
 
-	static {
-		for (FieldType type : FieldType.values()) {
-			codeLookup.put(type.key, type);
-		}
-	}
+    static {
+        for (FieldType type : FieldType.values()) {
+            codeLookup.put(type.key, type);
+        }
+    }
 
-	public static FieldType forCode(String code) {
-		return codeLookup.get(code);
-	}
+    public static FieldType forCode(String code) {
+        return codeLookup.get(code);
+    }
 
 }

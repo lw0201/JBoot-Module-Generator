@@ -1,4 +1,4 @@
-package com.frame.business.controller;
+package com.zhuoxun.it.business.controller;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.frame.business.base.Result;
-import com.frame.business.entity.EmpVO;
-import com.frame.business.service.IEmpService;
+import com.zhuoxun.it.business.entity.EmpVO;
+import com.zhuoxun.it.business.service.IEmpService;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -33,7 +33,7 @@ public class EmpController {
      *            :业务实体
      * @return 返回新增影响的数据
      */
-    @PostMapping("emp/insert")
+    @PostMapping("/v1/emp/insert")
     public Result<String> insert(@RequestBody EmpVO entity) {
         iEmpService.insert(entity);
         return new Result<String>().success();
@@ -46,7 +46,7 @@ public class EmpController {
      *            :实体ID
      * @return 返回删除影响的实体
      */
-    @PostMapping("emp/delete/{id}")
+    @PostMapping("/v1/emp/delete/{id}")
     public Result<String> delete(@PathVariable("id") Integer id) {
         iEmpService.deleteById(id);
         return new Result<String>().success();
@@ -59,20 +59,20 @@ public class EmpController {
      *            :操作的业务实体对象
      * @return 返回影响的行
      */
-    @PostMapping("emp/update")
+    @PostMapping("/v1/emp/update")
     public Result<String> update(@RequestBody EmpVO entity) {
         iEmpService.update(entity);
         return new Result<String>().success();
     }
 
     /**
-     * <li>根据实体ID查询实体对象并返回实体对象的详细信息i
+     * <li>根据实体ID查询实体对象并返回实体对象的详细信息
      * 
      * @param id
      *            :实体对象对应的ID
      * @return 返回实体对象的相信信息
      */
-    @GetMapping("emp/find/{id}")
+    @GetMapping("/v1/emp/find/{id}")
     public Result<EmpVO> findById(@PathVariable("id") Integer id) {
         return new Result<EmpVO>().success(iEmpService.findById(id));
     }
@@ -84,7 +84,7 @@ public class EmpController {
      *            :业务实体对象
      * @return 实体对象集合
      */
-    @PostMapping("emp/find/list")
+    @PostMapping("/v1/emp/find/list")
     public Result<List<EmpVO>> findList(@RequestBody EmpVO entity) {
         return new Result<List<EmpVO>>().success((iEmpService.findList(entity)));
     }
@@ -100,7 +100,7 @@ public class EmpController {
      *            :显示数量
      * @return 返回实体的分页信息
      */
-    @PostMapping("emp/page/{pageNo}/{pageSize}")
+    @PostMapping("/v1/emp/page/{pageNo}/{pageSize}")
     public Result<PageInfo<EmpVO>> findPage(@RequestBody EmpVO entity, @PathVariable("pageNo") int pageNo,
         @PathVariable("pageSize") int pageSize) {
         return new Result<PageInfo<EmpVO>>().success((iEmpService.findPage(entity, pageNo, pageSize)));

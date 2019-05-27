@@ -4,16 +4,17 @@
 
     <!-- 基础字段返回信息配置 -->
     <resultMap id="BaseResultMap" type="${packageName}.entity.${entityName}VO">
+        <id column="${pk.fieldName}" jdbcType="${pk.em.jdbcType}" property="${pk.attrName}" />
         <#list fields as field>
-        <id column="${field.fieldName}" jdbcType="${field.em.jdbcType}" property="${field.attrName}" />
+        <#if field.fieldName != pk.fieldName >
+        <result column="${field.fieldName}" jdbcType="${field.em.jdbcType}" property="${field.attrName}" />
+        </#if>
         </#list>
     </resultMap>
 
     <!-- 基础字段信息配置 -->
     <sql id="Base_Column_List">
-        <#list fields as field>
-            ${field.fieldName},
-        </#list>
+        <#list fields as field>${field.fieldName},</#list>
     </sql>
 
     <!-- 基础条件查询配置 -->
@@ -32,14 +33,14 @@
         select
         <include refid="Base_Column_List" />
         from emp
-        where empno = ${r'#{'}id,jdbcType=INTEGER${r'}'}
+        where ${pk.fieldName} = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
     </select>
 
     <!-- 根据实体对象信息查询返回实体对象 -->
     <select id="select" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from emp
+        from ${tableName}
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
@@ -49,7 +50,7 @@
     <select id="findList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from emp
+        from ${tableName}
         where empno = ${r'#{'}id,jdbcType=INTEGER${r'}'}
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
@@ -58,95 +59,40 @@
 
     <!-- 根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.lang.Integer">
-        delete from emp
-        where
-        empno = ${r'#{'}empno,jdbcType=INTEGER${r'}'}
+        delete from ${tableName}
+        where ${pk.fieldName} = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
     </delete>
 
     <!-- 插入实体对象 -->
-    <insert id="insert" parameterType="com.frame.business.entity.EmpVO">
-        insert into emp
+    <insert id="insert" parameterType="com.frame.business.entity.${entityName}VO">
+        insert into ${tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="empno != null">
-                empno,
+            <#list fields as field>
+            <if test="${field.attrName} != null">
+                ${field.fieldName},
             </if>
-            <if test="ename != null">
-                ename,
-            </if>
-            <if test="job != null">
-                job,
-            </if>
-            <if test="mgr != null">
-                mgr,
-            </if>
-            <if test="hiredate != null">
-                hiredate,
-            </if>
-            <if test="sal != null">
-                sal,
-            </if>
-            <if test="comm != null">
-                comm,
-            </if>
-            <if test="deptno != null">
-                deptno,
-            </if>
+            </#list>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="empno != null">
-                #{empno,jdbcType=INTEGER},
+            <#list fields as field>
+            <if test="${field.attrName} != null">
+                ${r'#{'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
             </if>
-            <if test="ename != null">
-                #{ename,jdbcType=VARCHAR},
-            </if>
-            <if test="job != null">
-                #{job,jdbcType=VARCHAR},
-            </if>
-            <if test="mgr != null">
-                #{mgr,jdbcType=INTEGER},
-            </if>
-            <if test="hiredate != null">
-                #{hiredate,jdbcType=DATE},
-            </if>
-            <if test="sal != null">
-                #{sal,jdbcType=DECIMAL},
-            </if>
-            <if test="comm != null">
-                #{comm,jdbcType=DECIMAL},
-            </if>
-            <if test="deptno != null">
-                #{deptno,jdbcType=INTEGER},
-            </if>
+            </#list>
         </trim>
     </insert>
 
     <!-- 更新实体对象 -->
-    <update id="update" parameterType="com.frame.business.entity.EmpVO">
-        update emp
+    <update id="update" parameterType="${packageName}.entity.${entityName}VO">
+        update ${tableName}
         <set>
-            <if test="ename != null">
-                ename = #{ename,jdbcType=VARCHAR},
+            <#list fields as field>
+            <if test="${field.attrName} != null">
+                ${field.fieldName} = ${r'#{'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
             </if>
-            <if test="job != null">
-                job = #{job,jdbcType=VARCHAR},
-            </if>
-            <if test="mgr != null">
-                mgr = #{mgr,jdbcType=INTEGER},
-            </if>
-            <if test="hiredate != null">
-                hiredate = #{hiredate,jdbcType=DATE},
-            </if>
-            <if test="sal != null">
-                sal = #{sal,jdbcType=DECIMAL},
-            </if>
-            <if test="comm != null">
-                comm = #{comm,jdbcType=DECIMAL},
-            </if>
-            <if test="deptno != null">
-                deptno = #{deptno,jdbcType=INTEGER},
-            </if>
+            </#list>
         </set>
-        where empno = #{empno,jdbcType=INTEGER}
+        where ${pk.fieldName} = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
     </update>
 
 </mapper>

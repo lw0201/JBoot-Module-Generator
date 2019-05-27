@@ -1,50 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhuoxun.it.business.dao.IEmpDao">
+<mapper namespace="com.zhuoxun.it.business.dao.IBonusDao">
 
     <!-- 基础字段返回信息配置 -->
-    <resultMap id="BaseResultMap" type="com.zhuoxun.it.business.entity.EmpVO">
-        <id column="emp_no" jdbcType="INTEGER" property="empNo" />
-        <result column="ename" jdbcType="VARCHAR" property="ename" />
+    <resultMap id="BaseResultMap" type="com.zhuoxun.it.business.entity.BonusVO">
+        <id column="ename" jdbcType="VARCHAR" property="ename" />
         <result column="job" jdbcType="VARCHAR" property="job" />
-        <result column="mgr" jdbcType="INTEGER" property="mgr" />
-        <result column="hiredate" jdbcType="DATE" property="hiredate" />
         <result column="sal" jdbcType="VARCHAR" property="sal" />
         <result column="comm" jdbcType="VARCHAR" property="comm" />
-        <result column="deptno" jdbcType="INTEGER" property="deptno" />
     </resultMap>
 
     <!-- 基础字段信息配置 -->
     <sql id="Base_Column_List">
-        emp_no,ename,job,mgr,hiredate,sal,comm,deptno,
+        ename,job,sal,comm,
     </sql>
 
     <!-- 基础条件查询配置 -->
     <sql id="Base_Where_Clause">
         <where>
-            <if test="empNo != null">
-                and emp_no = #{entity.empNo,jdbcType=INTEGER}
-            </if>
             <if test="ename != null">
                 and ename = #{entity.ename,jdbcType=VARCHAR}
             </if>
             <if test="job != null">
                 and job = #{entity.job,jdbcType=VARCHAR}
             </if>
-            <if test="mgr != null">
-                and mgr = #{entity.mgr,jdbcType=INTEGER}
-            </if>
-            <if test="hiredate != null">
-                and hiredate = #{entity.hiredate,jdbcType=DATE}
-            </if>
             <if test="sal != null">
                 and sal = #{entity.sal,jdbcType=VARCHAR}
             </if>
             <if test="comm != null">
                 and comm = #{entity.comm,jdbcType=VARCHAR}
-            </if>
-            <if test="deptno != null">
-                and deptno = #{entity.deptno,jdbcType=INTEGER}
             </if>
         </where>
     </sql>
@@ -54,14 +38,14 @@
         select
         <include refid="Base_Column_List" />
         from emp
-        where emp_no = #{empNo,jdbcType=INTEGER}
+        where ename = #{ename,jdbcType=VARCHAR}
     </select>
 
     <!-- 根据实体对象信息查询返回实体对象 -->
     <select id="select" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from emp
+        from bonus
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
@@ -71,7 +55,7 @@
     <select id="findList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from emp
+        from bonus
         where empno = #{id,jdbcType=INTEGER}
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
@@ -80,28 +64,19 @@
 
     <!-- 根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.lang.Integer">
-        delete from emp
-        where emp_no = #{empNo,jdbcType=INTEGER}
+        delete from bonus
+        where ename = #{ename,jdbcType=VARCHAR}
     </delete>
 
     <!-- 插入实体对象 -->
-    <insert id="insert" parameterType="com.frame.business.entity.EmpVO">
-        insert into emp
+    <insert id="insert" parameterType="com.frame.business.entity.BonusVO">
+        insert into bonus
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="empNo != null">
-                emp_no,
-            </if>
             <if test="ename != null">
                 ename,
             </if>
             <if test="job != null">
                 job,
-            </if>
-            <if test="mgr != null">
-                mgr,
-            </if>
-            <if test="hiredate != null">
-                hiredate,
             </if>
             <if test="sal != null">
                 sal,
@@ -109,25 +84,13 @@
             <if test="comm != null">
                 comm,
             </if>
-            <if test="deptno != null">
-                deptno,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="empNo != null">
-                #{empNo,jdbcType=INTEGER},
-            </if>
             <if test="ename != null">
                 #{ename,jdbcType=VARCHAR},
             </if>
             <if test="job != null">
                 #{job,jdbcType=VARCHAR},
-            </if>
-            <if test="mgr != null">
-                #{mgr,jdbcType=INTEGER},
-            </if>
-            <if test="hiredate != null">
-                #{hiredate,jdbcType=DATE},
             </if>
             <if test="sal != null">
                 #{sal,jdbcType=VARCHAR},
@@ -135,30 +98,18 @@
             <if test="comm != null">
                 #{comm,jdbcType=VARCHAR},
             </if>
-            <if test="deptno != null">
-                #{deptno,jdbcType=INTEGER},
-            </if>
         </trim>
     </insert>
 
     <!-- 更新实体对象 -->
-    <update id="update" parameterType="com.zhuoxun.it.business.entity.EmpVO">
-        update emp
+    <update id="update" parameterType="com.zhuoxun.it.business.entity.BonusVO">
+        update bonus
         <set>
-            <if test="empNo != null">
-                emp_no = #{empNo,jdbcType=INTEGER},
-            </if>
             <if test="ename != null">
                 ename = #{ename,jdbcType=VARCHAR},
             </if>
             <if test="job != null">
                 job = #{job,jdbcType=VARCHAR},
-            </if>
-            <if test="mgr != null">
-                mgr = #{mgr,jdbcType=INTEGER},
-            </if>
-            <if test="hiredate != null">
-                hiredate = #{hiredate,jdbcType=DATE},
             </if>
             <if test="sal != null">
                 sal = #{sal,jdbcType=VARCHAR},
@@ -166,11 +117,8 @@
             <if test="comm != null">
                 comm = #{comm,jdbcType=VARCHAR},
             </if>
-            <if test="deptno != null">
-                deptno = #{deptno,jdbcType=INTEGER},
-            </if>
         </set>
-        where emp_no = #{empNo,jdbcType=INTEGER}
+        where ename = #{ename,jdbcType=VARCHAR}
     </update>
 
 </mapper>

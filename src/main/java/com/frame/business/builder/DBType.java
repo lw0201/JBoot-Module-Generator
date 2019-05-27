@@ -9,14 +9,14 @@ package com.frame.business.builder;
  */
 public enum DBType {
 
-	/**
-	 * mysql数据库
-	 */
-	MySQL,
+    /**
+     * mysql数据库
+     */
+    MySQL,
 
-	/**
-	 * Oracle数据库
-	 */
-	Oracle;
+    /**
+     * Oracle数据库
+     */
+    Oracle;
 
 }
