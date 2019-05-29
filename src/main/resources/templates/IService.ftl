@@ -1,6 +1,6 @@
 package ${packageName}.service;
 
-import com.frame.business.base.IBaseService;
+import org.jboot.generator.base.IBaseService;
 import ${packageName}.entity.${entityName}VO;
 
 /**

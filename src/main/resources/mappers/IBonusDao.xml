@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhuoxun.it.business.dao.IBonusDao">
+<mapper namespace="org.jboot.generator.dao.IBonusDao">
 
     <!-- 基础字段返回信息配置 -->
-    <resultMap id="BaseResultMap" type="com.zhuoxun.it.business.entity.BonusVO">
+    <resultMap id="BaseResultMap" type="org.jboot.generator.entity.BonusVO">
         <id column="ename" jdbcType="VARCHAR" property="ename" />
         <result column="job" jdbcType="VARCHAR" property="job" />
         <result column="sal" jdbcType="VARCHAR" property="sal" />
@@ -12,7 +12,7 @@
 
     <!-- 基础字段信息配置 -->
     <sql id="Base_Column_List">
-        ename,job,sal,comm,
+        ename,job,sal,comm
     </sql>
 
     <!-- 基础条件查询配置 -->
@@ -56,7 +56,6 @@
         select
         <include refid="Base_Column_List" />
         from bonus
-        where empno = #{id,jdbcType=INTEGER}
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
@@ -69,7 +68,7 @@
     </delete>
 
     <!-- 插入实体对象 -->
-    <insert id="insert" parameterType="com.frame.business.entity.BonusVO">
+    <insert id="insert" parameterType="org.jboot.generator.entity.BonusVO">
         insert into bonus
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="ename != null">
@@ -102,7 +101,7 @@
     </insert>
 
     <!-- 更新实体对象 -->
-    <update id="update" parameterType="com.zhuoxun.it.business.entity.BonusVO">
+    <update id="update" parameterType="org.jboot.generator.entity.BonusVO">
         update bonus
         <set>
             <if test="ename != null">

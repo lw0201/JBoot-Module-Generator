@@ -1,4 +1,4 @@
-package ${packageName}.controller;
+package org.jboot.generator.controller;
 
 import java.util.List;
 
@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.jboot.generator.base.Result;
-import ${packageName}.entity.${entityName}VO;
-import ${packageName}.service.I${entityName}Service;
+import org.jboot.generator.entity.BonusVO;
+import org.jboot.generator.service.IBonusService;
 import com.github.pagehelper.PageInfo;
 
 /**
- * ${entityName}实体控制层
+ * Bonus实体控制层
  * 
  * @author liwen
  *
  */
 @RestController
-public class ${entityName}Controller {
+public class BonusController {
 
     @Autowired
-    I${entityName}Service i${entityName}Service;
+    IBonusService iBonusService;
 
     /**
      * <li>新增实体数据
@@ -33,9 +33,9 @@ public class ${entityName}Controller {
      *            :业务实体
      * @return 返回新增影响的数据
      */
-    @PostMapping("/v1/${entityName?lower_case}/insert")
-    public Result<String> insert(@RequestBody ${entityName}VO entity) {
-        i${entityName}Service.insert(entity);
+    @PostMapping("/v1/bonus/insert")
+    public Result<String> insert(@RequestBody BonusVO entity) {
+        iBonusService.insert(entity);
         return new Result<String>().success();
     }
 
@@ -46,9 +46,9 @@ public class ${entityName}Controller {
      *            :实体ID
      * @return 返回删除影响的实体
      */
-    @PostMapping("/v1/${entityName?lower_case}/delete/{id}")
+    @PostMapping("/v1/bonus/delete/{id}")
     public Result<String> delete(@PathVariable("id") Integer id) {
-        i${entityName}Service.deleteById(id);
+        iBonusService.deleteById(id);
         return new Result<String>().success();
     }
 
@@ -59,9 +59,9 @@ public class ${entityName}Controller {
      *            :操作的业务实体对象
      * @return 返回影响的行
      */
-    @PostMapping("/v1/${entityName?lower_case}/update")
-    public Result<String> update(@RequestBody ${entityName}VO entity) {
-        i${entityName}Service.update(entity);
+    @PostMapping("/v1/bonus/update")
+    public Result<String> update(@RequestBody BonusVO entity) {
+        iBonusService.update(entity);
         return new Result<String>().success();
     }
 
@@ -72,9 +72,9 @@ public class ${entityName}Controller {
      *            :实体对象对应的ID
      * @return 返回实体对象的相信信息
      */
-    @GetMapping("/v1/${entityName?lower_case}/find/{id}")
-    public Result<${entityName}VO> findById(@PathVariable("id") Integer id) {
-        return new Result<${entityName}VO>().success(i${entityName}Service.findById(id));
+    @GetMapping("/v1/bonus/find/{id}")
+    public Result<BonusVO> findById(@PathVariable("id") Integer id) {
+        return new Result<BonusVO>().success(iBonusService.findById(id));
     }
 
     /**
@@ -84,9 +84,9 @@ public class ${entityName}Controller {
      *            :业务实体对象
      * @return 实体对象集合
      */
-    @PostMapping("/v1/${entityName?lower_case}/find/list")
-    public Result<List<${entityName}VO>> findList(@RequestBody ${entityName}VO entity) {
-        return new Result<List<${entityName}VO>>().success((i${entityName}Service.findList(entity)));
+    @PostMapping("/v1/bonus/find/list")
+    public Result<List<BonusVO>> findList(@RequestBody BonusVO entity) {
+        return new Result<List<BonusVO>>().success((iBonusService.findList(entity)));
     }
 
     /**
@@ -100,10 +100,10 @@ public class ${entityName}Controller {
      *            :显示数量
      * @return 返回实体的分页信息
      */
-    @PostMapping("/v1/${entityName?lower_case}/page/{pageNo}/{pageSize}")
-    public Result<PageInfo<${entityName}VO>> findPage(@RequestBody ${entityName}VO entity, @PathVariable("pageNo") int pageNo,
+    @PostMapping("/v1/bonus/page/{pageNo}/{pageSize}")
+    public Result<PageInfo<BonusVO>> findPage(@RequestBody BonusVO entity, @PathVariable("pageNo") int pageNo,
         @PathVariable("pageSize") int pageSize) {
-        return new Result<PageInfo<${entityName}VO>>().success((i${entityName}Service.findPage(entity, pageNo, pageSize)));
+        return new Result<PageInfo<BonusVO>>().success((iBonusService.findPage(entity, pageNo, pageSize)));
     }
 
 }

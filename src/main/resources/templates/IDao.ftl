@@ -1,6 +1,6 @@
 package ${packageName}.dao;
 
-import com.frame.business.base.IBaseDao;
+import org.jboot.generator.base.IBaseDao;
 import ${packageName}.entity.${entityName}VO;
 
 /**

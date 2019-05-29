@@ -14,7 +14,7 @@
 
     <!-- 基础字段信息配置 -->
     <sql id="Base_Column_List">
-        <#list fields as field>${field.fieldName},</#list>
+        <#list fields as field><#if !field_has_next>${field.fieldName}<#else>${field.fieldName},</#if></#list>
     </sql>
 
     <!-- 基础条件查询配置 -->
@@ -51,7 +51,6 @@
         select
         <include refid="Base_Column_List" />
         from ${tableName}
-        where empno = ${r'#{'}id,jdbcType=INTEGER${r'}'}
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
@@ -64,7 +63,7 @@
     </delete>
 
     <!-- 插入实体对象 -->
-    <insert id="insert" parameterType="com.frame.business.entity.${entityName}VO">
+    <insert id="insert" parameterType="org.jboot.generator.entity.${entityName}VO">
         insert into ${tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list fields as field>

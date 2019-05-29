@@ -2,7 +2,7 @@ package ${packageName}.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.frame.business.base.impl.BaseService;
+import org.jboot.generator.base.impl.BaseService;
 import ${packageName}.entity.${entityName}VO;
 import ${packageName}.service.I${entityName}Service;
 
