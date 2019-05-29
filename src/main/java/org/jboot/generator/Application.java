@@ -10,11 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("org.jboot.generator.dao")
 public class Application {
 
-	private final static Logger logger = LoggerFactory.getLogger(Application.class);
+    private final static Logger logger = LoggerFactory.getLogger(Application.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-		logger.info("start complete...");
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+        logger.info("start complete...");
+    }
 
 }

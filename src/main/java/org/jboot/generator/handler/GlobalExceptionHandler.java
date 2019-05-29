@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.jboot.generator.base.Result;
 
 /**
- * 统一异常处理类
+ * GlobalExceptionHandler 全局性统一异常处理类
  * 
  * @author liwen
  *
@@ -16,7 +16,7 @@ import org.jboot.generator.base.Result;
 public class GlobalExceptionHandler {
 
     /**
-     * 
+     * Exception other异常处理
      * @param e
      * @return
      */
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 
+     * RuntimeException 运行时异常处理类
      * @param ex
      * @return
      */
