@@ -17,12 +17,12 @@ import org.slf4j.LoggerFactory;
  * 
  * @author liwen
  */
-public class DataSourceUtil {
+public class JdbcUtil {
 
     private final static Logger logger = LoggerFactory.getLogger(FreemarkerUtil.class);
 
     /**
-     * Register database driver
+     * 注册数据库驱动
      */
     static {
         try {
@@ -48,7 +48,7 @@ public class DataSourceUtil {
     }
 
     /**
-     * close connection
+     * 关闭连接资源
      * 
      * @throws SQLException
      */
@@ -63,17 +63,19 @@ public class DataSourceUtil {
     }
 
     /**
-     * get tables info
+     * 获取表单所有信息
      * 
-     * @return
+     * @return List<TableInfo> 返回表单数据集合
      */
     public static List<TableInfo> getTables() {
         List<TableInfo> tableInfos = new ArrayList<TableInfo>();
         Connection connection = null;
         try {
+
             connection = DriverManager.getConnection(Constant.url, Constant.username, Constant.password);
             DatabaseMetaData metaData = connection.getMetaData();
-            ResultSet tables = metaData.getTables(null, null, null, new String[] {"TABLE"});
+            System.err.println(metaData.getSchemas());
+            ResultSet tables = metaData.getTables(connection.getCatalog(), null, "%", new String[] {"TABLE"});
             while (tables.next()) {
                 TableInfo tableInfo = new TableInfo();
                 String table_name = tables.getString("TABLE_NAME");
@@ -116,6 +118,10 @@ public class DataSourceUtil {
             close(connection);
         }
         return tableInfos;
+    }
+
+    public static void main(String[] args) {
+        JdbcUtil.getTables();
     }
 
 }

@@ -6,7 +6,6 @@ import java.sql.Types;
  * 实体映射对象
  * 
  * @author liwen
- *
  */
 public enum EntityMapping {
 
@@ -132,9 +131,6 @@ public enum EntityMapping {
      * Identifies the generic SQL type {@code BOOLEAN}.
      */
     BOOLEAN(Types.BOOLEAN, "Boolean", "BOOLEAN"),
-
-    /* JDBC 4.0 Types */
-
     /**
      * Identifies the SQL type {@code ROWID}.
      */
@@ -159,24 +155,18 @@ public enum EntityMapping {
      * Identifies the generic SQL type {@code SQLXML}.
      */
     SQLXML(Types.SQLXML, "String", "VARCHAR"),
-
-    /* JDBC 4.2 Types */
-
     /**
      * Identifies the generic SQL type {@code REF_CURSOR}.
      */
     REF_CURSOR(Types.REF_CURSOR, "String", "VARCHAR"),
-
     /**
      * Identifies the generic SQL type {@code TIME_WITH_TIMEZONE}.
      */
     TIME_WITH_TIMEZONE(Types.TIME_WITH_TIMEZONE, "String", "VARCHAR"),
-
     /**
      * Identifies the generic SQL type {@code TIMESTAMP_WITH_TIMEZONE}.
      */
     TIMESTAMP_WITH_TIMEZONE(Types.TIMESTAMP_WITH_TIMEZONE, "String", "VARCHAR");
-
     /**
      * The Integer value for the JDBCType. It maps to a value in {@code Types.java}
      */

@@ -67,6 +67,20 @@
         where ename = #{ename,jdbcType=VARCHAR}
     </delete>
 
+    <!-- 根据实体对象删除数据-->
+    <delete id="delete" parameterType="org.jboot.generator.entity.BonusVO">
+        delete from bonus
+        <include refid="Base_Where_Clause" />
+    </delete>
+
+    <!-- 根据实体对象删除数据-->
+    <delete id="deletes" parameterType="org.jboot.generator.entity.BonusVO">
+        delete from bonus where ename in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item.attrName}
+        </foreach>
+    </delete>
+
     <!-- 插入实体对象 -->
     <insert id="insert" parameterType="org.jboot.generator.entity.BonusVO">
         insert into bonus
@@ -98,6 +112,25 @@
                 #{comm,jdbcType=VARCHAR},
             </if>
         </trim>
+    </insert>
+
+    <!-- 插入实体对象 -->
+    <insert id="inserts" parameterType="org.jboot.generator.entity.BonusVO">
+        insert into bonus
+        <trim prefix="(" suffix=") values" suffixOverrides=",">
+            ename,
+            job,
+            sal,
+            comm
+        </trim>
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{ename,jdbcType=VARCHAR},
+            #{job,jdbcType=VARCHAR},
+            #{sal,jdbcType=VARCHAR},
+            #{comm,jdbcType=VARCHAR}
+            )
+        </foreach>
     </insert>
 
     <!-- 更新实体对象 -->

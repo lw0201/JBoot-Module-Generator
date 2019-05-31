@@ -48,9 +48,9 @@ public class FreemarkerUtil {
      *            模板参数
      * @return 渲染后的模板内容
      * @throws IOException
-     *             IOException
+     *             Io异常
      * @throws TemplateException
-     *             TemplateException
+     *             template 异常
      */
     public static Template getTemplate(String templateName) {
         Template template = null;

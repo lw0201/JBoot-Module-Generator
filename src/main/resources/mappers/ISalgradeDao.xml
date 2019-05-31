@@ -63,6 +63,20 @@
         where grade = #{grade,jdbcType=INTEGER}
     </delete>
 
+    <!-- 根据实体对象删除数据-->
+    <delete id="delete" parameterType="org.jboot.generator.entity.SalgradeVO">
+        delete from salgrade
+        <include refid="Base_Where_Clause" />
+    </delete>
+
+    <!-- 根据实体对象删除数据-->
+    <delete id="deletes" parameterType="org.jboot.generator.entity.SalgradeVO">
+        delete from salgrade where grade in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item.attrName}
+        </foreach>
+    </delete>
+
     <!-- 插入实体对象 -->
     <insert id="insert" parameterType="org.jboot.generator.entity.SalgradeVO">
         insert into salgrade
@@ -88,6 +102,23 @@
                 #{hisal,jdbcType=INTEGER},
             </if>
         </trim>
+    </insert>
+
+    <!-- 插入实体对象 -->
+    <insert id="inserts" parameterType="org.jboot.generator.entity.SalgradeVO">
+        insert into salgrade
+        <trim prefix="(" suffix=") values" suffixOverrides=",">
+            grade,
+            losal,
+            hisal
+        </trim>
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{grade,jdbcType=INTEGER},
+            #{losal,jdbcType=INTEGER},
+            #{hisal,jdbcType=INTEGER}
+            )
+        </foreach>
     </insert>
 
     <!-- 更新实体对象 -->

@@ -1,11 +1,9 @@
 package org.jboot.generator.builder;
 
 /**
- * 
  * 数据库类型
  * 
  * @author liwen
- *
  */
 public enum DBType {
 

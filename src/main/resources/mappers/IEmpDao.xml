@@ -83,6 +83,20 @@
         where emp_no = #{empNo,jdbcType=INTEGER}
     </delete>
 
+    <!-- 根据实体对象删除数据-->
+    <delete id="delete" parameterType="org.jboot.generator.entity.EmpVO">
+        delete from emp
+        <include refid="Base_Where_Clause" />
+    </delete>
+
+    <!-- 根据实体对象删除数据-->
+    <delete id="deletes" parameterType="org.jboot.generator.entity.EmpVO">
+        delete from emp where emp_no in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item.attrName}
+        </foreach>
+    </delete>
+
     <!-- 插入实体对象 -->
     <insert id="insert" parameterType="org.jboot.generator.entity.EmpVO">
         insert into emp
@@ -138,6 +152,33 @@
                 #{deptno,jdbcType=INTEGER},
             </if>
         </trim>
+    </insert>
+
+    <!-- 插入实体对象 -->
+    <insert id="inserts" parameterType="org.jboot.generator.entity.EmpVO">
+        insert into emp
+        <trim prefix="(" suffix=") values" suffixOverrides=",">
+            emp_no,
+            ename,
+            job,
+            mgr,
+            hiredate,
+            sal,
+            comm,
+            deptno
+        </trim>
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{empNo,jdbcType=INTEGER},
+            #{ename,jdbcType=VARCHAR},
+            #{job,jdbcType=VARCHAR},
+            #{mgr,jdbcType=INTEGER},
+            #{hiredate,jdbcType=DATE},
+            #{sal,jdbcType=VARCHAR},
+            #{comm,jdbcType=VARCHAR},
+            #{deptno,jdbcType=INTEGER}
+            )
+        </foreach>
     </insert>
 
     <!-- 更新实体对象 -->

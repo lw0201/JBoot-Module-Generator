@@ -24,7 +24,7 @@ public class GeneratorBuilder {
     private final static Logger logger = LoggerFactory.getLogger(GeneratorBuilder.class);
 
     public void excute() {
-        List<TableInfo> talbes = DataSourceUtil.getTables();
+        List<TableInfo> talbes = JdbcUtil.getTables();
         generatorEntity(talbes);
         generatorDao(talbes);
         generatorMapper(talbes);
@@ -202,7 +202,6 @@ public class GeneratorBuilder {
     }
 
     public static void main(String[] args) {
-
         GeneratorBuilder bulder = new GeneratorBuilder();
         bulder.excute();
     }

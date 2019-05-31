@@ -62,6 +62,20 @@
         where ${pk.fieldName} = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
     </delete>
 
+    <!-- 根据实体对象删除数据-->
+    <delete id="delete" parameterType="org.jboot.generator.entity.${entityName}VO">
+        delete from ${tableName}
+        <include refid="Base_Where_Clause" />
+    </delete>
+
+    <!-- 根据实体对象删除数据-->
+    <delete id="deletes" parameterType="org.jboot.generator.entity.${entityName}VO">
+        delete from ${tableName} where ${pk.fieldName} in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            ${r'#{'}item.attrName${r'}'}
+        </foreach>
+    </delete>
+
     <!-- 插入实体对象 -->
     <insert id="insert" parameterType="org.jboot.generator.entity.${entityName}VO">
         insert into ${tableName}
@@ -79,6 +93,31 @@
             </if>
             </#list>
         </trim>
+    </insert>
+
+    <!-- 插入实体对象 -->
+    <insert id="inserts" parameterType="org.jboot.generator.entity.${entityName}VO">
+        insert into ${tableName}
+        <trim prefix="(" suffix=") values" suffixOverrides=",">
+            <#list fields as field>
+            <#if !field_has_next>
+            ${field.fieldName}
+            <#else>
+            ${field.fieldName},
+            </#if>
+            </#list>
+        </trim>
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            <#list fields as field>
+            <#if !field_has_next>
+            ${r'#{'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'}
+            <#else>
+            ${r'#{'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
+            </#if>
+            </#list>
+            )
+        </foreach>
     </insert>
 
     <!-- 更新实体对象 -->

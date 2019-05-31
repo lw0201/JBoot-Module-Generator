@@ -1,13 +1,13 @@
 package org.jboot.generator.base.impl;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import org.apache.commons.collections4.CollectionUtils;
 import org.jboot.generator.base.IBaseDao;
 import org.jboot.generator.base.IBaseService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -30,11 +30,16 @@ public class BaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public int inserts(Collection<T> entitys) {
+    public int inserts(List<T> entitys) {
         int result = 0;
-        for (T entity : entitys) {
-            iBaseDao.insert(entity);
-            result = result + 1;
+        while (CollectionUtils.isNotEmpty(entitys) && entitys.size() > 100) {
+            int count = iBaseDao.inserts(entitys.subList(0, 100));
+            result = result + count;
+            entitys.subList(0, 100).clear();
+        }
+        if (CollectionUtils.isNotEmpty(entitys)) {
+            int count = iBaseDao.inserts(entitys);
+            result = result + count;
         }
         return result;
     }
@@ -42,6 +47,26 @@ public class BaseService<T> implements IBaseService<T> {
     @Override
     public int deleteById(Serializable id) {
         return iBaseDao.deleteById(id);
+    }
+
+    @Override
+    public int delete(T entity) {
+        return iBaseDao.delete(entity);
+    }
+
+    @Override
+    public int deletes(List<T> entitys) {
+        int result = 0;
+        while (CollectionUtils.isNotEmpty(entitys) && entitys.size() > 100) {
+            int count = iBaseDao.deletes(entitys.subList(0, 100));
+            result = result + count;
+            entitys.subList(0, 100).clear();
+        }
+        if (CollectionUtils.isNotEmpty(entitys)) {
+            int count = iBaseDao.deletes(entitys);
+            result = result + count;
+        }
+        return result;
     }
 
     @Override

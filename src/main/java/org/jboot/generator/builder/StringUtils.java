@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * char字符串工具类操作
+ * 字符串工具类操作
  * 
  * @author liwen
  *
@@ -12,12 +12,12 @@ import java.util.regex.Pattern;
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
-     * <li>删除字符串后缀
+     * 删除字符串后缀
      * 
      * @param str
-     *            :字符操作对象
+     *            字符操作对象
      * @param suffix
-     *            :字符操作对象
+     *            字符操作对象
      * @return 截取后的字符对象
      */
     public static String rmSuffix(String str, String suffix) {
@@ -28,10 +28,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * <li>删除字符串前缀
+     * 删除字符串前缀
      * 
      * @param str
-     *            :字符操作对象
+     *            字符操作对象
      * @return 截取后的字符对象
      */
     public static String rmPrefix(String str, String prefix) {
@@ -44,10 +44,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     public static final char UNDERLINE = '_';
 
     /**
-     * <li>驼峰格式字符串转换为下划线格式字符串
+     * 驼峰格式字符串转换为下划线格式字符串
      * 
      * @param param
-     *            :要处理的字符串参数
+     *            要处理的字符串参数
      * @return 下划线格式字符串
      */
     public static String camelToUnderline(String param) {
@@ -69,10 +69,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * <li>下划线格式字符串转换为驼峰格式字符串
+     * 下划线格式字符串转换为驼峰格式字符串
      * 
      * @param param
-     *            : 要处理的字符串参数
+     *            要处理的字符串参数
      * @return 驼峰字符串
      */
     public static String underlineToCamel(String param) {
@@ -90,10 +90,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * <li>字符串首字母转小写
+     * 字符串首字母转小写
      * 
      * @param s
-     *            :需要转换的字符串
+     *            需要转换的字符串
      * @return 字符串F
      */
     public static String toLowerCaseFirst(String s) {
@@ -106,10 +106,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * <li>首字母转大写
+     * 首字母转大写
      * 
      * @param s
-     *            :需要转换的字符串
+     *            需要转换的字符串
      * @return 字符串F
      */
     public static String toUpperCaseFirst(String s) {

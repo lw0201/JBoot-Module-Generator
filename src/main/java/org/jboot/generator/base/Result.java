@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * <li>统一返回值处理
+ * 统一返回值处理
  * 
  * @author liwen
  *
@@ -16,17 +16,17 @@ public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * result code
+     * 返回编码
      */
     private int code;
 
     /**
-     * result message
+     * 返回消息
      */
     private String message;
 
     /**
-     * result data
+     * 返回数据
      */
     private T data;
 
