@@ -4,7 +4,7 @@
 
     <!-- 基础字段返回信息配置 -->
     <resultMap id="BaseResultMap" type="org.jboot.generator.entity.EmpVO">
-        <id column="emp_no" jdbcType="INTEGER" property="empNo" />
+        <id column="empno" jdbcType="INTEGER" property="empno" />
         <result column="ename" jdbcType="VARCHAR" property="ename" />
         <result column="job" jdbcType="VARCHAR" property="job" />
         <result column="mgr" jdbcType="INTEGER" property="mgr" />
@@ -16,14 +16,14 @@
 
     <!-- 基础字段信息配置 -->
     <sql id="Base_Column_List">
-        emp_no,ename,job,mgr,hiredate,sal,comm,deptno
+        empno,ename,job,mgr,hiredate,sal,comm,deptno
     </sql>
 
     <!-- 基础条件查询配置 -->
     <sql id="Base_Where_Clause">
         <where>
-            <if test="empNo != null">
-                and emp_no = #{entity.empNo,jdbcType=INTEGER}
+            <if test="empno != null">
+                and empno = #{entity.empno,jdbcType=INTEGER}
             </if>
             <if test="ename != null">
                 and ename = #{entity.ename,jdbcType=VARCHAR}
@@ -54,7 +54,7 @@
         select
         <include refid="Base_Column_List" />
         from emp
-        where emp_no = #{empNo,jdbcType=INTEGER}
+        where empno = #{empno,jdbcType=INTEGER}
     </select>
 
     <!-- 根据实体对象信息查询返回实体对象 -->
@@ -80,7 +80,7 @@
     <!-- 根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from emp
-        where emp_no = #{empNo,jdbcType=INTEGER}
+        where empno = #{empno,jdbcType=INTEGER}
     </delete>
 
     <!-- 根据实体对象删除数据-->
@@ -91,7 +91,7 @@
 
     <!-- 根据实体对象删除数据-->
     <delete id="deletes" parameterType="org.jboot.generator.entity.EmpVO">
-        delete from emp where emp_no in
+        delete from emp where empno in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item.attrName}
         </foreach>
@@ -101,8 +101,8 @@
     <insert id="insert" parameterType="org.jboot.generator.entity.EmpVO">
         insert into emp
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="empNo != null">
-                emp_no,
+            <if test="empno != null">
+                empno,
             </if>
             <if test="ename != null">
                 ename,
@@ -127,8 +127,8 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="empNo != null">
-                #{empNo,jdbcType=INTEGER},
+            <if test="empno != null">
+                #{empno,jdbcType=INTEGER},
             </if>
             <if test="ename != null">
                 #{ename,jdbcType=VARCHAR},
@@ -158,7 +158,7 @@
     <insert id="inserts" parameterType="org.jboot.generator.entity.EmpVO">
         insert into emp
         <trim prefix="(" suffix=") values" suffixOverrides=",">
-            emp_no,
+            empno,
             ename,
             job,
             mgr,
@@ -169,7 +169,7 @@
         </trim>
         <foreach collection="list" item="item" index="index" separator=",">
             (
-            #{empNo,jdbcType=INTEGER},
+            #{empno,jdbcType=INTEGER},
             #{ename,jdbcType=VARCHAR},
             #{job,jdbcType=VARCHAR},
             #{mgr,jdbcType=INTEGER},
@@ -185,8 +185,8 @@
     <update id="update" parameterType="org.jboot.generator.entity.EmpVO">
         update emp
         <set>
-            <if test="empNo != null">
-                emp_no = #{empNo,jdbcType=INTEGER},
+            <if test="empno != null">
+                empno = #{empno,jdbcType=INTEGER},
             </if>
             <if test="ename != null">
                 ename = #{ename,jdbcType=VARCHAR},
@@ -210,7 +210,7 @@
                 deptno = #{deptno,jdbcType=INTEGER},
             </if>
         </set>
-        where emp_no = #{empNo,jdbcType=INTEGER}
+        where empno = #{empno,jdbcType=INTEGER}
     </update>
 
 </mapper>

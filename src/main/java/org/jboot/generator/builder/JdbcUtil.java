@@ -21,6 +21,11 @@ public class JdbcUtil {
 
     private final static Logger logger = LoggerFactory.getLogger(FreemarkerUtil.class);
 
+    private static final String COLUMN_NAME = "COLUMN_NAME";
+    private static final String REMARKS = "REMARKS";
+    private static final String DATA_TYPE = "DATA_TYPE";
+    private static final String TABLE_NAME = "TABLE_NAME";
+
     /**
      * 注册数据库驱动
      */
@@ -67,19 +72,16 @@ public class JdbcUtil {
      * 
      * @return List<TableInfo> 返回表单数据集合
      */
-    public static List<TableInfo> getTables() {
+    public static List<TableInfo> getTables(Connection connection) {
         List<TableInfo> tableInfos = new ArrayList<TableInfo>();
-        Connection connection = null;
         try {
-
-            connection = DriverManager.getConnection(Constant.url, Constant.username, Constant.password);
             DatabaseMetaData metaData = connection.getMetaData();
             System.err.println(metaData.getSchemas());
             ResultSet tables = metaData.getTables(connection.getCatalog(), null, "%", new String[] {"TABLE"});
             while (tables.next()) {
                 TableInfo tableInfo = new TableInfo();
-                String table_name = tables.getString("TABLE_NAME");
-                String remarkes = tables.getString("REMARKS");
+                String table_name = tables.getString(TABLE_NAME);
+                String remarkes = tables.getString(REMARKS);
                 tableInfo.setTableName(table_name);
                 tableInfo.setEntityName(StringUtils.toUpperCaseFirst(StringUtils.underlineToCamel(table_name)));
                 tableInfo.setPackageName("");
@@ -88,14 +90,13 @@ public class JdbcUtil {
                 List<FieldInfo> fieldInfos = new ArrayList<FieldInfo>();
                 boolean isPk = false;
                 while (columns.next()) {
-                    String colName = columns.getString("COLUMN_NAME");
-                    String comments = columns.getString("REMARKS");
-                    int dataType = columns.getInt("DATA_TYPE");
+                    String colName = columns.getString(COLUMN_NAME);
+                    String comments = columns.getString(REMARKS);
+                    int dataType = columns.getInt(DATA_TYPE);
                     EntityMapping data = EntityMapping.forKey(dataType);
                     if (null == tableInfo.getImportPackages()) {
                         tableInfo.setImportPackages(new HashSet<String>());
                     }
-                    tableInfo.setPackageName(Constant.packageName);
                     tableInfo.getImportPackages().add(data.getJavaType());
                     FieldInfo fieldInfo = new FieldInfo();
                     fieldInfo.setFieldName(colName);
@@ -118,10 +119,6 @@ public class JdbcUtil {
             close(connection);
         }
         return tableInfos;
-    }
-
-    public static void main(String[] args) {
-        JdbcUtil.getTables();
     }
 
 }

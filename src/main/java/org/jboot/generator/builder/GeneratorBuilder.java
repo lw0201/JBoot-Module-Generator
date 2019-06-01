@@ -23,17 +23,6 @@ public class GeneratorBuilder {
 
     private final static Logger logger = LoggerFactory.getLogger(GeneratorBuilder.class);
 
-    public void excute() {
-        List<TableInfo> talbes = JdbcUtil.getTables();
-        generatorEntity(talbes);
-        generatorDao(talbes);
-        generatorMapper(talbes);
-        generatorIService(talbes);
-        generatorService(talbes);
-        generatorController(talbes);
-
-    }
-
     public void generatorEntity(TableInfo tableInfo) {
         FileWriter write = null;
         try {
@@ -165,45 +154,45 @@ public class GeneratorBuilder {
         }
     }
 
-    public void generatorMapper(List<TableInfo> talbes) {
+    public void generatorMapper(List<TableInfo> talbes, String packageName) {
         for (TableInfo tableInfo : talbes) {
             generatorMapper(tableInfo);
         }
     }
 
-    public void generatorEntity(List<TableInfo> talbes) {
+    public void generatorEntity(List<TableInfo> talbes, String packageName) {
         for (TableInfo tableInfo : talbes) {
+            tableInfo.setPackageName(packageName);
             generatorEntity(tableInfo);
         }
     }
 
-    public void generatorDao(List<TableInfo> talbes) {
+    public void generatorDao(List<TableInfo> talbes, String packageName) {
         for (TableInfo tableInfo : talbes) {
+            tableInfo.setPackageName(packageName);
             generatorDao(tableInfo);
         }
     }
 
-    public void generatorIService(List<TableInfo> talbes) {
+    public void generatorIService(List<TableInfo> talbes, String packageName) {
         for (TableInfo tableInfo : talbes) {
+            tableInfo.setPackageName(packageName);
             generatorIService(tableInfo);
         }
     }
 
-    public void generatorService(List<TableInfo> talbes) {
+    public void generatorService(List<TableInfo> talbes, String packageName) {
         for (TableInfo tableInfo : talbes) {
+            tableInfo.setPackageName(packageName);
             generatorService(tableInfo);
         }
     }
 
-    public void generatorController(List<TableInfo> talbes) {
+    public void generatorController(List<TableInfo> talbes, String packageName) {
         for (TableInfo tableInfo : talbes) {
+            tableInfo.setPackageName(packageName);
             generatorController(tableInfo);
         }
-    }
-
-    public static void main(String[] args) {
-        GeneratorBuilder bulder = new GeneratorBuilder();
-        bulder.excute();
     }
 
 }
