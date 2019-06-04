@@ -14,7 +14,8 @@
 
     <!-- 基础字段信息配置 -->
     <sql id="Base_Column_List">
-        <#list fields as field><#if !field_has_next>${field.fieldName}<#else>${field.fieldName},</#if></#list>
+        <#list fields as field><#if !((field_index > 1) && ((field_index+1) % 6 == 0))><#if !field_has_next>`${field.fieldName}`<#else>`${field.fieldName}`,</#if><#else>
+        <#if !field_has_next>`${field.fieldName}`<#else>`${field.fieldName}`,</#if></#if></#list>
     </sql>
 
     <!-- 基础条件查询配置 -->
@@ -63,13 +64,13 @@
     </delete>
 
     <!-- 根据实体对象删除数据-->
-    <delete id="delete" parameterType="org.jboot.generator.entity.${entityName}VO">
+    <delete id="delete" parameterType="${packageName}.entity.${entityName}VO">
         delete from ${tableName}
         <include refid="Base_Where_Clause" />
     </delete>
 
     <!-- 根据实体对象删除数据-->
-    <delete id="deletes" parameterType="org.jboot.generator.entity.${entityName}VO">
+    <delete id="deletes" parameterType="${packageName}.entity.${entityName}VO">
         delete from ${tableName} where ${pk.fieldName} in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             ${r'#{'}item.attrName${r'}'}
@@ -77,7 +78,7 @@
     </delete>
 
     <!-- 插入实体对象 -->
-    <insert id="insert" parameterType="org.jboot.generator.entity.${entityName}VO">
+    <insert id="insert" parameterType="${packageName}.entity.${entityName}VO">
         insert into ${tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list fields as field>
@@ -96,7 +97,7 @@
     </insert>
 
     <!-- 插入实体对象 -->
-    <insert id="inserts" parameterType="org.jboot.generator.entity.${entityName}VO">
+    <insert id="inserts" parameterType="${packageName}.entity.${entityName}VO">
         insert into ${tableName}
         <trim prefix="(" suffix=") values" suffixOverrides=",">
             <#list fields as field>

@@ -12,7 +12,7 @@
 
     <!-- 基础字段信息配置 -->
     <sql id="Base_Column_List">
-        ename,job,sal,comm
+        `ename`,`job`,`sal`,`comm`
     </sql>
 
     <!-- 基础条件查询配置 -->

@@ -52,7 +52,7 @@ public enum EntityMapping {
     /**
      * Identifies the generic SQL type {@code CHAR}.
      */
-    CHAR(Types.CHAR, "Char", "VARCHAR"),
+    CHAR(Types.CHAR, "Character", "VARCHAR"),
     /**
      * Identifies the generic SQL type {@code VARCHAR}.
      */

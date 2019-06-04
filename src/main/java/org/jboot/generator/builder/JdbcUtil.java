@@ -76,7 +76,6 @@ public class JdbcUtil {
         List<TableInfo> tableInfos = new ArrayList<TableInfo>();
         try {
             DatabaseMetaData metaData = connection.getMetaData();
-            System.err.println(metaData.getSchemas());
             ResultSet tables = metaData.getTables(connection.getCatalog(), null, "%", new String[] {"TABLE"});
             while (tables.next()) {
                 TableInfo tableInfo = new TableInfo();

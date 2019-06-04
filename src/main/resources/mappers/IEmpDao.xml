@@ -16,7 +16,8 @@
 
     <!-- 基础字段信息配置 -->
     <sql id="Base_Column_List">
-        empno,ename,job,mgr,hiredate,sal,comm,deptno
+        `empno`,`ename`,`job`,`mgr`,`hiredate`,
+        `sal`,`comm`,`deptno`
     </sql>
 
     <!-- 基础条件查询配置 -->
