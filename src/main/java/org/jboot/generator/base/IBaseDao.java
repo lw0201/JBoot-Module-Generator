@@ -122,7 +122,7 @@ public interface IBaseDao<T> {
      *            构造器
      * @return 返回更新实体影响的行
      */
-    int deleteByWrapper(T entity, @Param("wp") Wrapper<T> wrapper);
+    int deleteByWrapper(@Param("wp") Wrapper<T> wrapper);
 
     /**
      * 根据构造器来修改对象
@@ -133,6 +133,6 @@ public interface IBaseDao<T> {
      *            构造器
      * @return 返回更新实体影响的行
      */
-    int updateByWrapper(T entity, @Param("wp") Wrapper<T> wrapper);
+    int updateByWrapper(@Param("entity") T entity, @Param("wp") Wrapper<T> wrapper);
 
 }

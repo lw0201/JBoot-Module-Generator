@@ -107,8 +107,8 @@ public class BaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public int deleteByWrapper(T entity, Wrapper<T> wrapper) {
-        return iBaseDao.deleteByWrapper(entity, wrapper);
+    public int deleteByWrapper(Wrapper<T> wrapper) {
+        return iBaseDao.deleteByWrapper(wrapper);
     }
 
     @Override

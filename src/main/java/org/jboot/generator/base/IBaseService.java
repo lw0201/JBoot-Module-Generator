@@ -124,7 +124,7 @@ public interface IBaseService<T> {
      * @param wrapper
      * @return 返回业务实体对象集合
      */
-    List<T> findByWrapper(@Param("wp") Wrapper<T> wrapper);
+    List<T> findByWrapper(Wrapper<T> wrapper);
 
     /**
      * 根据构造器来修改对象
@@ -135,7 +135,7 @@ public interface IBaseService<T> {
      *            构造器
      * @return 返回更新实体影响的行
      */
-    int deleteByWrapper(T entity, @Param("wp") Wrapper<T> wrapper);
+    int deleteByWrapper(Wrapper<T> wrapper);
 
     /**
      * 根据构造器来修改对象
@@ -146,6 +146,6 @@ public interface IBaseService<T> {
      *            构造器
      * @return 返回更新实体影响的行
      */
-    int updateByWrapper(T entity, @Param("wp") Wrapper<T> wrapper);
+    int updateByWrapper(T entity, Wrapper<T> wrapper);
 
 }
