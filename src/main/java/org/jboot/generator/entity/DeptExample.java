@@ -878,4 +878,6 @@ public class DeptExample {
             this(condition, value, secondValue, null);
         }
     }
+
+    public void test() {}
 }

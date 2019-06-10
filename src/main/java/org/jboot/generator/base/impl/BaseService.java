@@ -51,11 +51,6 @@ public class BaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public int delete(T entity) {
-        return iBaseDao.delete(entity);
-    }
-
-    @Override
     public int deletes(List<T> entitys) {
         int result = 0;
         while (CollectionUtils.isNotEmpty(entitys) && entitys.size() > 100) {
@@ -86,6 +81,11 @@ public class BaseService<T> implements IBaseService<T> {
     }
 
     @Override
+    public T select(Wrapper<T> wrapper) {
+        return iBaseDao.select(wrapper);
+    }
+
+    @Override
     public List<T> findList() {
         return iBaseDao.findList();
     }
@@ -102,18 +102,18 @@ public class BaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public List<T> findByWrapper(Wrapper<T> wrapper) {
-        return iBaseDao.findByWrapper(wrapper);
+    public List<T> findList(Wrapper<T> wrapper) {
+        return iBaseDao.findList(wrapper);
     }
 
     @Override
-    public int deleteByWrapper(Wrapper<T> wrapper) {
-        return iBaseDao.deleteByWrapper(wrapper);
+    public int delete(Wrapper<T> wrapper) {
+        return iBaseDao.delete(wrapper);
     }
 
     @Override
-    public int updateByWrapper(T entity, Wrapper<T> wrapper) {
-        return iBaseDao.updateByWrapper(entity, wrapper);
+    public int update(T entity, Wrapper<T> wrapper) {
+        return iBaseDao.update(entity, wrapper);
     }
 
 }

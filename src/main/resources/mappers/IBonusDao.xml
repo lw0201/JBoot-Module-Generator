@@ -142,13 +142,18 @@
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
-    <select id="select" resultMap="BaseResultMap">
+    <select id="select">
         select
         <include refid="Base_Column_List" />
         from bonus
-        <if test="_parameter != null">
-            <include refid="Base_Where_Clause" />
-        </if>
+        <choose>
+            <when test="entity != null">
+                <include refid="Base_Where_Clause" />
+            </when>
+            <otherwise>
+                <include refid="Wrapper_Where_Clause" />
+            </otherwise>
+        </choose>
     </select>
 
     <!--根据实体对象信息查询返回实体对象集合 -->
@@ -156,9 +161,14 @@
         select
         <include refid="Base_Column_List" />
         from bonus
-        <if test="_parameter != null">
-            <include refid="Base_Where_Clause" />
-        </if>
+        <choose>
+            <when test="entity != null">
+                <include refid="Base_Where_Clause" />
+            </when>
+            <otherwise>
+                <include refid="Wrapper_Where_Clause" />
+            </otherwise>
+        </choose>
     </select>
     
     <!--根据主键信息删除实体对象 -->
@@ -170,7 +180,14 @@
     <!--根据实体对象删除数据-->
     <delete id="delete" parameterType="org.jboot.generator.entity.BonusVO">
         delete from bonus
-        <include refid="Base_Where_Clause" />
+        <choose>
+            <when test="entity != null">
+                <include refid="Base_Where_Clause" />
+            </when>
+            <otherwise>
+                <include refid="Wrapper_Where_Clause" />
+            </otherwise>
+        </choose>
     </delete>
 
     <!--根据实体对象删除数据-->
@@ -234,64 +251,30 @@
     </insert>
 
     <!--更新实体对象 -->
-    <update id="update" parameterType="org.jboot.generator.entity.BonusVO">
+    <update id="update">
         update bonus
         <set>
             <if test="ename != null">
-                `ename` = #{ename,jdbcType=VARCHAR},
-            </if>
-            <if test="job != null">
-                `job` = #{job,jdbcType=VARCHAR},
-            </if>
-            <if test="sal != null">
-                `sal` = #{sal,jdbcType=VARCHAR},
-            </if>
-            <if test="comm != null">
-                `comm` = #{comm,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where `ename` = #{ename,jdbcType=VARCHAR}
-    </update>
-    
-    <!--构造器查询 -->
-    <select id="findByWrapper" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from bonus
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-            <include refid="Wrapper_Order_Clause" />
-        </if>
-    </select>
-    
-    <!--更新实体对象 -->
-    <update id="updateByWrapper">
-        update bonus
-        <set>
-            <if test="entity.ename != null">
                 `ename` = #{entity.ename,jdbcType=VARCHAR},
             </if>
-            <if test="entity.job != null">
+            <if test="job != null">
                 `job` = #{entity.job,jdbcType=VARCHAR},
             </if>
-            <if test="entity.sal != null">
+            <if test="sal != null">
                 `sal` = #{entity.sal,jdbcType=VARCHAR},
             </if>
-            <if test="entity.comm != null">
+            <if test="comm != null">
                 `comm` = #{entity.comm,jdbcType=VARCHAR},
             </if>
         </set>
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
+        <choose>
+            <when test="wp != null">
+                <include refid="Wrapper_Where_Clause" />
+            </when>
+            <otherwise>
+                where `ename` = #{entity.ename,jdbcType=VARCHAR}
+            </otherwise>
+        </choose>
     </update>
-    
-    <!--根据实体对象删除数据-->
-    <delete id="deleteByWrapper">
-        delete from bonus
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
-    </delete>
 
 </mapper>

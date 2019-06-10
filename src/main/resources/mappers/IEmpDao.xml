@@ -187,13 +187,18 @@
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
-    <select id="select" resultMap="BaseResultMap">
+    <select id="select">
         select
         <include refid="Base_Column_List" />
         from emp
-        <if test="_parameter != null">
-            <include refid="Base_Where_Clause" />
-        </if>
+        <choose>
+            <when test="entity != null">
+                <include refid="Base_Where_Clause" />
+            </when>
+            <otherwise>
+                <include refid="Wrapper_Where_Clause" />
+            </otherwise>
+        </choose>
     </select>
 
     <!--根据实体对象信息查询返回实体对象集合 -->
@@ -201,9 +206,14 @@
         select
         <include refid="Base_Column_List" />
         from emp
-        <if test="_parameter != null">
-            <include refid="Base_Where_Clause" />
-        </if>
+        <choose>
+            <when test="entity != null">
+                <include refid="Base_Where_Clause" />
+            </when>
+            <otherwise>
+                <include refid="Wrapper_Where_Clause" />
+            </otherwise>
+        </choose>
     </select>
     
     <!--根据主键信息删除实体对象 -->
@@ -215,7 +225,14 @@
     <!--根据实体对象删除数据-->
     <delete id="delete" parameterType="org.jboot.generator.entity.EmpVO">
         delete from emp
-        <include refid="Base_Where_Clause" />
+        <choose>
+            <when test="entity != null">
+                <include refid="Base_Where_Clause" />
+            </when>
+            <otherwise>
+                <include refid="Wrapper_Where_Clause" />
+            </otherwise>
+        </choose>
     </delete>
 
     <!--根据实体对象删除数据-->
@@ -311,88 +328,42 @@
     </insert>
 
     <!--更新实体对象 -->
-    <update id="update" parameterType="org.jboot.generator.entity.EmpVO">
+    <update id="update">
         update emp
         <set>
             <if test="empno != null">
-                `empno` = #{empno,jdbcType=INTEGER},
-            </if>
-            <if test="ename != null">
-                `ename` = #{ename,jdbcType=VARCHAR},
-            </if>
-            <if test="job != null">
-                `job` = #{job,jdbcType=VARCHAR},
-            </if>
-            <if test="mgr != null">
-                `mgr` = #{mgr,jdbcType=INTEGER},
-            </if>
-            <if test="hiredate != null">
-                `hiredate` = #{hiredate,jdbcType=DATE},
-            </if>
-            <if test="sal != null">
-                `sal` = #{sal,jdbcType=VARCHAR},
-            </if>
-            <if test="comm != null">
-                `comm` = #{comm,jdbcType=VARCHAR},
-            </if>
-            <if test="deptno != null">
-                `deptno` = #{deptno,jdbcType=INTEGER},
-            </if>
-        </set>
-        where `empno` = #{empno,jdbcType=INTEGER}
-    </update>
-    
-    <!--构造器查询 -->
-    <select id="findByWrapper" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from emp
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-            <include refid="Wrapper_Order_Clause" />
-        </if>
-    </select>
-    
-    <!--更新实体对象 -->
-    <update id="updateByWrapper">
-        update emp
-        <set>
-            <if test="entity.empno != null">
                 `empno` = #{entity.empno,jdbcType=INTEGER},
             </if>
-            <if test="entity.ename != null">
+            <if test="ename != null">
                 `ename` = #{entity.ename,jdbcType=VARCHAR},
             </if>
-            <if test="entity.job != null">
+            <if test="job != null">
                 `job` = #{entity.job,jdbcType=VARCHAR},
             </if>
-            <if test="entity.mgr != null">
+            <if test="mgr != null">
                 `mgr` = #{entity.mgr,jdbcType=INTEGER},
             </if>
-            <if test="entity.hiredate != null">
+            <if test="hiredate != null">
                 `hiredate` = #{entity.hiredate,jdbcType=DATE},
             </if>
-            <if test="entity.sal != null">
+            <if test="sal != null">
                 `sal` = #{entity.sal,jdbcType=VARCHAR},
             </if>
-            <if test="entity.comm != null">
+            <if test="comm != null">
                 `comm` = #{entity.comm,jdbcType=VARCHAR},
             </if>
-            <if test="entity.deptno != null">
+            <if test="deptno != null">
                 `deptno` = #{entity.deptno,jdbcType=INTEGER},
             </if>
         </set>
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
+        <choose>
+            <when test="wp != null">
+                <include refid="Wrapper_Where_Clause" />
+            </when>
+            <otherwise>
+                where `empno` = #{entity.empno,jdbcType=INTEGER}
+            </otherwise>
+        </choose>
     </update>
-    
-    <!--根据实体对象删除数据-->
-    <delete id="deleteByWrapper">
-        delete from emp
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
-    </delete>
 
 </mapper>

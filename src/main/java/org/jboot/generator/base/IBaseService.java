@@ -45,15 +45,6 @@ public interface IBaseService<T> {
     int deleteById(Serializable id);
 
     /**
-     * 根据实体删除实体对象
-     * 
-     * @param entity
-     *            操作业务实体
-     * @return 返回删除实体影响的行
-     */
-    int delete(T entity);
-
-    /**
      * 批量删除
      * 
      * @param entitys
@@ -90,6 +81,15 @@ public interface IBaseService<T> {
     T select(@Param("entity") T entity);
 
     /**
+     * 根据实体对象查询并返回单个实体对象
+     * 
+     * @param entity
+     *            业务实体
+     * @return 返回单个业务实体对象详细信息
+     */
+    T select(@Param("wp") Wrapper<T> wrapper);
+
+    /**
      * 查询业务实体集合</li>
      * 
      * @return 返回实体集合
@@ -124,7 +124,7 @@ public interface IBaseService<T> {
      * @param wrapper
      * @return 返回业务实体对象集合
      */
-    List<T> findByWrapper(Wrapper<T> wrapper);
+    List<T> findList(Wrapper<T> wrapper);
 
     /**
      * 根据构造器来修改对象
@@ -135,7 +135,7 @@ public interface IBaseService<T> {
      *            构造器
      * @return 返回更新实体影响的行
      */
-    int deleteByWrapper(Wrapper<T> wrapper);
+    int delete(Wrapper<T> wrapper);
 
     /**
      * 根据构造器来修改对象
@@ -146,6 +146,6 @@ public interface IBaseService<T> {
      *            构造器
      * @return 返回更新实体影响的行
      */
-    int updateByWrapper(T entity, Wrapper<T> wrapper);
+    int update(T entity, Wrapper<T> wrapper);
 
 }

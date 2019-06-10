@@ -131,13 +131,18 @@
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
-    <select id="select" resultMap="BaseResultMap">
+    <select id="select">
         select
         <include refid="Base_Column_List" />
         from salgrade
-        <if test="_parameter != null">
-            <include refid="Base_Where_Clause" />
-        </if>
+        <choose>
+            <when test="entity != null">
+                <include refid="Base_Where_Clause" />
+            </when>
+            <otherwise>
+                <include refid="Wrapper_Where_Clause" />
+            </otherwise>
+        </choose>
     </select>
 
     <!--根据实体对象信息查询返回实体对象集合 -->
@@ -145,9 +150,14 @@
         select
         <include refid="Base_Column_List" />
         from salgrade
-        <if test="_parameter != null">
-            <include refid="Base_Where_Clause" />
-        </if>
+        <choose>
+            <when test="entity != null">
+                <include refid="Base_Where_Clause" />
+            </when>
+            <otherwise>
+                <include refid="Wrapper_Where_Clause" />
+            </otherwise>
+        </choose>
     </select>
     
     <!--根据主键信息删除实体对象 -->
@@ -159,7 +169,14 @@
     <!--根据实体对象删除数据-->
     <delete id="delete" parameterType="org.jboot.generator.entity.SalgradeVO">
         delete from salgrade
-        <include refid="Base_Where_Clause" />
+        <choose>
+            <when test="entity != null">
+                <include refid="Base_Where_Clause" />
+            </when>
+            <otherwise>
+                <include refid="Wrapper_Where_Clause" />
+            </otherwise>
+        </choose>
     </delete>
 
     <!--根据实体对象删除数据-->
@@ -215,58 +232,27 @@
     </insert>
 
     <!--更新实体对象 -->
-    <update id="update" parameterType="org.jboot.generator.entity.SalgradeVO">
+    <update id="update">
         update salgrade
         <set>
             <if test="grade != null">
-                `grade` = #{grade,jdbcType=INTEGER},
-            </if>
-            <if test="losal != null">
-                `losal` = #{losal,jdbcType=INTEGER},
-            </if>
-            <if test="hisal != null">
-                `hisal` = #{hisal,jdbcType=INTEGER},
-            </if>
-        </set>
-        where `grade` = #{grade,jdbcType=INTEGER}
-    </update>
-    
-    <!--构造器查询 -->
-    <select id="findByWrapper" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from salgrade
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-            <include refid="Wrapper_Order_Clause" />
-        </if>
-    </select>
-    
-    <!--更新实体对象 -->
-    <update id="updateByWrapper">
-        update salgrade
-        <set>
-            <if test="entity.grade != null">
                 `grade` = #{entity.grade,jdbcType=INTEGER},
             </if>
-            <if test="entity.losal != null">
+            <if test="losal != null">
                 `losal` = #{entity.losal,jdbcType=INTEGER},
             </if>
-            <if test="entity.hisal != null">
+            <if test="hisal != null">
                 `hisal` = #{entity.hisal,jdbcType=INTEGER},
             </if>
         </set>
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
+        <choose>
+            <when test="wp != null">
+                <include refid="Wrapper_Where_Clause" />
+            </when>
+            <otherwise>
+                where `grade` = #{entity.grade,jdbcType=INTEGER}
+            </otherwise>
+        </choose>
     </update>
-    
-    <!--根据实体对象删除数据-->
-    <delete id="deleteByWrapper">
-        delete from salgrade
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
-    </delete>
 
 </mapper>

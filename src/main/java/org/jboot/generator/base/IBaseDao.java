@@ -24,7 +24,7 @@ public interface IBaseDao<T> {
      *            实体对象
      * @return 返回实体操作所影响的行
      */
-    int insert(T entity);
+    int insert(@Param("entity") T entity);
 
     /**
      * 批量插入实体对象操作
@@ -45,15 +45,6 @@ public interface IBaseDao<T> {
     int deleteById(Serializable id);
 
     /**
-     * 根据实体删除实体对象
-     * 
-     * @param entity
-     *            操作业务实体
-     * @return 返回删除实体影响的行
-     */
-    int delete(T entity);
-
-    /**
      * 批量删除
      * 
      * @param entitys
@@ -69,7 +60,7 @@ public interface IBaseDao<T> {
      *            实体对象
      * @return 返回更新实体影响的行
      */
-    int update(T entity);
+    int update(@Param("entity") T entity);
 
     /**
      * 根据业务实体ID可查询返回业务实体的详细信息
@@ -87,7 +78,16 @@ public interface IBaseDao<T> {
      *            业务实体
      * @return 返回单个业务实体对象详细信息
      */
-    T select(T entity);
+    T select(@Param("entity") T entity);
+
+    /**
+     * 根据实体对象查询并返回单个实体对象
+     * 
+     * @param entity
+     *            业务实体
+     * @return 返回单个业务实体对象详细信息
+     */
+    T select(@Param("wp") Wrapper<T> wrapper);
 
     /**
      * 查询业务实体集合
@@ -103,7 +103,7 @@ public interface IBaseDao<T> {
      *            业务实体对象
      * @return 返回业务实体对象集合
      */
-    List<T> findList(T entity);
+    List<T> findList(@Param("entity") T entity);
 
     /**
      * 根据构造器来查询数据
@@ -111,7 +111,7 @@ public interface IBaseDao<T> {
      * @param wrapper
      * @return 返回业务实体对象集合
      */
-    List<T> findByWrapper(@Param("wp") Wrapper<T> wrapper);
+    List<T> findList(@Param("wp") Wrapper<T> wrapper);
 
     /**
      * 根据构造器来修改对象
@@ -122,7 +122,7 @@ public interface IBaseDao<T> {
      *            构造器
      * @return 返回更新实体影响的行
      */
-    int deleteByWrapper(@Param("wp") Wrapper<T> wrapper);
+    int delete(@Param("wp") Wrapper<T> wrapper);
 
     /**
      * 根据构造器来修改对象
@@ -133,6 +133,6 @@ public interface IBaseDao<T> {
      *            构造器
      * @return 返回更新实体影响的行
      */
-    int updateByWrapper(@Param("entity") T entity, @Param("wp") Wrapper<T> wrapper);
+    int update(@Param("entity") T entity, @Param("wp") Wrapper<T> wrapper);
 
 }
