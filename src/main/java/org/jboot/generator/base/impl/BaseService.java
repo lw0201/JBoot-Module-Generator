@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.jboot.generator.base.IBaseDao;
 import org.jboot.generator.base.IBaseService;
+import org.jboot.generator.conditions.Wrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.pagehelper.PageHelper;
@@ -98,6 +99,21 @@ public class BaseService<T> implements IBaseService<T> {
     public PageInfo<T> findPage(T entity, int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
         return new PageInfo<T>(iBaseDao.findList(entity));
+    }
+
+    @Override
+    public List<T> findByWrapper(Wrapper<T> wrapper) {
+        return iBaseDao.findByWrapper(wrapper);
+    }
+
+    @Override
+    public int deleteByWrapper(T entity, Wrapper<T> wrapper) {
+        return iBaseDao.deleteByWrapper(entity, wrapper);
+    }
+
+    @Override
+    public int updateByWrapper(T entity, Wrapper<T> wrapper) {
+        return iBaseDao.updateByWrapper(entity, wrapper);
     }
 
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.jboot.generator.constants.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +32,7 @@ public class JdbcUtil {
      */
     static {
         try {
-            Class.forName(Constant.driverClassName);
+            Class.forName(Constants.driverClassName);
         } catch (ClassNotFoundException e) {
             logger.error("Load drive failure:", e);
         }

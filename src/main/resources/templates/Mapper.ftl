@@ -29,11 +29,94 @@
         </where>
     </sql>
 
+    <!-- 构造条件 -->
+    <sql id="Wrapper_Where_Clause">
+        <where>
+            <foreach collection="wp.conditions" item="condition">
+                <choose>
+                    <#list fields as field>
+                    <when test="condition.attr == '${field.attrName}'">
+                        and `${field.fieldName}`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    </#list>
+                </choose>
+            </foreach>
+        </where>
+    </sql>
+
+    <!-- 查询操作构造器 -->
+    <sql id="Wrapper_Op_Clause">
+        <choose>
+            <when test="condition.op.type == 'eq'">
+                = ${r'#{'}condition.value${r'}'}
+            </when>
+            <when test="condition.op.type == 'ne'">
+                != ${r'#{'}condition.value${r'}'}
+            </when>
+            <when test="condition.op.type == 'gt'">
+                <![CDATA[ > ${r'#{'}condition.value${r'}'} ]]>
+            </when>
+            <when test="condition.op.type == 'ge'">
+                <![CDATA[ >= ${r'#{'}condition.value${r'}'} ]]>
+            </when>
+            <when test="condition.op.type == 'lt'">
+                <![CDATA[ < ${r'#{'}condition.value${r'}'} ]]>
+            </when>
+            <when test="condition.op.type == 'le'">
+                <![CDATA[ <= ${r'#{'}condition.value${r'}'} ]]>
+            </when>
+            <when test="condition.op.type == 'like'">
+                <![CDATA[ LIKE CONCAT('%',${r'#{'}condition.value${r'}'},'%')]]>
+            </when>
+            <when test="condition.op.type == 'notLike'">
+                <![CDATA[ NOT LIKE CONCAT('%',${r'#{'}condition.value${r'}'},'%') ]]>
+            </when>
+            <when test="condition.op.type == 'in'">
+                = ${r'#{'}condition.value${r'}'}
+            </when>
+            <when test="condition.op.type == 'notIn'">
+                = ${r'#{'}condition.value${r'}'}
+            </when>
+            <when test="condition.op.type == 'in'">
+                in
+                <foreach collection="condition.value" item="value" separator="," open="(" close=")">
+                    ${r'#{'}value${r'}'}
+                </foreach>
+            </when>
+            <when test="condition.op.type == 'notIn'">
+                not in
+                <foreach collection="condition.value" item="value" separator="," open="(" close=")">
+                    ${r'#{'}value${r'}'}
+                </foreach>
+            </when>
+            <when test="condition.op.type == 'between'">
+                BETWEEN ${r'#{'}condition.value${r'}'} and ${r'#{'}condition.secondValue${r'}'}
+            </when>
+            <when test="condition.op.type == 'notBetween'">
+                NOT BETWEEN ${r'#{'}condition.value${r'}'} and ${r'#{'}condition.secondValue${r'}'}
+            </when>
+        </choose>
+    </sql>
+
+    <!-- 构造排序条件 -->
+    <sql id="Wrapper_Order_Clause">
+        <foreach collection="wp.sorts" item="st" separator=",">
+            <choose>
+                <#list fields as field>
+                <when test="st.attr == '${field.attrName}'">
+                    `${field.fieldName}` ${r'#{'}st.order.type${r'}'}
+                </when>
+                </#list>
+            </choose>
+        </foreach>
+    </sql>
+
     <!-- 根据主键信息查询返回实体对象 -->
     <select id="findById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from emp
+        from ${tableName}
         where ${pk.fieldName} = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
     </select>
 
@@ -54,6 +137,17 @@
         from ${tableName}
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
+        </if>
+    </select>
+    
+     <!-- 构造器查询 -->
+    <select id="queryWrapper" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ${tableName}
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+            <include refid="Wrapper_Order_Clause" />
         </if>
     </select>
 

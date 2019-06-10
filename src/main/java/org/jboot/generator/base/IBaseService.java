@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.jboot.generator.conditions.Wrapper;
 
 import com.github.pagehelper.PageInfo;
 
@@ -116,4 +117,35 @@ public interface IBaseService<T> {
      * @return 返回业务的实体的分页信息
      */
     PageInfo<T> findPage(T entity, int pageNo, int pageSize);
+
+    /**
+     * 根据构造器来查询数据
+     * 
+     * @param wrapper
+     * @return 返回业务实体对象集合
+     */
+    List<T> findByWrapper(@Param("wp") Wrapper<T> wrapper);
+
+    /**
+     * 根据构造器来修改对象
+     * 
+     * @param entity
+     *            实体对象
+     * @param wrapper
+     *            构造器
+     * @return 返回更新实体影响的行
+     */
+    int deleteByWrapper(T entity, @Param("wp") Wrapper<T> wrapper);
+
+    /**
+     * 根据构造器来修改对象
+     * 
+     * @param entity
+     *            实体对象
+     * @param wrapper
+     *            构造器
+     * @return 返回更新实体影响的行
+     */
+    int updateByWrapper(T entity, @Param("wp") Wrapper<T> wrapper);
+
 }

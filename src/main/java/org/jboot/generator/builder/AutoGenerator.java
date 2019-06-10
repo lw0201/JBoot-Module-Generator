@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import org.jboot.generator.constants.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,16 +20,16 @@ import freemarker.template.TemplateException;
  * @author liwen
  *
  */
-public class GeneratorBuilder {
+public class AutoGenerator {
 
-    private final static Logger logger = LoggerFactory.getLogger(GeneratorBuilder.class);
+    private final static Logger logger = LoggerFactory.getLogger(AutoGenerator.class);
 
     public void generatorEntity(TableInfo tableInfo) {
         FileWriter write = null;
         try {
             if (StringUtils.isNotBlank(tableInfo.getPackageName())) {
                 String path = tableInfo.getPackageName().replace(".", "/");
-                File file = new File(Constant.java + File.separator + path + "/entity");
+                File file = new File(Constants.java + File.separator + path + "/entity");
                 if (!file.exists()) {
                     file.mkdirs();
                 }
@@ -50,7 +51,7 @@ public class GeneratorBuilder {
         try {
             if (null != tableInfo.getPackageName() && !"".equals(tableInfo.getPackageName().trim())) {
                 String path = tableInfo.getPackageName().replace(".", "/");
-                File file = new File(Constant.java + File.separator + path + "/dao");
+                File file = new File(Constants.java + File.separator + path + "/dao");
                 if (!file.exists()) {
                     file.mkdirs();
                 }
@@ -72,7 +73,7 @@ public class GeneratorBuilder {
         try {
             if (null != tableInfo.getPackageName() && !"".equals(tableInfo.getPackageName().trim())) {
                 String path = tableInfo.getPackageName().replace(".", "/");
-                File file = new File(Constant.java + File.separator + path + "/service");
+                File file = new File(Constants.java + File.separator + path + "/service");
                 if (!file.exists()) {
                     file.mkdirs();
                 }
@@ -94,7 +95,7 @@ public class GeneratorBuilder {
         try {
             if (null != tableInfo.getPackageName() && !"".equals(tableInfo.getPackageName().trim())) {
                 String path = tableInfo.getPackageName().replace(".", "/");
-                File file = new File(Constant.java + File.separator + path + "/service/impl");
+                File file = new File(Constants.java + File.separator + path + "/service/impl");
                 if (!file.exists()) {
                     file.mkdirs();
                 }
@@ -116,7 +117,7 @@ public class GeneratorBuilder {
         try {
             if (null != tableInfo.getPackageName() && !"".equals(tableInfo.getPackageName().trim())) {
                 String path = tableInfo.getPackageName().replace(".", "/");
-                File file = new File(Constant.java + File.separator + path + "/controller");
+                File file = new File(Constants.java + File.separator + path + "/controller");
                 if (!file.exists()) {
                     file.mkdirs();
                 }
@@ -137,7 +138,7 @@ public class GeneratorBuilder {
         FileWriter write = null;
         try {
             if (null != tableInfo.getPackageName() && !"".equals(tableInfo.getPackageName().trim())) {
-                File file = new File(Constant.resources + File.separator + "/mappers");
+                File file = new File(Constants.resources + File.separator + "/mappers");
                 if (!file.exists()) {
                     file.mkdirs();
                 }

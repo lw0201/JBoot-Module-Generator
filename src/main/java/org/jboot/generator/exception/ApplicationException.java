@@ -1,6 +1,6 @@
 package org.jboot.generator.exception;
 
-import org.jboot.generator.constant.CommonConstant;
+import org.jboot.generator.constants.Constants;
 
 /**
  * ApplicationException 自定义异常处理类
@@ -25,7 +25,7 @@ public class ApplicationException extends RuntimeException {
     public ApplicationException() {
         super();
         this.code = 500;
-        this.message = CommonConstant.FAIL;
+        this.message = Constants.FAIL;
     }
 
     public ApplicationException(String message) {

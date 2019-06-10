@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+import org.jboot.generator.conditions.Wrapper;
+
 /**
  * 基础数据持久层
  * 
@@ -64,7 +67,7 @@ public interface IBaseDao<T> {
      * 
      * @param entity
      *            实体对象
-     * @return
+     * @return 返回更新实体影响的行
      */
     int update(T entity);
 
@@ -101,5 +104,35 @@ public interface IBaseDao<T> {
      * @return 返回业务实体对象集合
      */
     List<T> findList(T entity);
+
+    /**
+     * 根据构造器来查询数据
+     * 
+     * @param wrapper
+     * @return 返回业务实体对象集合
+     */
+    List<T> findByWrapper(@Param("wp") Wrapper<T> wrapper);
+
+    /**
+     * 根据构造器来修改对象
+     * 
+     * @param entity
+     *            实体对象
+     * @param wrapper
+     *            构造器
+     * @return 返回更新实体影响的行
+     */
+    int deleteByWrapper(T entity, @Param("wp") Wrapper<T> wrapper);
+
+    /**
+     * 根据构造器来修改对象
+     * 
+     * @param entity
+     *            实体对象
+     * @param wrapper
+     *            构造器
+     * @return 返回更新实体影响的行
+     */
+    int updateByWrapper(T entity, @Param("wp") Wrapper<T> wrapper);
 
 }
