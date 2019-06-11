@@ -17,13 +17,13 @@
     <!--基础条件查询配置 -->
     <sql id="Base_Where_Clause">
         <where>
-            <if test="deptno != null">
+            <if test="entity.deptno != null">
                 and `deptno` = #{entity.deptno,jdbcType=INTEGER}
             </if>
-            <if test="dname != null">
+            <if test="entity.dname != null">
                 and `dname` = #{entity.dname,jdbcType=VARCHAR}
             </if>
-            <if test="loc != null">
+            <if test="entity.loc != null">
                 and `loc` = #{entity.loc,jdbcType=VARCHAR}
             </if>
         </where>
@@ -131,18 +131,11 @@
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
-    <select id="select">
+    <select id="query">
         select
         <include refid="Base_Column_List" />
         from dept
-        <choose>
-            <when test="entity != null">
-                <include refid="Base_Where_Clause" />
-            </when>
-            <otherwise>
-                <include refid="Wrapper_Where_Clause" />
-            </otherwise>
-        </choose>
+        <include refid="Base_Where_Clause" />
     </select>
 
     <!--根据实体对象信息查询返回实体对象集合 -->
@@ -150,14 +143,9 @@
         select
         <include refid="Base_Column_List" />
         from dept
-        <choose>
-            <when test="entity != null">
-                <include refid="Base_Where_Clause" />
-            </when>
-            <otherwise>
-                <include refid="Wrapper_Where_Clause" />
-            </otherwise>
-        </choose>
+        <if test="_parameter != null">
+            <include refid="Base_Where_Clause" />
+        </if>
     </select>
     
     <!--根据主键信息删除实体对象 -->
@@ -165,23 +153,16 @@
         delete from dept
         where `deptno` = #{deptno,jdbcType=INTEGER}
     </delete>
-
+    
     <!--根据实体对象删除数据-->
     <delete id="delete" parameterType="org.jboot.generator.entity.DeptVO">
         delete from dept
-        <choose>
-            <when test="entity != null">
-                <include refid="Base_Where_Clause" />
-            </when>
-            <otherwise>
-                <include refid="Wrapper_Where_Clause" />
-            </otherwise>
-        </choose>
+        <include refid="Base_Where_Clause" />
     </delete>
 
     <!--根据实体对象删除数据-->
     <delete id="deletes" parameterType="org.jboot.generator.entity.DeptVO">
-        delete from dept where deptno in
+        delete from dept where `deptno` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item.attrName}
         </foreach>
@@ -235,24 +216,65 @@
     <update id="update">
         update dept
         <set>
-            <if test="deptno != null">
+            <if test="entity.deptno != null">
                 `deptno` = #{entity.deptno,jdbcType=INTEGER},
             </if>
-            <if test="dname != null">
+            <if test="entity.dname != null">
                 `dname` = #{entity.dname,jdbcType=VARCHAR},
             </if>
-            <if test="loc != null">
+            <if test="entity.loc != null">
                 `loc` = #{entity.loc,jdbcType=VARCHAR},
             </if>
         </set>
-        <choose>
-            <when test="wp != null">
-                <include refid="Wrapper_Where_Clause" />
-            </when>
-            <otherwise>
-                where `deptno` = #{entity.deptno,jdbcType=INTEGER}
-            </otherwise>
-        </choose>
+        where `deptno` = #{entity.deptno,jdbcType=INTEGER}
     </update>
+
+    <!--构造器查询 -->
+    <select id="queryByWrapper" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from dept
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+        </if>
+    </select>
+    
+    <!--构造器查询 -->
+    <select id="findByWrapper" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from dept
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+            <include refid="Wrapper_Order_Clause" />
+        </if>
+    </select>
+
+    <!--更新实体对象 -->
+    <update id="updateByWrapper">
+        update dept
+        <set>
+            <if test="entity.deptno != null">
+                `deptno` = #{entity.deptno,jdbcType=INTEGER},
+            </if>
+            <if test="entity.dname != null">
+                `dname` = #{entity.dname,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.loc != null">
+                `loc` = #{entity.loc,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+        </if>
+    </update>
+    
+    <!--根据实体对象删除数据-->
+    <delete id="deleteByWrapper">
+        delete from dept
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+        </if>
+    </delete>
 
 </mapper>

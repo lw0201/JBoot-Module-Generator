@@ -76,13 +76,13 @@ public class BaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public T select(T entity) {
-        return iBaseDao.select(entity);
+    public T query(T entity) {
+        return iBaseDao.query(entity);
     }
 
     @Override
-    public T select(Wrapper<T> wrapper) {
-        return iBaseDao.select(wrapper);
+    public T query(Wrapper<T> wrapper) {
+        return iBaseDao.queryByWrapper(wrapper);
     }
 
     @Override
@@ -103,17 +103,17 @@ public class BaseService<T> implements IBaseService<T> {
 
     @Override
     public List<T> findList(Wrapper<T> wrapper) {
-        return iBaseDao.findList(wrapper);
+        return iBaseDao.findByWrapper(wrapper);
     }
 
     @Override
     public int delete(Wrapper<T> wrapper) {
-        return iBaseDao.delete(wrapper);
+        return iBaseDao.deleteByWrapper(wrapper);
     }
 
     @Override
     public int update(T entity, Wrapper<T> wrapper) {
-        return iBaseDao.update(entity, wrapper);
+        return iBaseDao.updateByWrapper(entity, wrapper);
     }
 
 }

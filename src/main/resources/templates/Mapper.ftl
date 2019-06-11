@@ -22,7 +22,7 @@
     <sql id="Base_Where_Clause">
         <where>
             <#list fields as field>
-            <if test="${field.attrName} != null">
+            <if test="entity.${field.attrName} != null">
                 and `${field.fieldName}` = ${r'#{'}entity.${field.attrName},jdbcType=${field.em.jdbcType}${r'}'}
             </if>
             </#list>
@@ -121,18 +121,11 @@
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
-    <select id="select">
+    <select id="query">
         select
         <include refid="Base_Column_List" />
         from ${tableName}
-        <choose>
-            <when test="entity != null">
-                <include refid="Base_Where_Clause" />
-            </when>
-            <otherwise>
-                <include refid="Wrapper_Where_Clause" />
-            </otherwise>
-        </choose>
+        <include refid="Base_Where_Clause" />
     </select>
 
     <!--根据实体对象信息查询返回实体对象集合 -->
@@ -140,14 +133,9 @@
         select
         <include refid="Base_Column_List" />
         from ${tableName}
-        <choose>
-            <when test="entity != null">
-                <include refid="Base_Where_Clause" />
-            </when>
-            <otherwise>
-                <include refid="Wrapper_Where_Clause" />
-            </otherwise>
-        </choose>
+        <if test="_parameter != null">
+            <include refid="Base_Where_Clause" />
+        </if>
     </select>
     
     <!--根据主键信息删除实体对象 -->
@@ -155,23 +143,16 @@
         delete from ${tableName}
         where `${pk.fieldName}` = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
     </delete>
-
+    
     <!--根据实体对象删除数据-->
     <delete id="delete" parameterType="${packageName}.entity.${entityName}VO">
         delete from ${tableName}
-        <choose>
-            <when test="entity != null">
-                <include refid="Base_Where_Clause" />
-            </when>
-            <otherwise>
-                <include refid="Wrapper_Where_Clause" />
-            </otherwise>
-        </choose>
+        <include refid="Base_Where_Clause" />
     </delete>
 
     <!--根据实体对象删除数据-->
     <delete id="deletes" parameterType="${packageName}.entity.${entityName}VO">
-        delete from ${tableName} where ${pk.fieldName} in
+        delete from ${tableName} where `${pk.fieldName}` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             ${r'#{'}item.attrName${r'}'}
         </foreach>
@@ -226,19 +207,56 @@
         update ${tableName}
         <set>
             <#list fields as field>
-            <if test="${field.attrName} != null">
+            <if test="entity.${field.attrName} != null">
                 `${field.fieldName}` = ${r'#{entity.'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
             </if>
             </#list>
         </set>
-        <choose>
-            <when test="wp != null">
-                <include refid="Wrapper_Where_Clause" />
-            </when>
-            <otherwise>
-                where `${pk.fieldName}` = ${r'#{entity.'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
-            </otherwise>
-        </choose>
+        where `${pk.fieldName}` = ${r'#{entity.'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
     </update>
+
+    <!--构造器查询 -->
+    <select id="queryByWrapper" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ${tableName}
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+        </if>
+    </select>
+    
+    <!--构造器查询 -->
+    <select id="findByWrapper" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ${tableName}
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+            <include refid="Wrapper_Order_Clause" />
+        </if>
+    </select>
+
+    <!--更新实体对象 -->
+    <update id="updateByWrapper">
+        update ${tableName}
+        <set>
+            <#list fields as field>
+            <if test="entity.${field.attrName} != null">
+                `${field.fieldName}` = ${r'#{entity.'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
+            </if>
+            </#list>
+        </set>
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+        </if>
+    </update>
+    
+    <!--根据实体对象删除数据-->
+    <delete id="deleteByWrapper">
+        delete from ${tableName}
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+        </if>
+    </delete>
 
 </mapper>

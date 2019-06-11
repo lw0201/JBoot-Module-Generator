@@ -78,7 +78,7 @@ public interface IBaseService<T> {
      *            业务实体
      * @return 返回单个业务实体对象详细信息
      */
-    T select(@Param("entity") T entity);
+    T query(@Param("entity") T entity);
 
     /**
      * 根据实体对象查询并返回单个实体对象
@@ -87,7 +87,7 @@ public interface IBaseService<T> {
      *            业务实体
      * @return 返回单个业务实体对象详细信息
      */
-    T select(@Param("wp") Wrapper<T> wrapper);
+    T query(@Param("wp") Wrapper<T> wrapper);
 
     /**
      * 查询业务实体集合</li>

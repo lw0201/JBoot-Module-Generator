@@ -23,28 +23,28 @@
     <!--基础条件查询配置 -->
     <sql id="Base_Where_Clause">
         <where>
-            <if test="empno != null">
+            <if test="entity.empno != null">
                 and `empno` = #{entity.empno,jdbcType=INTEGER}
             </if>
-            <if test="ename != null">
+            <if test="entity.ename != null">
                 and `ename` = #{entity.ename,jdbcType=VARCHAR}
             </if>
-            <if test="job != null">
+            <if test="entity.job != null">
                 and `job` = #{entity.job,jdbcType=VARCHAR}
             </if>
-            <if test="mgr != null">
+            <if test="entity.mgr != null">
                 and `mgr` = #{entity.mgr,jdbcType=INTEGER}
             </if>
-            <if test="hiredate != null">
+            <if test="entity.hiredate != null">
                 and `hiredate` = #{entity.hiredate,jdbcType=DATE}
             </if>
-            <if test="sal != null">
+            <if test="entity.sal != null">
                 and `sal` = #{entity.sal,jdbcType=VARCHAR}
             </if>
-            <if test="comm != null">
+            <if test="entity.comm != null">
                 and `comm` = #{entity.comm,jdbcType=VARCHAR}
             </if>
-            <if test="deptno != null">
+            <if test="entity.deptno != null">
                 and `deptno` = #{entity.deptno,jdbcType=INTEGER}
             </if>
         </where>
@@ -187,18 +187,11 @@
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
-    <select id="select">
+    <select id="query">
         select
         <include refid="Base_Column_List" />
         from emp
-        <choose>
-            <when test="entity != null">
-                <include refid="Base_Where_Clause" />
-            </when>
-            <otherwise>
-                <include refid="Wrapper_Where_Clause" />
-            </otherwise>
-        </choose>
+        <include refid="Base_Where_Clause" />
     </select>
 
     <!--根据实体对象信息查询返回实体对象集合 -->
@@ -206,14 +199,9 @@
         select
         <include refid="Base_Column_List" />
         from emp
-        <choose>
-            <when test="entity != null">
-                <include refid="Base_Where_Clause" />
-            </when>
-            <otherwise>
-                <include refid="Wrapper_Where_Clause" />
-            </otherwise>
-        </choose>
+        <if test="_parameter != null">
+            <include refid="Base_Where_Clause" />
+        </if>
     </select>
     
     <!--根据主键信息删除实体对象 -->
@@ -221,23 +209,16 @@
         delete from emp
         where `empno` = #{empno,jdbcType=INTEGER}
     </delete>
-
+    
     <!--根据实体对象删除数据-->
     <delete id="delete" parameterType="org.jboot.generator.entity.EmpVO">
         delete from emp
-        <choose>
-            <when test="entity != null">
-                <include refid="Base_Where_Clause" />
-            </when>
-            <otherwise>
-                <include refid="Wrapper_Where_Clause" />
-            </otherwise>
-        </choose>
+        <include refid="Base_Where_Clause" />
     </delete>
 
     <!--根据实体对象删除数据-->
     <delete id="deletes" parameterType="org.jboot.generator.entity.EmpVO">
-        delete from emp where empno in
+        delete from emp where `empno` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item.attrName}
         </foreach>
@@ -331,39 +312,95 @@
     <update id="update">
         update emp
         <set>
-            <if test="empno != null">
+            <if test="entity.empno != null">
                 `empno` = #{entity.empno,jdbcType=INTEGER},
             </if>
-            <if test="ename != null">
+            <if test="entity.ename != null">
                 `ename` = #{entity.ename,jdbcType=VARCHAR},
             </if>
-            <if test="job != null">
+            <if test="entity.job != null">
                 `job` = #{entity.job,jdbcType=VARCHAR},
             </if>
-            <if test="mgr != null">
+            <if test="entity.mgr != null">
                 `mgr` = #{entity.mgr,jdbcType=INTEGER},
             </if>
-            <if test="hiredate != null">
+            <if test="entity.hiredate != null">
                 `hiredate` = #{entity.hiredate,jdbcType=DATE},
             </if>
-            <if test="sal != null">
+            <if test="entity.sal != null">
                 `sal` = #{entity.sal,jdbcType=VARCHAR},
             </if>
-            <if test="comm != null">
+            <if test="entity.comm != null">
                 `comm` = #{entity.comm,jdbcType=VARCHAR},
             </if>
-            <if test="deptno != null">
+            <if test="entity.deptno != null">
                 `deptno` = #{entity.deptno,jdbcType=INTEGER},
             </if>
         </set>
-        <choose>
-            <when test="wp != null">
-                <include refid="Wrapper_Where_Clause" />
-            </when>
-            <otherwise>
-                where `empno` = #{entity.empno,jdbcType=INTEGER}
-            </otherwise>
-        </choose>
+        where `empno` = #{entity.empno,jdbcType=INTEGER}
     </update>
+
+    <!--构造器查询 -->
+    <select id="queryByWrapper" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from emp
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+        </if>
+    </select>
+    
+    <!--构造器查询 -->
+    <select id="findByWrapper" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from emp
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+            <include refid="Wrapper_Order_Clause" />
+        </if>
+    </select>
+
+    <!--更新实体对象 -->
+    <update id="updateByWrapper">
+        update emp
+        <set>
+            <if test="entity.empno != null">
+                `empno` = #{entity.empno,jdbcType=INTEGER},
+            </if>
+            <if test="entity.ename != null">
+                `ename` = #{entity.ename,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.job != null">
+                `job` = #{entity.job,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.mgr != null">
+                `mgr` = #{entity.mgr,jdbcType=INTEGER},
+            </if>
+            <if test="entity.hiredate != null">
+                `hiredate` = #{entity.hiredate,jdbcType=DATE},
+            </if>
+            <if test="entity.sal != null">
+                `sal` = #{entity.sal,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.comm != null">
+                `comm` = #{entity.comm,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.deptno != null">
+                `deptno` = #{entity.deptno,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+        </if>
+    </update>
+    
+    <!--根据实体对象删除数据-->
+    <delete id="deleteByWrapper">
+        delete from emp
+        <if test="wp != null">
+            <include refid="Wrapper_Where_Clause" />
+        </if>
+    </delete>
 
 </mapper>
