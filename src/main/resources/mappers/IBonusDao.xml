@@ -69,53 +69,53 @@
     <!--查询操作构造器 -->
     <sql id="Wrapper_Op_Clause">
         <choose>
-            <when test="condition.op.type == 'eq'">
-                = #{condition.value}
+            <when test="criterion.op.type == 'eq'">
+                = #{criterion.value}
             </when>
-            <when test="condition.op.type == 'ne'">
-                != #{condition.value}
+            <when test="criterion.op.type == 'ne'">
+                != #{criterion.value}
             </when>
-            <when test="condition.op.type == 'gt'">
-                <![CDATA[ > #{condition.value} ]]>
+            <when test="criterion.op.type == 'gt'">
+                <![CDATA[ > #{criterion.value} ]]>
             </when>
-            <when test="condition.op.type == 'ge'">
-                <![CDATA[ >= #{condition.value} ]]>
+            <when test="criterion.op.type == 'ge'">
+                <![CDATA[ >= #{criterion.value} ]]>
             </when>
-            <when test="condition.op.type == 'lt'">
-                <![CDATA[ < #{condition.value} ]]>
+            <when test="criterion.op.type == 'lt'">
+                <![CDATA[ < #{criterion.value} ]]>
             </when>
-            <when test="condition.op.type == 'le'">
-                <![CDATA[ <= #{condition.value} ]]>
+            <when test="criterion.op.type == 'le'">
+                <![CDATA[ <= #{criterion.value} ]]>
             </when>
-            <when test="condition.op.type == 'like'">
-                <![CDATA[ LIKE CONCAT('%',#{condition.value},'%')]]>
+            <when test="criterion.op.type == 'like'">
+                <![CDATA[ LIKE CONCAT('%',#{criterion.value},'%')]]>
             </when>
-            <when test="condition.op.type == 'notLike'">
-                <![CDATA[ NOT LIKE CONCAT('%',#{condition.value},'%') ]]>
+            <when test="criterion.op.type == 'notLike'">
+                <![CDATA[ NOT LIKE CONCAT('%',#{criterion.value},'%') ]]>
             </when>
-            <when test="condition.op.type == 'in'">
-                = #{condition.value}
+            <when test="criterion.op.type == 'in'">
+                = #{criterion.value}
             </when>
-            <when test="condition.op.type == 'notIn'">
-                = #{condition.value}
+            <when test="criterion.op.type == 'notIn'">
+                = #{criterion.value}
             </when>
-            <when test="condition.op.type == 'in'">
+            <when test="criterion.op.type == 'in'">
                 in
-                <foreach collection="condition.value" item="value" separator="," open="(" close=")">
+                <foreach collection="criterion.value" item="value" separator="," open="(" close=")">
                     #{value}
                 </foreach>
             </when>
-            <when test="condition.op.type == 'notIn'">
+            <when test="criterion.op.type == 'notIn'">
                 not in
-                <foreach collection="condition.value" item="value" separator="," open="(" close=")">
+                <foreach collection="criterion.value" item="value" separator="," open="(" close=")">
                     #{value}
                 </foreach>
             </when>
-            <when test="condition.op.type == 'between'">
-                BETWEEN #{condition.value} and #{condition.secondValue}
+            <when test="criterion.op.type == 'between'">
+                BETWEEN #{criterion.value} and #{criterion.secondValue}
             </when>
-            <when test="condition.op.type == 'notBetween'">
-                NOT BETWEEN #{condition.value} and #{condition.secondValue}
+            <when test="criterion.op.type == 'notBetween'">
+                NOT BETWEEN #{criterion.value} and #{criterion.secondValue}
             </when>
         </choose>
     </sql>

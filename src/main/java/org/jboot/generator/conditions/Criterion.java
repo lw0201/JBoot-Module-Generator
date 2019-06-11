@@ -18,13 +18,17 @@ public class Criterion {
 
     private Object secondValue;
 
-    protected Criterion(String attr, Operation op) {
+    public Criterion() {
+        super();
+    }
+
+    public Criterion(String attr, Operation op) {
         super();
         this.attr = attr;
         this.op = op;
     }
 
-    protected Criterion(String attr, Operation op, Object value, Object secondValue) {
+    public Criterion(String attr, Operation op, Object value, Object secondValue) {
         super();
         this.attr = attr;
         this.op = op;
@@ -32,7 +36,7 @@ public class Criterion {
         this.secondValue = secondValue;
     }
 
-    protected Criterion(String attr, Operation op, Object value) {
+    public Criterion(String attr, Operation op, Object value) {
         super();
         this.attr = attr;
         this.op = op;

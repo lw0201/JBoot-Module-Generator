@@ -116,7 +116,7 @@ public interface IBaseService<T> {
      *            分页每页显示的数据大小
      * @return 返回业务的实体的分页信息
      */
-    PageInfo<T> findPage(T entity, int pageNo, int pageSize);
+    PageInfo<T> findPage(Wrapper<T> wrapper, int pageNo, int pageSize);
 
     /**
      * 根据构造器来查询数据

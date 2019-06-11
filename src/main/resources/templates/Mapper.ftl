@@ -55,53 +55,53 @@
     <!--查询操作构造器 -->
     <sql id="Wrapper_Op_Clause">
         <choose>
-            <when test="condition.op.type == 'eq'">
-                = ${r'#{'}condition.value${r'}'}
+            <when test="criterion.op.type == 'eq'">
+                = ${r'#{'}criterion.value${r'}'}
             </when>
-            <when test="condition.op.type == 'ne'">
-                != ${r'#{'}condition.value${r'}'}
+            <when test="criterion.op.type == 'ne'">
+                != ${r'#{'}criterion.value${r'}'}
             </when>
-            <when test="condition.op.type == 'gt'">
-                <![CDATA[ > ${r'#{'}condition.value${r'}'} ]]>
+            <when test="criterion.op.type == 'gt'">
+                <![CDATA[ > ${r'#{'}criterion.value${r'}'} ]]>
             </when>
-            <when test="condition.op.type == 'ge'">
-                <![CDATA[ >= ${r'#{'}condition.value${r'}'} ]]>
+            <when test="criterion.op.type == 'ge'">
+                <![CDATA[ >= ${r'#{'}criterion.value${r'}'} ]]>
             </when>
-            <when test="condition.op.type == 'lt'">
-                <![CDATA[ < ${r'#{'}condition.value${r'}'} ]]>
+            <when test="criterion.op.type == 'lt'">
+                <![CDATA[ < ${r'#{'}criterion.value${r'}'} ]]>
             </when>
-            <when test="condition.op.type == 'le'">
-                <![CDATA[ <= ${r'#{'}condition.value${r'}'} ]]>
+            <when test="criterion.op.type == 'le'">
+                <![CDATA[ <= ${r'#{'}criterion.value${r'}'} ]]>
             </when>
-            <when test="condition.op.type == 'like'">
-                <![CDATA[ LIKE CONCAT('%',${r'#{'}condition.value${r'}'},'%')]]>
+            <when test="criterion.op.type == 'like'">
+                <![CDATA[ LIKE CONCAT('%',${r'#{'}criterion.value${r'}'},'%')]]>
             </when>
-            <when test="condition.op.type == 'notLike'">
-                <![CDATA[ NOT LIKE CONCAT('%',${r'#{'}condition.value${r'}'},'%') ]]>
+            <when test="criterion.op.type == 'notLike'">
+                <![CDATA[ NOT LIKE CONCAT('%',${r'#{'}criterion.value${r'}'},'%') ]]>
             </when>
-            <when test="condition.op.type == 'in'">
-                = ${r'#{'}condition.value${r'}'}
+            <when test="criterion.op.type == 'in'">
+                = ${r'#{'}criterion.value${r'}'}
             </when>
-            <when test="condition.op.type == 'notIn'">
-                = ${r'#{'}condition.value${r'}'}
+            <when test="criterion.op.type == 'notIn'">
+                = ${r'#{'}criterion.value${r'}'}
             </when>
-            <when test="condition.op.type == 'in'">
+            <when test="criterion.op.type == 'in'">
                 in
-                <foreach collection="condition.value" item="value" separator="," open="(" close=")">
+                <foreach collection="criterion.value" item="value" separator="," open="(" close=")">
                     ${r'#{'}value${r'}'}
                 </foreach>
             </when>
-            <when test="condition.op.type == 'notIn'">
+            <when test="criterion.op.type == 'notIn'">
                 not in
-                <foreach collection="condition.value" item="value" separator="," open="(" close=")">
+                <foreach collection="criterion.value" item="value" separator="," open="(" close=")">
                     ${r'#{'}value${r'}'}
                 </foreach>
             </when>
-            <when test="condition.op.type == 'between'">
-                BETWEEN ${r'#{'}condition.value${r'}'} and ${r'#{'}condition.secondValue${r'}'}
+            <when test="criterion.op.type == 'between'">
+                BETWEEN ${r'#{'}criterion.value${r'}'} and ${r'#{'}criterion.secondValue${r'}'}
             </when>
-            <when test="condition.op.type == 'notBetween'">
-                NOT BETWEEN ${r'#{'}condition.value${r'}'} and ${r'#{'}condition.secondValue${r'}'}
+            <when test="criterion.op.type == 'notBetween'">
+                NOT BETWEEN ${r'#{'}criterion.value${r'}'} and ${r'#{'}criterion.secondValue${r'}'}
             </when>
         </choose>
     </sql>

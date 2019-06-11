@@ -2,6 +2,10 @@ package org.jboot.generator.controller;
 
 import java.util.List;
 
+import org.jboot.generator.base.Result;
+import org.jboot.generator.conditions.Wrapper;
+import org.jboot.generator.entity.SalgradeVO;
+import org.jboot.generator.service.ISalgradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.jboot.generator.base.Result;
-import org.jboot.generator.entity.SalgradeVO;
-import org.jboot.generator.service.ISalgradeService;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -102,9 +103,9 @@ public class SalgradeController {
      * @return 返回实体的分页信息
      */
     @PostMapping("/v1/salgrade/page/{pageNo}/{pageSize}")
-    public Result<PageInfo<SalgradeVO>> findPage(@RequestBody SalgradeVO entity, @PathVariable("pageNo") int pageNo,
+    public Result<PageInfo<SalgradeVO>> findPage(@RequestBody Wrapper<SalgradeVO> entity, @PathVariable("pageNo") int pageNo,
         @PathVariable("pageSize") int pageSize) {
-        return new Result<PageInfo<SalgradeVO>>().success((iSalgradeService.findPage(entity, pageNo, pageSize)));
+        return new Result<PageInfo<SalgradeVO>>().success(iSalgradeService.findPage(entity, pageNo, pageSize));
     }
 
 }

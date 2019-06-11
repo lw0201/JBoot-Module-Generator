@@ -2,6 +2,10 @@ package ${packageName}.controller;
 
 import java.util.List;
 
+import ${packageName}.base.Result;
+import ${packageName}.conditions.Wrapper;
+import ${packageName}.entity.${entityName}VO;
+import ${packageName}.service.I${entityName}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.jboot.generator.base.Result;
-import ${packageName}.entity.${entityName}VO;
-import ${packageName}.service.I${entityName}Service;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -102,9 +103,9 @@ public class ${entityName}Controller {
      * @return 返回实体的分页信息
      */
     @PostMapping("/v1/${entityName?lower_case}/page/{pageNo}/{pageSize}")
-    public Result<PageInfo<${entityName}VO>> findPage(@RequestBody ${entityName}VO entity, @PathVariable("pageNo") int pageNo,
+    public Result<PageInfo<${entityName}VO>> findPage(@RequestBody Wrapper<${entityName}VO> entity, @PathVariable("pageNo") int pageNo,
         @PathVariable("pageSize") int pageSize) {
-        return new Result<PageInfo<${entityName}VO>>().success((i${entityName}Service.findPage(entity, pageNo, pageSize)));
+        return new Result<PageInfo<${entityName}VO>>().success(i${entityName}Service.findPage(entity, pageNo, pageSize));
     }
 
 }

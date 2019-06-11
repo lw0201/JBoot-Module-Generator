@@ -96,9 +96,9 @@ public class BaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public PageInfo<T> findPage(T entity, int pageNo, int pageSize) {
+    public PageInfo<T> findPage(Wrapper<T> wrapper, int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
-        return new PageInfo<T>(iBaseDao.findList(entity));
+        return new PageInfo<T>(iBaseDao.findByWrapper(wrapper));
     }
 
     @Override

@@ -2,6 +2,10 @@ package org.jboot.generator.controller;
 
 import java.util.List;
 
+import org.jboot.generator.base.Result;
+import org.jboot.generator.conditions.Wrapper;
+import org.jboot.generator.entity.DeptVO;
+import org.jboot.generator.service.IDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.jboot.generator.base.Result;
-import org.jboot.generator.entity.DeptVO;
-import org.jboot.generator.service.IDeptService;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -102,9 +103,9 @@ public class DeptController {
      * @return 返回实体的分页信息
      */
     @PostMapping("/v1/dept/page/{pageNo}/{pageSize}")
-    public Result<PageInfo<DeptVO>> findPage(@RequestBody DeptVO entity, @PathVariable("pageNo") int pageNo,
+    public Result<PageInfo<DeptVO>> findPage(@RequestBody Wrapper<DeptVO> entity, @PathVariable("pageNo") int pageNo,
         @PathVariable("pageSize") int pageSize) {
-        return new Result<PageInfo<DeptVO>>().success((iDeptService.findPage(entity, pageNo, pageSize)));
+        return new Result<PageInfo<DeptVO>>().success(iDeptService.findPage(entity, pageNo, pageSize));
     }
 
 }
