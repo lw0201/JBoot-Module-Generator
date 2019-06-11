@@ -32,15 +32,22 @@
     <!--构造条件 -->
     <sql id="Wrapper_Where_Clause">
         <where>
-            <foreach collection="wp.conditions" item="condition">
-                <choose>
-                    <#list fields as field>
-                    <when test="condition.attr == '${field.attrName}'">
-                        and `${field.fieldName}`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    </#list>
-                </choose>
+            <foreach collection="wp.criterias" item="criteria" separator="or">
+                <trim prefix="(" prefixOverrides="and" suffix=")">
+                    <foreach collection="criteria.criterions" item="criterion">
+                         <choose>
+                            <#list fields as field>
+                            <when test="criterion.attr == '${field.attrName}'">
+                                and `${field.fieldName}`
+                                <include refid="Wrapper_Op_Clause" />
+                            </when>
+                            </#list>
+                            <otherwise>
+                                and false
+                            </otherwise>
+                        </choose>
+                    </foreach>
+                </trim>
             </foreach>
         </where>
     </sql>
@@ -101,15 +108,17 @@
 
     <!--构造排序条件 -->
     <sql id="Wrapper_Order_Clause">
-        <foreach collection="wp.sorts" item="st" separator=",">
-            <choose>
-                <#list fields as field>
-                <when test="st.attr == '${field.attrName}'">
-                    `${field.fieldName}` ${r'#{'}st.order.type${r'}'}
-                </when>
-                </#list>
-            </choose>
-        </foreach>
+        <if test="wp.sorts != null">
+            <foreach collection="wp.sorts" item="st" separator=",">
+                <choose>
+                    <#list fields as field>
+                    <when test="st.attr == '${field.attrName}'">
+                        `${field.fieldName}` ${r'#{'}st.order.type${r'}'}
+                    </when>
+                    </#list>
+                </choose>
+            </foreach>
+        </if>
     </sql>
 
     <!--根据主键信息查询返回实体对象 -->

@@ -53,41 +53,48 @@
     <!--构造条件 -->
     <sql id="Wrapper_Where_Clause">
         <where>
-            <foreach collection="wp.conditions" item="condition">
-                <choose>
-                    <when test="condition.attr == 'empno'">
-                        and `empno`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="condition.attr == 'ename'">
-                        and `ename`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="condition.attr == 'job'">
-                        and `job`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="condition.attr == 'mgr'">
-                        and `mgr`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="condition.attr == 'hiredate'">
-                        and `hiredate`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="condition.attr == 'sal'">
-                        and `sal`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="condition.attr == 'comm'">
-                        and `comm`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="condition.attr == 'deptno'">
-                        and `deptno`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                </choose>
+            <foreach collection="wp.criterias" item="criteria" separator="or">
+                <trim prefix="(" prefixOverrides="and" suffix=")">
+                    <foreach collection="criteria.criterions" item="criterion">
+                         <choose>
+                            <when test="criterion.attr == 'empno'">
+                                and `empno`
+                                <include refid="Wrapper_Op_Clause" />
+                            </when>
+                            <when test="criterion.attr == 'ename'">
+                                and `ename`
+                                <include refid="Wrapper_Op_Clause" />
+                            </when>
+                            <when test="criterion.attr == 'job'">
+                                and `job`
+                                <include refid="Wrapper_Op_Clause" />
+                            </when>
+                            <when test="criterion.attr == 'mgr'">
+                                and `mgr`
+                                <include refid="Wrapper_Op_Clause" />
+                            </when>
+                            <when test="criterion.attr == 'hiredate'">
+                                and `hiredate`
+                                <include refid="Wrapper_Op_Clause" />
+                            </when>
+                            <when test="criterion.attr == 'sal'">
+                                and `sal`
+                                <include refid="Wrapper_Op_Clause" />
+                            </when>
+                            <when test="criterion.attr == 'comm'">
+                                and `comm`
+                                <include refid="Wrapper_Op_Clause" />
+                            </when>
+                            <when test="criterion.attr == 'deptno'">
+                                and `deptno`
+                                <include refid="Wrapper_Op_Clause" />
+                            </when>
+                            <otherwise>
+                                and false
+                            </otherwise>
+                        </choose>
+                    </foreach>
+                </trim>
             </foreach>
         </where>
     </sql>
@@ -148,34 +155,36 @@
 
     <!--构造排序条件 -->
     <sql id="Wrapper_Order_Clause">
-        <foreach collection="wp.sorts" item="st" separator=",">
-            <choose>
-                <when test="st.attr == 'empno'">
-                    `empno` #{st.order.type}
-                </when>
-                <when test="st.attr == 'ename'">
-                    `ename` #{st.order.type}
-                </when>
-                <when test="st.attr == 'job'">
-                    `job` #{st.order.type}
-                </when>
-                <when test="st.attr == 'mgr'">
-                    `mgr` #{st.order.type}
-                </when>
-                <when test="st.attr == 'hiredate'">
-                    `hiredate` #{st.order.type}
-                </when>
-                <when test="st.attr == 'sal'">
-                    `sal` #{st.order.type}
-                </when>
-                <when test="st.attr == 'comm'">
-                    `comm` #{st.order.type}
-                </when>
-                <when test="st.attr == 'deptno'">
-                    `deptno` #{st.order.type}
-                </when>
-            </choose>
-        </foreach>
+        <if test="wp.sorts != null">
+            <foreach collection="wp.sorts" item="st" separator=",">
+                <choose>
+                    <when test="st.attr == 'empno'">
+                        `empno` #{st.order.type}
+                    </when>
+                    <when test="st.attr == 'ename'">
+                        `ename` #{st.order.type}
+                    </when>
+                    <when test="st.attr == 'job'">
+                        `job` #{st.order.type}
+                    </when>
+                    <when test="st.attr == 'mgr'">
+                        `mgr` #{st.order.type}
+                    </when>
+                    <when test="st.attr == 'hiredate'">
+                        `hiredate` #{st.order.type}
+                    </when>
+                    <when test="st.attr == 'sal'">
+                        `sal` #{st.order.type}
+                    </when>
+                    <when test="st.attr == 'comm'">
+                        `comm` #{st.order.type}
+                    </when>
+                    <when test="st.attr == 'deptno'">
+                        `deptno` #{st.order.type}
+                    </when>
+                </choose>
+            </foreach>
+        </if>
     </sql>
 
     <!--根据主键信息查询返回实体对象 -->
