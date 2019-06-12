@@ -12,12 +12,12 @@ import lombok.Data;
 public class TableInfo {
 
     /**
-     * note:表名
+     * 表名
      */
     private String tableName;
 
     /**
-     * :表描述
+     * 表描述
      */
     private String comments;
 

@@ -88,7 +88,7 @@ public class EmpController {
      */
     @PostMapping("/v1/emp/find/list")
     public Result<List<EmpVO>> findList(@RequestBody EmpVO entity) {
-        return new Result<List<EmpVO>>().success((iEmpService.findList(entity)));
+        return new Result<List<EmpVO>>().success(iEmpService.findList(entity));
     }
 
     /**

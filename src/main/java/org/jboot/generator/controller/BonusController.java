@@ -88,7 +88,7 @@ public class BonusController {
      */
     @PostMapping("/v1/bonus/find/list")
     public Result<List<BonusVO>> findList(@RequestBody BonusVO entity) {
-        return new Result<List<BonusVO>>().success((iBonusService.findList(entity)));
+        return new Result<List<BonusVO>>().success(iBonusService.findList(entity));
     }
 
     /**

@@ -13,6 +13,7 @@ spring:
       password: 123456
 jboot:
    package: org.jboot.generator
+###分頁插件使用配置
    java: src/main/java
    resource: src/main/resources
 #mybatis扫描配置
@@ -25,9 +26,8 @@ mybatis:
 swagger:
    enabled: true
    package: org.jboot.generator
-###分頁插件使用配置   
 pagehelper:
-   helperDialect: mysql
-   reasonable: true
-   supportMethodsArguments: true
-   params: count=countSql
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countsql

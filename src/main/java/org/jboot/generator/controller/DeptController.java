@@ -88,7 +88,7 @@ public class DeptController {
      */
     @PostMapping("/v1/dept/find/list")
     public Result<List<DeptVO>> findList(@RequestBody DeptVO entity) {
-        return new Result<List<DeptVO>>().success((iDeptService.findList(entity)));
+        return new Result<List<DeptVO>>().success(iDeptService.findList(entity));
     }
 
     /**

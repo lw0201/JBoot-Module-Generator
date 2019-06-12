@@ -3,8 +3,8 @@ package org.jboot.generator.builder;
 import java.sql.Connection;
 import java.util.List;
 
-import org.jboot.generator.config.GeneratorConfig;
 import org.jboot.generator.config.DataSourceConfig;
+import org.jboot.generator.config.GeneratorConfig;
 import org.jboot.generator.utils.JdbcUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

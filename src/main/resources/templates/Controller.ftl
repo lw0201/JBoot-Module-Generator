@@ -88,7 +88,7 @@ public class ${entityName}Controller {
      */
     @PostMapping("/v1/${entityName?lower_case}/find/list")
     public Result<List<${entityName}VO>> findList(@RequestBody ${entityName}VO entity) {
-        return new Result<List<${entityName}VO>>().success((i${entityName}Service.findList(entity)));
+        return new Result<List<${entityName}VO>>().success(i${entityName}Service.findList(entity));
     }
 
     /**

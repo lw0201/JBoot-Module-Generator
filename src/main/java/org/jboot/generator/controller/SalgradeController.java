@@ -88,7 +88,7 @@ public class SalgradeController {
      */
     @PostMapping("/v1/salgrade/find/list")
     public Result<List<SalgradeVO>> findList(@RequestBody SalgradeVO entity) {
-        return new Result<List<SalgradeVO>>().success((iSalgradeService.findList(entity)));
+        return new Result<List<SalgradeVO>>().success(iSalgradeService.findList(entity));
     }
 
     /**
