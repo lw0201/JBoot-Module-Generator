@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.jboot.generator.constants.Constants;
+import org.jboot.generator.utils.FreemarkerUtil;
+import org.jboot.generator.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

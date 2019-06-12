@@ -1,4 +1,4 @@
-package org.jboot.generator.builder;
+package org.jboot.generator.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

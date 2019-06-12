@@ -3,6 +3,9 @@ package org.jboot.generator.builder;
 import java.sql.Connection;
 import java.util.List;
 
+import org.jboot.generator.config.GeneratorConfig;
+import org.jboot.generator.config.DataSourceConfig;
+import org.jboot.generator.utils.JdbcUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -15,10 +18,10 @@ public class InitBean implements InitializingBean {
     private final static Logger logger = LoggerFactory.getLogger(InitBean.class);
 
     @Autowired
-    private SpringDataSource springDataSource;
+    private DataSourceConfig springDataSource;
 
     @Autowired
-    private Generator generator;
+    private GeneratorConfig generator;
 
     @Override
     public void afterPropertiesSet() throws Exception {

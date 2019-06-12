@@ -1,4 +1,4 @@
-package org.jboot.generator.builder;
+package org.jboot.generator.enums;
 
 import java.util.HashMap;
 import java.util.Map;

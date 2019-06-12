@@ -1,5 +1,8 @@
 package org.jboot.generator.builder;
 
+import org.jboot.generator.enums.EntityMapping;
+import org.jboot.generator.enums.FieldType;
+
 import lombok.Data;
 
 /**

@@ -1,4 +1,4 @@
-package org.jboot.generator.builder;
+package org.jboot.generator.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -11,7 +11,7 @@ import lombok.Data;
 @Component
 @Configuration
 @ConfigurationProperties
-public class Generator {
+public class GeneratorConfig {
 
     @Value("${jboot.package}")
     private String packageName;

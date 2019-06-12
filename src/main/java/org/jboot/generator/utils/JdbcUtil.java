@@ -1,4 +1,4 @@
-package org.jboot.generator.builder;
+package org.jboot.generator.utils;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.jboot.generator.builder.FieldInfo;
+import org.jboot.generator.builder.TableInfo;
 import org.jboot.generator.constants.Constants;
+import org.jboot.generator.enums.EntityMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
