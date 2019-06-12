@@ -78,4 +78,13 @@ public class Result<T> implements Serializable {
         return new Result<T>(code, message);
     }
 
+    /**
+     * success
+     */
+    public Result<T> fail(T data) {
+        this.code = 500;
+        this.message = "Fail!";
+        return new Result<T>(code, message, data);
+    }
+
 }
