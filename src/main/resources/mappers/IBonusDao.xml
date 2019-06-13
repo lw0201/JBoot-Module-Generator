@@ -6,8 +6,8 @@
     <resultMap id="BaseResultMap" type="org.jboot.generator.entity.BonusVO">
         <id column="ename" jdbcType="VARCHAR" property="ename" />
         <result column="job" jdbcType="VARCHAR" property="job" />
-        <result column="sal" jdbcType="VARCHAR" property="sal" />
-        <result column="comm" jdbcType="VARCHAR" property="comm" />
+        <result column="sal" jdbcType="DECIMAL" property="sal" />
+        <result column="comm" jdbcType="DECIMAL" property="comm" />
     </resultMap>
 
     <!--基础字段信息配置 -->
@@ -25,10 +25,10 @@
                 and `job` = #{entity.job,jdbcType=VARCHAR}
             </if>
             <if test="entity.sal != null">
-                and `sal` = #{entity.sal,jdbcType=VARCHAR}
+                and `sal` = #{entity.sal,jdbcType=DECIMAL}
             </if>
             <if test="entity.comm != null">
-                and `comm` = #{entity.comm,jdbcType=VARCHAR}
+                and `comm` = #{entity.comm,jdbcType=DECIMAL}
             </if>
         </where>
     </sql>
@@ -190,6 +190,9 @@
 
     <!--插入实体对象 -->
     <insert id="insert" parameterType="org.jboot.generator.entity.BonusVO">
+        <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="ename">
+            select uuid() 
+        </selectKey>
         insert into bonus
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="ename != null">
@@ -213,10 +216,10 @@
                 #{job,jdbcType=VARCHAR},
             </if>
             <if test="sal != null">
-                #{sal,jdbcType=VARCHAR},
+                #{sal,jdbcType=DECIMAL},
             </if>
             <if test="comm != null">
-                #{comm,jdbcType=VARCHAR},
+                #{comm,jdbcType=DECIMAL},
             </if>
         </trim>
     </insert>
@@ -232,10 +235,10 @@
         </trim>
         <foreach collection="list" item="item" index="index" separator=",">
             (
-            #{ename,jdbcType=VARCHAR},
+            UUID(),
             #{job,jdbcType=VARCHAR},
-            #{sal,jdbcType=VARCHAR},
-            #{comm,jdbcType=VARCHAR}
+            #{sal,jdbcType=DECIMAL},
+            #{comm,jdbcType=DECIMAL}
             )
         </foreach>
     </insert>
@@ -244,17 +247,14 @@
     <update id="update">
         update bonus
         <set>
-            <if test="entity.ename != null">
-                `ename` = #{entity.ename,jdbcType=VARCHAR},
-            </if>
             <if test="entity.job != null">
                 `job` = #{entity.job,jdbcType=VARCHAR},
             </if>
             <if test="entity.sal != null">
-                `sal` = #{entity.sal,jdbcType=VARCHAR},
+                `sal` = #{entity.sal,jdbcType=DECIMAL},
             </if>
             <if test="entity.comm != null">
-                `comm` = #{entity.comm,jdbcType=VARCHAR},
+                `comm` = #{entity.comm,jdbcType=DECIMAL},
             </if>
         </set>
         where `ename` = #{entity.ename,jdbcType=VARCHAR}
@@ -292,23 +292,19 @@
                 `job` = #{entity.job,jdbcType=VARCHAR},
             </if>
             <if test="entity.sal != null">
-                `sal` = #{entity.sal,jdbcType=VARCHAR},
+                `sal` = #{entity.sal,jdbcType=DECIMAL},
             </if>
             <if test="entity.comm != null">
-                `comm` = #{entity.comm,jdbcType=VARCHAR},
+                `comm` = #{entity.comm,jdbcType=DECIMAL},
             </if>
         </set>
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
+        <include refid="Wrapper_Where_Clause" />
     </update>
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
         delete from bonus
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
+        <include refid="Wrapper_Where_Clause" />
     </delete>
 
 </mapper>

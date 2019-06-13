@@ -169,19 +169,34 @@
 
     <!--插入实体对象 -->
     <insert id="insert" parameterType="${packageName}.entity.${entityName}VO">
+        <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="${pk.attrName}">
+            select uuid() 
+        </selectKey>
         insert into ${tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list fields as field>
+            <#if field.attrName =='lastUpdateDate' || field.attrName =='createdDate'>
+            <if test="${field.attrName} != null or ${field.attrName} == null">
+                `${field.fieldName}`,
+            </if>
+            <#else>
             <if test="${field.attrName} != null">
                 `${field.fieldName}`,
             </if>
+            </#if>
             </#list>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <#list fields as field>
+            <#if field.attrName =='lastUpdateDate' || field.attrName =='createdDate'>
+            <if test="${field.attrName} != null or ${field.attrName} == null">
+                current_timestamp(),
+            </if>
+            <#else>
             <if test="${field.attrName} != null">
                 ${r'#{'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
             </if>
+            </#if>
             </#list>
         </trim>
     </insert>
@@ -191,20 +206,18 @@
         insert into ${tableName}
         <trim prefix="(" suffix=") values" suffixOverrides=",">
             <#list fields as field>
-            <#if !field_has_next>
-            `${field.fieldName}`
-            <#else>
-            `${field.fieldName}`,
-            </#if>
+            `${field.fieldName}`<#if field_has_next>,</#if>
             </#list>
         </trim>
         <foreach collection="list" item="item" index="index" separator=",">
             (
             <#list fields as field>
-            <#if !field_has_next>
-            ${r'#{'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'}
+            <#if field.attrName =='lastUpdateDate' || field.attrName =='createdDate'>
+            current_timestamp()<#if field_has_next>,</#if>
+            <#elseif field.fieldName == pk.fieldName >
+            UUID()<#if field_has_next>,</#if>
             <#else>
-            ${r'#{'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
+            ${r'#{'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'}<#if field_has_next>,</#if>
             </#if>
             </#list>
             )
@@ -216,9 +229,16 @@
         update ${tableName}
         <set>
             <#list fields as field>
+            <#if field.attrName =='lastUpdateDate'>
+            <if test="entity.${field.attrName} == null or entity.${field.attrName} != null">
+                `${field.fieldName}` = current_timestamp(),
+            </if>
+            <#elseif field.attrName =='createdDate' || field.attrName =='createdBy' || field.fieldName == pk.fieldName>
+            <#else>
             <if test="entity.${field.attrName} != null">
                 `${field.fieldName}` = ${r'#{entity.'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
             </if>
+            </#if>
             </#list>
         </set>
         where `${pk.fieldName}` = ${r'#{entity.'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
@@ -250,22 +270,25 @@
         update ${tableName}
         <set>
             <#list fields as field>
+            <#if field.attrName =='lastUpdateDate'>
+            <if test="entity.${field.attrName} == null or entity.${field.attrName} != null">
+                `${field.fieldName}` = current_timestamp(),
+            </if>
+            <#elseif field.attrName =='createdDate' || field.attrName =='createdBy'>
+            <#else>
             <if test="entity.${field.attrName} != null">
                 `${field.fieldName}` = ${r'#{entity.'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
             </if>
+            </#if>
             </#list>
         </set>
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
+        <include refid="Wrapper_Where_Clause" />
     </update>
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
         delete from ${tableName}
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
+        <include refid="Wrapper_Where_Clause" />
     </delete>
 
 </mapper>

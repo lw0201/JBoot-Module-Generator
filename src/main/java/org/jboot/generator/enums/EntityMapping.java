@@ -28,7 +28,7 @@ public enum EntityMapping {
     /**
      * Identifies the generic SQL type {@code BIGINT}.
      */
-    BIGINT(Types.BIGINT, "Long", "LONG"),
+    BIGINT(Types.BIGINT, "Long", "BIGINT"),
     /**
      * Identifies the generic SQL type {@code FLOAT}.
      */
@@ -44,11 +44,11 @@ public enum EntityMapping {
     /**
      * Identifies the generic SQL type {@code NUMERIC}.
      */
-    NUMERIC(Types.NUMERIC, "String", "VARCHAR"),
+    NUMERIC(Types.NUMERIC, "Long", "DECIMAL"),
     /**
      * Identifies the generic SQL type {@code DECIMAL}.
      */
-    DECIMAL(Types.DECIMAL, "BigDecimal", "VARCHAR"),
+    DECIMAL(Types.DECIMAL, "BigDecimal", "DECIMAL"),
     /**
      * Identifies the generic SQL type {@code CHAR}.
      */
@@ -72,7 +72,7 @@ public enum EntityMapping {
     /**
      * Identifies the generic SQL type {@code TIMESTAMP}.
      */
-    TIMESTAMP(Types.TIMESTAMP, "Date", "DATE"),
+    TIMESTAMP(Types.TIMESTAMP, "Date", "TIMESTAMP"),
     /**
      * Identifies the generic SQL type {@code BINARY}.
      */

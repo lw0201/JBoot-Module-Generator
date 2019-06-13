@@ -9,8 +9,8 @@
         <result column="job" jdbcType="VARCHAR" property="job" />
         <result column="mgr" jdbcType="INTEGER" property="mgr" />
         <result column="hiredate" jdbcType="DATE" property="hiredate" />
-        <result column="sal" jdbcType="VARCHAR" property="sal" />
-        <result column="comm" jdbcType="VARCHAR" property="comm" />
+        <result column="sal" jdbcType="DECIMAL" property="sal" />
+        <result column="comm" jdbcType="DECIMAL" property="comm" />
         <result column="deptno" jdbcType="INTEGER" property="deptno" />
     </resultMap>
 
@@ -39,10 +39,10 @@
                 and `hiredate` = #{entity.hiredate,jdbcType=DATE}
             </if>
             <if test="entity.sal != null">
-                and `sal` = #{entity.sal,jdbcType=VARCHAR}
+                and `sal` = #{entity.sal,jdbcType=DECIMAL}
             </if>
             <if test="entity.comm != null">
-                and `comm` = #{entity.comm,jdbcType=VARCHAR}
+                and `comm` = #{entity.comm,jdbcType=DECIMAL}
             </if>
             <if test="entity.deptno != null">
                 and `deptno` = #{entity.deptno,jdbcType=INTEGER}
@@ -235,6 +235,9 @@
 
     <!--插入实体对象 -->
     <insert id="insert" parameterType="org.jboot.generator.entity.EmpVO">
+        <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="empno">
+            select uuid() 
+        </selectKey>
         insert into emp
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="empno != null">
@@ -279,10 +282,10 @@
                 #{hiredate,jdbcType=DATE},
             </if>
             <if test="sal != null">
-                #{sal,jdbcType=VARCHAR},
+                #{sal,jdbcType=DECIMAL},
             </if>
             <if test="comm != null">
-                #{comm,jdbcType=VARCHAR},
+                #{comm,jdbcType=DECIMAL},
             </if>
             <if test="deptno != null">
                 #{deptno,jdbcType=INTEGER},
@@ -305,13 +308,13 @@
         </trim>
         <foreach collection="list" item="item" index="index" separator=",">
             (
-            #{empno,jdbcType=INTEGER},
+            UUID(),
             #{ename,jdbcType=VARCHAR},
             #{job,jdbcType=VARCHAR},
             #{mgr,jdbcType=INTEGER},
             #{hiredate,jdbcType=DATE},
-            #{sal,jdbcType=VARCHAR},
-            #{comm,jdbcType=VARCHAR},
+            #{sal,jdbcType=DECIMAL},
+            #{comm,jdbcType=DECIMAL},
             #{deptno,jdbcType=INTEGER}
             )
         </foreach>
@@ -321,9 +324,6 @@
     <update id="update">
         update emp
         <set>
-            <if test="entity.empno != null">
-                `empno` = #{entity.empno,jdbcType=INTEGER},
-            </if>
             <if test="entity.ename != null">
                 `ename` = #{entity.ename,jdbcType=VARCHAR},
             </if>
@@ -337,10 +337,10 @@
                 `hiredate` = #{entity.hiredate,jdbcType=DATE},
             </if>
             <if test="entity.sal != null">
-                `sal` = #{entity.sal,jdbcType=VARCHAR},
+                `sal` = #{entity.sal,jdbcType=DECIMAL},
             </if>
             <if test="entity.comm != null">
-                `comm` = #{entity.comm,jdbcType=VARCHAR},
+                `comm` = #{entity.comm,jdbcType=DECIMAL},
             </if>
             <if test="entity.deptno != null">
                 `deptno` = #{entity.deptno,jdbcType=INTEGER},
@@ -390,26 +390,22 @@
                 `hiredate` = #{entity.hiredate,jdbcType=DATE},
             </if>
             <if test="entity.sal != null">
-                `sal` = #{entity.sal,jdbcType=VARCHAR},
+                `sal` = #{entity.sal,jdbcType=DECIMAL},
             </if>
             <if test="entity.comm != null">
-                `comm` = #{entity.comm,jdbcType=VARCHAR},
+                `comm` = #{entity.comm,jdbcType=DECIMAL},
             </if>
             <if test="entity.deptno != null">
                 `deptno` = #{entity.deptno,jdbcType=INTEGER},
             </if>
         </set>
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
+        <include refid="Wrapper_Where_Clause" />
     </update>
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
         delete from emp
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
+        <include refid="Wrapper_Where_Clause" />
     </delete>
 
 </mapper>

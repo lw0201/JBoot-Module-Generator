@@ -179,6 +179,9 @@
 
     <!--插入实体对象 -->
     <insert id="insert" parameterType="org.jboot.generator.entity.SalgradeVO">
+        <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="grade">
+            select uuid() 
+        </selectKey>
         insert into salgrade
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="grade != null">
@@ -214,7 +217,7 @@
         </trim>
         <foreach collection="list" item="item" index="index" separator=",">
             (
-            #{grade,jdbcType=INTEGER},
+            UUID(),
             #{losal,jdbcType=INTEGER},
             #{hisal,jdbcType=INTEGER}
             )
@@ -225,9 +228,6 @@
     <update id="update">
         update salgrade
         <set>
-            <if test="entity.grade != null">
-                `grade` = #{entity.grade,jdbcType=INTEGER},
-            </if>
             <if test="entity.losal != null">
                 `losal` = #{entity.losal,jdbcType=INTEGER},
             </if>
@@ -273,17 +273,13 @@
                 `hisal` = #{entity.hisal,jdbcType=INTEGER},
             </if>
         </set>
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
+        <include refid="Wrapper_Where_Clause" />
     </update>
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
         delete from salgrade
-        <if test="wp != null">
-            <include refid="Wrapper_Where_Clause" />
-        </if>
+        <include refid="Wrapper_Where_Clause" />
     </delete>
 
 </mapper>
