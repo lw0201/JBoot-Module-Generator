@@ -8,8 +8,6 @@ import lombok.Data;
 @Data
 public class Wrapper<T> {
 
-    private T entity;
-
     private List<Sort> sorts;
 
     private List<Criteria> criterias;
@@ -18,17 +16,14 @@ public class Wrapper<T> {
         criterias = new ArrayList<Criteria>();
     }
 
-    public void or(Criteria criteria) {
-        criterias.add(criteria);
+    public Wrapper<T> or(Criteria criteria) {
+        if (null != criteria) {
+            criterias.add(criteria);
+        }
+        return this;
     }
 
-    public Criteria or() {
-        Criteria criteria = new Criteria();
-        criterias.add(criteria);
-        return criteria;
-    }
-
-    public Wrapper<T> create(Criteria criteria) {
+    public Wrapper<T> where(Criteria criteria) {
         if (null != criteria) {
             criterias.add(criteria);
         }
@@ -38,5 +33,4 @@ public class Wrapper<T> {
     public void clear() {
         criterias.clear();
     }
-
 }
