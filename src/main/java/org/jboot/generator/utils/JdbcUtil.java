@@ -86,10 +86,11 @@ public class JdbcUtil {
                 String table_name = tables.getString(TABLE_NAME);
                 String remarkes = tables.getString(REMARKS);
                 tableInfo.setTableName(table_name);
-                tableInfo.setEntityName(StringUtils.toUpperCaseFirst(StringUtils.underlineToCamel(table_name)));
+                tableInfo.setEntityName(
+                    StringUtils.toUpperCaseFirst(StringUtils.underlineToCamel(table_name.toLowerCase())));
                 tableInfo.setPackageName("");
                 tableInfo.setComments(remarkes);
-                ResultSet columns = metaData.getColumns(null, null, table_name, "%");
+                ResultSet columns = metaData.getColumns(connection.getCatalog(), null, table_name, "%");
                 List<FieldInfo> fieldInfos = new ArrayList<FieldInfo>();
                 boolean isPk = false;
                 while (columns.next()) {
@@ -103,7 +104,7 @@ public class JdbcUtil {
                     tableInfo.getImportPackages().add(data.getJavaType());
                     FieldInfo fieldInfo = new FieldInfo();
                     fieldInfo.setFieldName(colName);
-                    fieldInfo.setAttrName(StringUtils.underlineToCamel(colName));
+                    fieldInfo.setAttrName(StringUtils.underlineToCamel(colName.toLowerCase()));
                     fieldInfo.setEm(data);
                     fieldInfo.setComments(comments);
                     fieldInfos.add(fieldInfo);
