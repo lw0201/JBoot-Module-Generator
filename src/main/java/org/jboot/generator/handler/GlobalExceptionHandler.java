@@ -3,6 +3,9 @@ package org.jboot.generator.handler;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -17,7 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,6 +30,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * GlobalExceptionHandler 全局性统一异常处理类
@@ -286,14 +292,18 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public @ResponseBody Result<String> handle(MethodArgumentNotValidException e) {
+    public @ResponseBody Result<Map<String, String>> handle(MethodArgumentNotValidException e) {
         logger.error("参数验证失败", e);
         BindingResult result = e.getBindingResult();
-        FieldError error = result.getFieldError();
-        String field = error.getField();
-        String code = error.getDefaultMessage();
-        String message = String.format("%s:%s", field, code);
-        return new Result<String>(ErrorCode.VALID_ERROR, "参数验证失败：" + message, e.getMessage());
+        List<ObjectError> results = result.getAllErrors();
+        Map<String, String> map = new HashMap<String, String>();
+        for (ObjectError objectError : results) {
+            JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(objectError));
+            String field = jsonObject.getString("field");
+            String defaultMessage = jsonObject.getString("defaultMessage");
+            map.put(field, defaultMessage);
+        }
+        return new Result<Map<String, String>>(ErrorCode.VALID_ERROR, "参数验证失败", map);
     }
 
     /**
@@ -305,14 +315,10 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
-    public @ResponseBody Result<String> handle(BindException e) {
+    public @ResponseBody Result<List<ObjectError>> handle(BindException e) {
         logger.error("参数绑定失败", e);
-        BindingResult result = e.getBindingResult();
-        FieldError error = result.getFieldError();
-        String field = error.getField();
-        String code = error.getDefaultMessage();
-        String message = String.format("%s:%s", field, code);
-        return new Result<String>(ErrorCode.BIND_ERROR, "参数绑定失败：" + message, e.getMessage());
+        List<ObjectError> errors = e.getAllErrors();
+        return new Result<List<ObjectError>>(ErrorCode.BIND_ERROR, "参数绑定失败.", errors);
     }
 
     /**
@@ -324,12 +330,12 @@ public class GlobalExceptionHandler {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
-    public @ResponseBody Result<String> handle(ConstraintViolationException e) {
+    public @ResponseBody Result<Set<ConstraintViolation<?>>> handle(ConstraintViolationException e) {
         logger.error("参数验证失败", e);
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
-        ConstraintViolation<?> violation = violations.iterator().next();
-        String message = violation.getMessage();
-        return new Result<String>(ErrorCode.VALID_ERROR, "参数验证失败" + message, e.getMessage());
+        // ConstraintViolation<?> violation = violations.iterator().next();
+        // String message = violation.getMessage();
+        return new Result<Set<ConstraintViolation<?>>>(ErrorCode.VALID_ERROR, "参数验证失败。", violations);
     }
 
     /**

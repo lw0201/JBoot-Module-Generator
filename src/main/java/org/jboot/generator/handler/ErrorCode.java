@@ -7,6 +7,9 @@ package org.jboot.generator.handler;
  */
 public class ErrorCode {
 
+    /** 参数验证异常处理 */
+    public static final int VALID_ERROR = 400;
+
     /** 未知异常 */
     public final static int OTHER = 10000;
 
@@ -64,10 +67,7 @@ public class ErrorCode {
     /** 运行时异常 */
     public static final int RUNTIME = 517;
 
-    /** 参数验证异常处理 */
-    public static final int VALID_ERROR = 518;
-
     /** 参数绑定异常处理 */
-    public static final int BIND_ERROR = 519;
+    public static final int BIND_ERROR = 518;
 
 }

@@ -36,9 +36,8 @@ public class ${entityName}Controller {
      * @return 返回新增影响的数据
      */
     @PostMapping("/v1/${entityName?lower_case}/insert")
-    public Result<String> insert(@RequestBody ${entityName}VO entity) {
-        i${entityName}Service.insert(entity);
-        return new Result<String>().success();
+    public Result<Integer> insert(@RequestBody ${entityName}VO entity) {
+        return new Result<Integer>().success(i${entityName}Service.insert(entity));
     }
 
     /**
@@ -49,9 +48,8 @@ public class ${entityName}Controller {
      * @return 返回删除影响的实体
      */
     @DeleteMapping("/v1/${entityName?lower_case}/delete/{id}")
-    public Result<String> delete(@PathVariable("id") Integer id) {
-        i${entityName}Service.deleteById(id);
-        return new Result<String>().success();
+    public Result<Integer> delete(@PathVariable("id") Integer id) {
+        return new Result<Integer>().success(i${entityName}Service.deleteById(id));
     }
 
     /**
@@ -62,9 +60,8 @@ public class ${entityName}Controller {
      * @return 返回影响的行
      */
     @PostMapping("/v1/${entityName?lower_case}/update")
-    public Result<String> update(@RequestBody ${entityName}VO entity) {
-        i${entityName}Service.update(entity);
-        return new Result<String>().success();
+    public Result<Integer> update(@RequestBody ${entityName}VO entity) {
+        return new Result<Integer>().success(i${entityName}Service.update(entity));
     }
 
     /**

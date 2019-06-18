@@ -36,9 +36,8 @@ public class BonusController {
      * @return 返回新增影响的数据
      */
     @PostMapping("/v1/bonus/insert")
-    public Result<String> insert(@RequestBody BonusVO entity) {
-        iBonusService.insert(entity);
-        return new Result<String>().success();
+    public Result<Integer> insert(@RequestBody BonusVO entity) {
+        return new Result<Integer>().success(iBonusService.insert(entity));
     }
 
     /**
@@ -49,9 +48,8 @@ public class BonusController {
      * @return 返回删除影响的实体
      */
     @DeleteMapping("/v1/bonus/delete/{id}")
-    public Result<String> delete(@PathVariable("id") Integer id) {
-        iBonusService.deleteById(id);
-        return new Result<String>().success();
+    public Result<Integer> delete(@PathVariable("id") Integer id) {
+        return new Result<Integer>().success(iBonusService.deleteById(id));
     }
 
     /**
@@ -62,9 +60,8 @@ public class BonusController {
      * @return 返回影响的行
      */
     @PostMapping("/v1/bonus/update")
-    public Result<String> update(@RequestBody BonusVO entity) {
-        iBonusService.update(entity);
-        return new Result<String>().success();
+    public Result<Integer> update(@RequestBody BonusVO entity) {
+        return new Result<Integer>().success(iBonusService.update(entity));
     }
 
     /**

@@ -29,6 +29,7 @@ public class JdbcUtil {
     private static final String REMARKS = "REMARKS";
     private static final String DATA_TYPE = "DATA_TYPE";
     private static final String TABLE_NAME = "TABLE_NAME";
+    private static final String COLUMN_SIZE = "COLUMN_SIZE";
 
     /**
      * 注册数据库驱动
@@ -97,12 +98,14 @@ public class JdbcUtil {
                     String colName = columns.getString(COLUMN_NAME);
                     String comments = columns.getString(REMARKS);
                     int dataType = columns.getInt(DATA_TYPE);
+                    int columnSize = columns.getInt(COLUMN_SIZE);
                     EntityMapping data = EntityMapping.forKey(dataType);
                     if (null == tableInfo.getImportPackages()) {
                         tableInfo.setImportPackages(new HashSet<String>());
                     }
                     tableInfo.getImportPackages().add(data.getJavaType());
                     FieldInfo fieldInfo = new FieldInfo();
+                    fieldInfo.setColumnSize(columnSize);
                     fieldInfo.setFieldName(colName);
                     fieldInfo.setAttrName(StringUtils.underlineToCamel(colName.toLowerCase()));
                     fieldInfo.setEm(data);
@@ -117,7 +120,6 @@ public class JdbcUtil {
                 tableInfos.add(tableInfo);
             }
         } catch (SQLException e) {
-            System.err.println(e);
             logger.error("db error:", e);
         } finally {
             close(connection);

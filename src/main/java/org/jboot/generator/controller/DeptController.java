@@ -36,9 +36,8 @@ public class DeptController {
      * @return 返回新增影响的数据
      */
     @PostMapping("/v1/dept/insert")
-    public Result<String> insert(@RequestBody DeptVO entity) {
-        iDeptService.insert(entity);
-        return new Result<String>().success();
+    public Result<Integer> insert(@RequestBody DeptVO entity) {
+        return new Result<Integer>().success(iDeptService.insert(entity));
     }
 
     /**
@@ -49,9 +48,8 @@ public class DeptController {
      * @return 返回删除影响的实体
      */
     @DeleteMapping("/v1/dept/delete/{id}")
-    public Result<String> delete(@PathVariable("id") Integer id) {
-        iDeptService.deleteById(id);
-        return new Result<String>().success();
+    public Result<Integer> delete(@PathVariable("id") Integer id) {
+        return new Result<Integer>().success(iDeptService.deleteById(id));
     }
 
     /**
@@ -62,9 +60,8 @@ public class DeptController {
      * @return 返回影响的行
      */
     @PostMapping("/v1/dept/update")
-    public Result<String> update(@RequestBody DeptVO entity) {
-        iDeptService.update(entity);
-        return new Result<String>().success();
+    public Result<Integer> update(@RequestBody DeptVO entity) {
+        return new Result<Integer>().success(iDeptService.update(entity));
     }
 
     /**
