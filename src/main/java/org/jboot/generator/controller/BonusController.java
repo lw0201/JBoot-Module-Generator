@@ -35,8 +35,8 @@ public class BonusController {
      *            业务实体
      * @return 返回新增影响的数据
      */
-    @PostMapping("/v1/bonus/insert")
-    public Result<Integer> insert(@RequestBody BonusVO entity) {
+    @PostMapping("/v1/bonus/save")
+    public Result<Integer> save(@RequestBody BonusVO entity) {
         return new Result<Integer>().success(iBonusService.insert(entity));
     }
 
@@ -48,7 +48,7 @@ public class BonusController {
      * @return 返回删除影响的实体
      */
     @DeleteMapping("/v1/bonus/delete/{id}")
-    public Result<Integer> delete(@PathVariable("id") Integer id) {
+    public Result<Integer> delete(@PathVariable("id") String id) {
         return new Result<Integer>().success(iBonusService.deleteById(id));
     }
 
@@ -72,7 +72,7 @@ public class BonusController {
      * @return 返回实体对象的相信信息
      */
     @GetMapping("/v1/bonus/single/{id}")
-    public Result<BonusVO> findById(@PathVariable("id") Integer id) {
+    public Result<BonusVO> findById(@PathVariable("id") String id) {
         return new Result<BonusVO>().success(iBonusService.findById(id));
     }
 

@@ -35,8 +35,8 @@ public class SalgradeController {
      *            业务实体
      * @return 返回新增影响的数据
      */
-    @PostMapping("/v1/salgrade/insert")
-    public Result<Integer> insert(@RequestBody SalgradeVO entity) {
+    @PostMapping("/v1/salgrade/save")
+    public Result<Integer> save(@RequestBody SalgradeVO entity) {
         return new Result<Integer>().success(iSalgradeService.insert(entity));
     }
 
@@ -48,7 +48,7 @@ public class SalgradeController {
      * @return 返回删除影响的实体
      */
     @DeleteMapping("/v1/salgrade/delete/{id}")
-    public Result<Integer> delete(@PathVariable("id") Integer id) {
+    public Result<Integer> delete(@PathVariable("id") String id) {
         return new Result<Integer>().success(iSalgradeService.deleteById(id));
     }
 
@@ -72,7 +72,7 @@ public class SalgradeController {
      * @return 返回实体对象的相信信息
      */
     @GetMapping("/v1/salgrade/single/{id}")
-    public Result<SalgradeVO> findById(@PathVariable("id") Integer id) {
+    public Result<SalgradeVO> findById(@PathVariable("id") String id) {
         return new Result<SalgradeVO>().success(iSalgradeService.findById(id));
     }
 

@@ -35,21 +35,43 @@
             <foreach collection="wp.criterias" item="criteria" separator="or">
                 <trim prefix="(" prefixOverrides="and" suffix=")">
                     <foreach collection="criteria.criterions" item="criterion">
-                         <choose>
-                            <#list fields as field>
-                            <when test="criterion.attr == '${field.attrName}'">
-                                and `${field.fieldName}`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            </#list>
-                            <otherwise>
-                                and false
-                            </otherwise>
-                        </choose>
+                         <include refid="Wrapper_Where_Op_Clause"></include>
                     </foreach>
                 </trim>
             </foreach>
         </where>
+    </sql>
+
+    <!--构造操作条件 -->
+    <sql id="Wrapper_Where_Op_Clause">
+        <choose>
+            <when test="criterion.op.type == 'like' or criterion.op.type == 'notLike'">
+                <choose>
+                    <#list fields as field>
+                    <when test="criterion.attr == '${field.attrName}'">
+                        and LOWER(`${field.fieldName}`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    </#list>
+                    <otherwise>
+                        and false
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                <choose>
+                    <#list fields as field>
+                    <when test="criterion.attr == '${field.attrName}'">
+                        and `${field.fieldName}`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    </#list>
+                    <otherwise>
+                        and false
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
     </sql>
 
     <!--查询操作构造器 -->
@@ -74,10 +96,10 @@
                 <![CDATA[ <= ${r'#{'}criterion.value${r'}'} ]]>
             </when>
             <when test="criterion.op.type == 'like'">
-                <![CDATA[ LIKE CONCAT('%',${r'#{'}criterion.value${r'}'},'%')]]>
+                <![CDATA[ LIKE CONCAT('%',LOWER(${r'#{'}criterion.value${r'}'}),'%')]]>
             </when>
             <when test="criterion.op.type == 'notLike'">
-                <![CDATA[ NOT LIKE CONCAT('%',${r'#{'}criterion.value${r'}'},'%') ]]>
+                <![CDATA[ NOT LIKE CONCAT('%',LOWER(${r'#{'}criterion.value${r'}'}),'%') ]]>
             </when>
             <when test="criterion.op.type == 'in'">
                 = ${r'#{'}criterion.value${r'}'}
@@ -148,7 +170,7 @@
     </select>
     
     <!--根据主键信息删除实体对象 -->
-    <delete id="deleteById" parameterType="java.lang.Integer">
+    <delete id="deleteById" parameterType="java.io.Serializable">
         delete from ${tableName}
         where `${pk.fieldName}` = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
     </delete>

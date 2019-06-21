@@ -35,27 +35,55 @@
             <foreach collection="wp.criterias" item="criteria" separator="or">
                 <trim prefix="(" prefixOverrides="and" suffix=")">
                     <foreach collection="criteria.criterions" item="criterion">
-                         <choose>
-                            <when test="criterion.attr == 'grade'">
-                                and `grade`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'losal'">
-                                and `losal`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'hisal'">
-                                and `hisal`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <otherwise>
-                                and false
-                            </otherwise>
-                        </choose>
+                         <include refid="Wrapper_Where_Op_Clause"></include>
                     </foreach>
                 </trim>
             </foreach>
         </where>
+    </sql>
+
+    <!--构造操作条件 -->
+    <sql id="Wrapper_Where_Op_Clause">
+        <choose>
+            <when test="criterion.op.type == 'like' or criterion.op.type == 'notLike'">
+                <choose>
+                    <when test="criterion.attr == 'grade'">
+                        and LOWER(`grade`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'losal'">
+                        and LOWER(`losal`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'hisal'">
+                        and LOWER(`hisal`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <otherwise>
+                        and false
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="criterion.attr == 'grade'">
+                        and `grade`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'losal'">
+                        and `losal`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'hisal'">
+                        and `hisal`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <otherwise>
+                        and false
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
     </sql>
 
     <!--查询操作构造器 -->
@@ -80,10 +108,10 @@
                 <![CDATA[ <= #{criterion.value} ]]>
             </when>
             <when test="criterion.op.type == 'like'">
-                <![CDATA[ LIKE CONCAT('%',#{criterion.value},'%')]]>
+                <![CDATA[ LIKE CONCAT('%',LOWER(#{criterion.value}),'%')]]>
             </when>
             <when test="criterion.op.type == 'notLike'">
-                <![CDATA[ NOT LIKE CONCAT('%',#{criterion.value},'%') ]]>
+                <![CDATA[ NOT LIKE CONCAT('%',LOWER(#{criterion.value}),'%') ]]>
             </when>
             <when test="criterion.op.type == 'in'">
                 = #{criterion.value}
@@ -158,7 +186,7 @@
     </select>
     
     <!--根据主键信息删除实体对象 -->
-    <delete id="deleteById" parameterType="java.lang.Integer">
+    <delete id="deleteById" parameterType="java.io.Serializable">
         delete from salgrade
         where `grade` = #{grade,jdbcType=INTEGER}
     </delete>
