@@ -131,11 +131,11 @@
     <!--构造排序条件 -->
     <sql id="Wrapper_Order_Clause">
         <if test="wp.sorts != null">
-            <foreach collection="wp.sorts" item="st" separator=",">
+            <foreach collection="wp.sorts" open=" order by " item="st" separator=",">
                 <choose>
                     <#list fields as field>
                     <when test="st.attr == '${field.attrName}'">
-                        `${field.fieldName}` ${r'#{'}st.order.type${r'}'}
+                        `${field.fieldName}` ${st.order.type}
                     </when>
                     </#list>
                 </choose>
