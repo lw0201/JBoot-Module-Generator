@@ -56,47 +56,95 @@
             <foreach collection="wp.criterias" item="criteria" separator="or">
                 <trim prefix="(" prefixOverrides="and" suffix=")">
                     <foreach collection="criteria.criterions" item="criterion">
-                         <choose>
-                            <when test="criterion.attr == 'empno'">
-                                and `empno`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'ename'">
-                                and `ename`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'job'">
-                                and `job`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'mgr'">
-                                and `mgr`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'hiredate'">
-                                and `hiredate`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'sal'">
-                                and `sal`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'comm'">
-                                and `comm`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'deptno'">
-                                and `deptno`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <otherwise>
-                                and false
-                            </otherwise>
-                        </choose>
+                         <include refid="Wrapper_Where_Op_Clause"></include>
                     </foreach>
                 </trim>
             </foreach>
         </where>
+    </sql>
+
+    <!--构造操作条件 -->
+    <sql id="Wrapper_Where_Op_Clause">
+        <choose>
+            <when test="criterion.op.type == 'like' or criterion.op.type == 'notLike'">
+                <choose>
+                    <when test="criterion.attr == 'empno'">
+                        and LOWER(`empno`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'ename'">
+                        and LOWER(`ename`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'job'">
+                        and LOWER(`job`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'mgr'">
+                        and LOWER(`mgr`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'hiredate'">
+                        and LOWER(`hiredate`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'sal'">
+                        and LOWER(`sal`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'comm'">
+                        and LOWER(`comm`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'deptno'">
+                        and LOWER(`deptno`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <otherwise>
+                        and false
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="criterion.attr == 'empno'">
+                        and `empno`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'ename'">
+                        and `ename`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'job'">
+                        and `job`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'mgr'">
+                        and `mgr`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'hiredate'">
+                        and `hiredate`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'sal'">
+                        and `sal`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'comm'">
+                        and `comm`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'deptno'">
+                        and `deptno`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <otherwise>
+                        and false
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
     </sql>
 
     <!--查询操作构造器 -->
@@ -121,10 +169,10 @@
                 <![CDATA[ <= #{criterion.value} ]]>
             </when>
             <when test="criterion.op.type == 'like'">
-                <![CDATA[ LIKE CONCAT('%',#{criterion.value},'%')]]>
+                <![CDATA[ LIKE CONCAT('%',LOWER(#{criterion.value}),'%')]]>
             </when>
             <when test="criterion.op.type == 'notLike'">
-                <![CDATA[ NOT LIKE CONCAT('%',#{criterion.value},'%') ]]>
+                <![CDATA[ NOT LIKE CONCAT('%',LOWER(#{criterion.value}),'%') ]]>
             </when>
             <when test="criterion.op.type == 'in'">
                 = #{criterion.value}
@@ -214,7 +262,7 @@
     </select>
     
     <!--根据主键信息删除实体对象 -->
-    <delete id="deleteById" parameterType="java.lang.Integer">
+    <delete id="deleteById" parameterType="java.io.Serializable">
         delete from emp
         where `empno` = #{empno,jdbcType=INTEGER}
     </delete>

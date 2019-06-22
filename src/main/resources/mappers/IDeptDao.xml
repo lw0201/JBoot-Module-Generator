@@ -64,55 +64,111 @@
             <foreach collection="wp.criterias" item="criteria" separator="or">
                 <trim prefix="(" prefixOverrides="and" suffix=")">
                     <foreach collection="criteria.criterions" item="criterion">
-                         <choose>
-                            <when test="criterion.attr == 'id'">
-                                and `id`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'deptCode'">
-                                and `dept_code`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'deptName'">
-                                and `dept_name`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'tenantId'">
-                                and `tenant_id`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'address'">
-                                and `address`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'describe'">
-                                and `describe`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'createdBy'">
-                                and `created_by`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'createdDate'">
-                                and `created_date`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'lastUpdateBy'">
-                                and `last_update_by`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <when test="criterion.attr == 'lastUpdateDate'">
-                                and `last_update_date`
-                                <include refid="Wrapper_Op_Clause" />
-                            </when>
-                            <otherwise>
-                                and false
-                            </otherwise>
-                        </choose>
+                         <include refid="Wrapper_Where_Op_Clause"></include>
                     </foreach>
                 </trim>
             </foreach>
         </where>
+    </sql>
+
+    <!--构造操作条件 -->
+    <sql id="Wrapper_Where_Op_Clause">
+        <choose>
+            <when test="criterion.op.type == 'like' or criterion.op.type == 'notLike'">
+                <choose>
+                    <when test="criterion.attr == 'id'">
+                        and LOWER(`id`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'deptCode'">
+                        and LOWER(`dept_code`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'deptName'">
+                        and LOWER(`dept_name`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'tenantId'">
+                        and LOWER(`tenant_id`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'address'">
+                        and LOWER(`address`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'describe'">
+                        and LOWER(`describe`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'createdBy'">
+                        and LOWER(`created_by`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'createdDate'">
+                        and LOWER(`created_date`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastUpdateBy'">
+                        and LOWER(`last_update_by`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastUpdateDate'">
+                        and LOWER(`last_update_date`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <otherwise>
+                        and false
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="criterion.attr == 'id'">
+                        and `id`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'deptCode'">
+                        and `dept_code`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'deptName'">
+                        and `dept_name`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'tenantId'">
+                        and `tenant_id`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'address'">
+                        and `address`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'describe'">
+                        and `describe`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'createdBy'">
+                        and `created_by`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'createdDate'">
+                        and `created_date`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastUpdateBy'">
+                        and `last_update_by`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastUpdateDate'">
+                        and `last_update_date`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <otherwise>
+                        and false
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
     </sql>
 
     <!--查询操作构造器 -->
@@ -137,10 +193,10 @@
                 <![CDATA[ <= #{criterion.value} ]]>
             </when>
             <when test="criterion.op.type == 'like'">
-                <![CDATA[ LIKE CONCAT('%',#{criterion.value},'%')]]>
+                <![CDATA[ LIKE CONCAT('%',LOWER(#{criterion.value}),'%')]]>
             </when>
             <when test="criterion.op.type == 'notLike'">
-                <![CDATA[ NOT LIKE CONCAT('%',#{criterion.value},'%') ]]>
+                <![CDATA[ NOT LIKE CONCAT('%',LOWER(#{criterion.value}),'%') ]]>
             </when>
             <when test="criterion.op.type == 'in'">
                 = #{criterion.value}
@@ -236,7 +292,7 @@
     </select>
     
     <!--根据主键信息删除实体对象 -->
-    <delete id="deleteById" parameterType="java.lang.Integer">
+    <delete id="deleteById" parameterType="java.io.Serializable">
         delete from dept
         where `id` = #{id,jdbcType=VARCHAR}
     </delete>

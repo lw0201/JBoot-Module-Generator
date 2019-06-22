@@ -11,10 +11,18 @@ import java.util.Date;
 </#list>
 </#if>
 
+<#if importPackages?? && (importPackages?size > 0) >
+<#list importPackages as packageName>
+<#if packageName == 'String'>
+import org.hibernate.validator.constraints.Length;
+</#if>
+</#list>
+</#if>
+
 import lombok.Data;
 
 /**
- * Emp 实体类
+ * ${entityName} 实体类
  * 
  * @author liwen
  */
@@ -27,8 +35,11 @@ public class ${entityName}VO implements Serializable {
     /**
      * ${fidld.comments}
      */
+    <#if fidld.em.javaType == 'String'>
+    @Length(max = ${fidld.columnSize})
+    </#if>
     private ${fidld.em.javaType} ${fidld.attrName};
-    
+
     </#list>
 
 }
