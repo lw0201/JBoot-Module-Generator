@@ -35,10 +35,9 @@ public class EmpController {
      *            业务实体
      * @return 返回新增影响的数据
      */
-    @PostMapping("/v1/emp/insert")
-    public Result<String> insert(@RequestBody EmpVO entity) {
-        iEmpService.insert(entity);
-        return new Result<String>().success();
+    @PostMapping("/v1/emp/save")
+    public Result<Integer> save(@RequestBody EmpVO entity) {
+        return new Result<Integer>().success(iEmpService.insert(entity));
     }
 
     /**
@@ -49,9 +48,8 @@ public class EmpController {
      * @return 返回删除影响的实体
      */
     @DeleteMapping("/v1/emp/delete/{id}")
-    public Result<String> delete(@PathVariable("id") Integer id) {
-        iEmpService.deleteById(id);
-        return new Result<String>().success();
+    public Result<Integer> delete(@PathVariable("id") String id) {
+        return new Result<Integer>().success(iEmpService.deleteById(id));
     }
 
     /**
@@ -62,9 +60,8 @@ public class EmpController {
      * @return 返回影响的行
      */
     @PostMapping("/v1/emp/update")
-    public Result<String> update(@RequestBody EmpVO entity) {
-        iEmpService.update(entity);
-        return new Result<String>().success();
+    public Result<Integer> update(@RequestBody EmpVO entity) {
+        return new Result<Integer>().success(iEmpService.update(entity));
     }
 
     /**
@@ -75,7 +72,7 @@ public class EmpController {
      * @return 返回实体对象的相信信息
      */
     @GetMapping("/v1/emp/single/{id}")
-    public Result<EmpVO> findById(@PathVariable("id") Integer id) {
+    public Result<EmpVO> findById(@PathVariable("id") String id) {
         return new Result<EmpVO>().success(iEmpService.findById(id));
     }
 

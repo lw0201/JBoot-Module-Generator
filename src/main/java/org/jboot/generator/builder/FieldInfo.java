@@ -30,6 +30,11 @@ public class FieldInfo {
     private String comments;
 
     /**
+     * 字段长度
+     */
+    private int columnSize;
+
+    /**
      * 字段类型
      */
     private EntityMapping em;
