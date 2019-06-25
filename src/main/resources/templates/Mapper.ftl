@@ -152,7 +152,7 @@
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
-    <select id="query">
+    <select id="query" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         from ${tableName}
