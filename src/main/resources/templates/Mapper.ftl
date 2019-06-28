@@ -239,7 +239,7 @@
             <#elseif field.fieldName == pk.fieldName >
             UUID()<#if field_has_next>,</#if>
             <#else>
-            ${r'#{'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'}<#if field_has_next>,</#if>
+            ${r'#{item.'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'}<#if field_has_next>,</#if>
             </#if>
             </#list>
             )
