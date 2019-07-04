@@ -157,7 +157,7 @@
                     <dockerDirectory>/</dockerDirectory>
                     <resources>
                         <resource>
-                            <targetPath>/docker</targetPath>
+                            <targetPath>/</targetPath>
                             <directory>${project.build.directory}</directory>
                             <include>${project.build.finalName}.jar</include>
                         </resource>
