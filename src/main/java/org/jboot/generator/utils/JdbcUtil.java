@@ -81,14 +81,14 @@ public class JdbcUtil {
         List<TableInfo> tableInfos = new ArrayList<TableInfo>();
         try {
             DatabaseMetaData metaData = connection.getMetaData();
+            System.err.println(metaData.getSchemas());
             ResultSet tables = metaData.getTables(connection.getCatalog(), null, "%", new String[] {"TABLE"});
             while (tables.next()) {
                 TableInfo tableInfo = new TableInfo();
                 String table_name = tables.getString(TABLE_NAME);
                 String remarkes = tables.getString(REMARKS);
                 tableInfo.setTableName(table_name);
-                tableInfo.setEntityName(
-                    StringUtils.toUpperCaseFirst(StringUtils.underlineToCamel(table_name.toLowerCase())));
+                tableInfo.setEntityName(StringUtils.toUpperCaseFirst(StringUtils.underlineToCamel(table_name)));
                 tableInfo.setPackageName("");
                 tableInfo.setComments(remarkes);
                 ResultSet columns = metaData.getColumns(connection.getCatalog(), null, table_name, "%");
@@ -103,11 +103,14 @@ public class JdbcUtil {
                     if (null == tableInfo.getImportPackages()) {
                         tableInfo.setImportPackages(new HashSet<String>());
                     }
-                    tableInfo.getImportPackages().add(data.getJavaType());
+                    String attrName = StringUtils.underlineToCamel(colName);
+                    if (!"createdDate".equals(attrName) && !"lastUpdateDate".equals(attrName)) {
+                        tableInfo.getImportPackages().add(data.getJavaType());
+                    }
                     FieldInfo fieldInfo = new FieldInfo();
                     fieldInfo.setColumnSize(columnSize);
                     fieldInfo.setFieldName(colName);
-                    fieldInfo.setAttrName(StringUtils.underlineToCamel(colName.toLowerCase()));
+                    fieldInfo.setAttrName(attrName);
                     fieldInfo.setEm(data);
                     fieldInfo.setComments(comments);
                     fieldInfos.add(fieldInfo);
@@ -120,6 +123,7 @@ public class JdbcUtil {
                 tableInfos.add(tableInfo);
             }
         } catch (SQLException e) {
+            System.err.println(e);
             logger.error("db error:", e);
         } finally {
             close(connection);
