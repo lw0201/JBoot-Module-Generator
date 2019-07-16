@@ -16,36 +16,36 @@
 
     <!--基础字段信息配置 -->
     <sql id="Base_Column_List">
-        `empno`,`ename`,`job`,`mgr`,`hiredate`,
-        `sal`,`comm`,`deptno`
+        t.`empno`,t.`ename`,t.`job`,t.`mgr`,t.`hiredate`,
+        t.`sal`,t.`comm`,t.`deptno`
     </sql>
 
     <!--基础条件查询配置 -->
     <sql id="Base_Where_Clause">
         <where>
             <if test="entity.empno != null">
-                and `empno` = #{entity.empno,jdbcType=INTEGER}
+                and t.`empno` = #{entity.empno,jdbcType=INTEGER}
             </if>
             <if test="entity.ename != null">
-                and `ename` = #{entity.ename,jdbcType=VARCHAR}
+                and t.`ename` = #{entity.ename,jdbcType=VARCHAR}
             </if>
             <if test="entity.job != null">
-                and `job` = #{entity.job,jdbcType=VARCHAR}
+                and t.`job` = #{entity.job,jdbcType=VARCHAR}
             </if>
             <if test="entity.mgr != null">
-                and `mgr` = #{entity.mgr,jdbcType=INTEGER}
+                and t.`mgr` = #{entity.mgr,jdbcType=INTEGER}
             </if>
             <if test="entity.hiredate != null">
-                and `hiredate` = #{entity.hiredate,jdbcType=DATE}
+                and t.`hiredate` = #{entity.hiredate,jdbcType=DATE}
             </if>
             <if test="entity.sal != null">
-                and `sal` = #{entity.sal,jdbcType=DECIMAL}
+                and t.`sal` = #{entity.sal,jdbcType=DECIMAL}
             </if>
             <if test="entity.comm != null">
-                and `comm` = #{entity.comm,jdbcType=DECIMAL}
+                and t.`comm` = #{entity.comm,jdbcType=DECIMAL}
             </if>
             <if test="entity.deptno != null">
-                and `deptno` = #{entity.deptno,jdbcType=INTEGER}
+                and t.`deptno` = #{entity.deptno,jdbcType=INTEGER}
             </if>
         </where>
     </sql>
@@ -69,35 +69,35 @@
             <when test="criterion.op.type == 'like' or criterion.op.type == 'notLike'">
                 <choose>
                     <when test="criterion.attr == 'empno'">
-                        and LOWER(`empno`)
+                        and LOWER(t.`empno`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'ename'">
-                        and LOWER(`ename`)
+                        and LOWER(t.`ename`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'job'">
-                        and LOWER(`job`)
+                        and LOWER(t.`job`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'mgr'">
-                        and LOWER(`mgr`)
+                        and LOWER(t.`mgr`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'hiredate'">
-                        and LOWER(`hiredate`)
+                        and LOWER(t.`hiredate`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'sal'">
-                        and LOWER(`sal`)
+                        and LOWER(t.`sal`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'comm'">
-                        and LOWER(`comm`)
+                        and LOWER(t.`comm`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'deptno'">
-                        and LOWER(`deptno`)
+                        and LOWER(t.`deptno`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <otherwise>
@@ -108,35 +108,35 @@
             <otherwise>
                 <choose>
                     <when test="criterion.attr == 'empno'">
-                        and `empno`
+                        and t.`empno`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'ename'">
-                        and `ename`
+                        and t.`ename`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'job'">
-                        and `job`
+                        and t.`job`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'mgr'">
-                        and `mgr`
+                        and t.`mgr`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'hiredate'">
-                        and `hiredate`
+                        and t.`hiredate`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'sal'">
-                        and `sal`
+                        and t.`sal`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'comm'">
-                        and `comm`
+                        and t.`comm`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'deptno'">
-                        and `deptno`
+                        and t.`deptno`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <otherwise>
@@ -174,11 +174,11 @@
             <when test="criterion.op.type == 'notLike'">
                 <![CDATA[ NOT LIKE CONCAT('%',LOWER(#{criterion.value}),'%') ]]>
             </when>
-            <when test="criterion.op.type == 'in'">
-                = #{criterion.value}
+            <when test="criterion.op.type == 'isNull'">
+                is null
             </when>
-            <when test="criterion.op.type == 'notIn'">
-                = #{criterion.value}
+            <when test="criterion.op.type == 'isNotNull'">
+                is not null
             </when>
             <when test="criterion.op.type == 'in'">
                 in
@@ -204,31 +204,31 @@
     <!--构造排序条件 -->
     <sql id="Wrapper_Order_Clause">
         <if test="wp.sorts != null">
-            <foreach collection="wp.sorts" item="st" separator=",">
+            <foreach collection="wp.sorts" open=" order by " item="st" separator=",">
                 <choose>
                     <when test="st.attr == 'empno'">
-                        `empno` #{st.order.type}
+                        t.`empno` ${st.order.type}
                     </when>
                     <when test="st.attr == 'ename'">
-                        `ename` #{st.order.type}
+                        t.`ename` ${st.order.type}
                     </when>
                     <when test="st.attr == 'job'">
-                        `job` #{st.order.type}
+                        t.`job` ${st.order.type}
                     </when>
                     <when test="st.attr == 'mgr'">
-                        `mgr` #{st.order.type}
+                        t.`mgr` ${st.order.type}
                     </when>
                     <when test="st.attr == 'hiredate'">
-                        `hiredate` #{st.order.type}
+                        t.`hiredate` ${st.order.type}
                     </when>
                     <when test="st.attr == 'sal'">
-                        `sal` #{st.order.type}
+                        t.`sal` ${st.order.type}
                     </when>
                     <when test="st.attr == 'comm'">
-                        `comm` #{st.order.type}
+                        t.`comm` ${st.order.type}
                     </when>
                     <when test="st.attr == 'deptno'">
-                        `deptno` #{st.order.type}
+                        t.`deptno` ${st.order.type}
                     </when>
                 </choose>
             </foreach>
@@ -239,15 +239,15 @@
     <select id="findById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from emp
-        where `empno` = #{empno,jdbcType=INTEGER}
+        from `emp` t
+        where t.`empno` = #{empno,jdbcType=INTEGER}
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
-    <select id="query">
+    <select id="query" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from emp
+        from `emp` t
         <include refid="Base_Where_Clause" />
     </select>
 
@@ -255,7 +255,7 @@
     <select id="findList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from emp
+        from `emp` t
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
@@ -263,19 +263,19 @@
     
     <!--根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.io.Serializable">
-        delete from emp
-        where `empno` = #{empno,jdbcType=INTEGER}
+        delete t from `emp`
+        where t.`empno` = #{empno,jdbcType=INTEGER}
     </delete>
     
     <!--根据实体对象删除数据-->
     <delete id="delete" parameterType="org.jboot.generator.entity.EmpVO">
-        delete from emp
+        delete t from `emp` t
         <include refid="Base_Where_Clause" />
     </delete>
 
     <!--根据实体对象删除数据-->
     <delete id="deletes" parameterType="org.jboot.generator.entity.EmpVO">
-        delete from emp where `empno` in
+        delete t from `emp` t where t.`empno` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item.attrName}
         </foreach>
@@ -286,7 +286,7 @@
         <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="empno">
             select uuid() 
         </selectKey>
-        insert into emp
+        insert into `emp`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="empno != null">
                 `empno`,
@@ -343,7 +343,7 @@
 
     <!--插入实体对象 -->
     <insert id="inserts" parameterType="org.jboot.generator.entity.EmpVO">
-        insert into emp
+        insert into `emp`
         <trim prefix="(" suffix=") values" suffixOverrides=",">
             `empno`,
             `ename`,
@@ -357,51 +357,51 @@
         <foreach collection="list" item="item" index="index" separator=",">
             (
             UUID(),
-            #{ename,jdbcType=VARCHAR},
-            #{job,jdbcType=VARCHAR},
-            #{mgr,jdbcType=INTEGER},
-            #{hiredate,jdbcType=DATE},
-            #{sal,jdbcType=DECIMAL},
-            #{comm,jdbcType=DECIMAL},
-            #{deptno,jdbcType=INTEGER}
+            #{item.ename,jdbcType=VARCHAR},
+            #{item.job,jdbcType=VARCHAR},
+            #{item.mgr,jdbcType=INTEGER},
+            #{item.hiredate,jdbcType=DATE},
+            #{item.sal,jdbcType=DECIMAL},
+            #{item.comm,jdbcType=DECIMAL},
+            #{item.deptno,jdbcType=INTEGER}
             )
         </foreach>
     </insert>
 
     <!--更新实体对象 -->
     <update id="update">
-        update emp
+        update `emp` t
         <set>
             <if test="entity.ename != null">
-                `ename` = #{entity.ename,jdbcType=VARCHAR},
+                t.`ename` = #{entity.ename,jdbcType=VARCHAR},
             </if>
             <if test="entity.job != null">
-                `job` = #{entity.job,jdbcType=VARCHAR},
+                t.`job` = #{entity.job,jdbcType=VARCHAR},
             </if>
             <if test="entity.mgr != null">
-                `mgr` = #{entity.mgr,jdbcType=INTEGER},
+                t.`mgr` = #{entity.mgr,jdbcType=INTEGER},
             </if>
             <if test="entity.hiredate != null">
-                `hiredate` = #{entity.hiredate,jdbcType=DATE},
+                t.`hiredate` = #{entity.hiredate,jdbcType=DATE},
             </if>
             <if test="entity.sal != null">
-                `sal` = #{entity.sal,jdbcType=DECIMAL},
+                t.`sal` = #{entity.sal,jdbcType=DECIMAL},
             </if>
             <if test="entity.comm != null">
-                `comm` = #{entity.comm,jdbcType=DECIMAL},
+                t.`comm` = #{entity.comm,jdbcType=DECIMAL},
             </if>
             <if test="entity.deptno != null">
-                `deptno` = #{entity.deptno,jdbcType=INTEGER},
+                t.`deptno` = #{entity.deptno,jdbcType=INTEGER},
             </if>
         </set>
-        where `empno` = #{entity.empno,jdbcType=INTEGER}
+        where t.`empno` = #{entity.empno,jdbcType=INTEGER}
     </update>
 
     <!--构造器查询 -->
     <select id="queryByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from emp
+        from `emp` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
         </if>
@@ -411,7 +411,7 @@
     <select id="findByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from emp
+        from `emp` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
             <include refid="Wrapper_Order_Clause" />
@@ -420,31 +420,31 @@
 
     <!--更新实体对象 -->
     <update id="updateByWrapper">
-        update emp
+        update `emp` t
         <set>
             <if test="entity.empno != null">
-                `empno` = #{entity.empno,jdbcType=INTEGER},
+                t.`empno` = #{entity.empno,jdbcType=INTEGER},
             </if>
             <if test="entity.ename != null">
-                `ename` = #{entity.ename,jdbcType=VARCHAR},
+                t.`ename` = #{entity.ename,jdbcType=VARCHAR},
             </if>
             <if test="entity.job != null">
-                `job` = #{entity.job,jdbcType=VARCHAR},
+                t.`job` = #{entity.job,jdbcType=VARCHAR},
             </if>
             <if test="entity.mgr != null">
-                `mgr` = #{entity.mgr,jdbcType=INTEGER},
+                t.`mgr` = #{entity.mgr,jdbcType=INTEGER},
             </if>
             <if test="entity.hiredate != null">
-                `hiredate` = #{entity.hiredate,jdbcType=DATE},
+                t.`hiredate` = #{entity.hiredate,jdbcType=DATE},
             </if>
             <if test="entity.sal != null">
-                `sal` = #{entity.sal,jdbcType=DECIMAL},
+                t.`sal` = #{entity.sal,jdbcType=DECIMAL},
             </if>
             <if test="entity.comm != null">
-                `comm` = #{entity.comm,jdbcType=DECIMAL},
+                t.`comm` = #{entity.comm,jdbcType=DECIMAL},
             </if>
             <if test="entity.deptno != null">
-                `deptno` = #{entity.deptno,jdbcType=INTEGER},
+                t.`deptno` = #{entity.deptno,jdbcType=INTEGER},
             </if>
         </set>
         <include refid="Wrapper_Where_Clause" />
@@ -452,7 +452,7 @@
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
-        delete from emp
+        delete t from `emp` t
         <include refid="Wrapper_Where_Clause" />
     </delete>
 

@@ -12,23 +12,23 @@
 
     <!--基础字段信息配置 -->
     <sql id="Base_Column_List">
-        `ename`,`job`,`sal`,`comm`
+        t.`ename`,t.`job`,t.`sal`,t.`comm`
     </sql>
 
     <!--基础条件查询配置 -->
     <sql id="Base_Where_Clause">
         <where>
             <if test="entity.ename != null">
-                and `ename` = #{entity.ename,jdbcType=VARCHAR}
+                and t.`ename` = #{entity.ename,jdbcType=VARCHAR}
             </if>
             <if test="entity.job != null">
-                and `job` = #{entity.job,jdbcType=VARCHAR}
+                and t.`job` = #{entity.job,jdbcType=VARCHAR}
             </if>
             <if test="entity.sal != null">
-                and `sal` = #{entity.sal,jdbcType=DECIMAL}
+                and t.`sal` = #{entity.sal,jdbcType=DECIMAL}
             </if>
             <if test="entity.comm != null">
-                and `comm` = #{entity.comm,jdbcType=DECIMAL}
+                and t.`comm` = #{entity.comm,jdbcType=DECIMAL}
             </if>
         </where>
     </sql>
@@ -52,19 +52,19 @@
             <when test="criterion.op.type == 'like' or criterion.op.type == 'notLike'">
                 <choose>
                     <when test="criterion.attr == 'ename'">
-                        and LOWER(`ename`)
+                        and LOWER(t.`ename`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'job'">
-                        and LOWER(`job`)
+                        and LOWER(t.`job`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'sal'">
-                        and LOWER(`sal`)
+                        and LOWER(t.`sal`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'comm'">
-                        and LOWER(`comm`)
+                        and LOWER(t.`comm`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <otherwise>
@@ -75,19 +75,19 @@
             <otherwise>
                 <choose>
                     <when test="criterion.attr == 'ename'">
-                        and `ename`
+                        and t.`ename`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'job'">
-                        and `job`
+                        and t.`job`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'sal'">
-                        and `sal`
+                        and t.`sal`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'comm'">
-                        and `comm`
+                        and t.`comm`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <otherwise>
@@ -125,11 +125,11 @@
             <when test="criterion.op.type == 'notLike'">
                 <![CDATA[ NOT LIKE CONCAT('%',LOWER(#{criterion.value}),'%') ]]>
             </when>
-            <when test="criterion.op.type == 'in'">
-                = #{criterion.value}
+            <when test="criterion.op.type == 'isNull'">
+                is null
             </when>
-            <when test="criterion.op.type == 'notIn'">
-                = #{criterion.value}
+            <when test="criterion.op.type == 'isNotNull'">
+                is not null
             </when>
             <when test="criterion.op.type == 'in'">
                 in
@@ -155,19 +155,19 @@
     <!--构造排序条件 -->
     <sql id="Wrapper_Order_Clause">
         <if test="wp.sorts != null">
-            <foreach collection="wp.sorts" item="st" separator=",">
+            <foreach collection="wp.sorts" open=" order by " item="st" separator=",">
                 <choose>
                     <when test="st.attr == 'ename'">
-                        `ename` #{st.order.type}
+                        t.`ename` ${st.order.type}
                     </when>
                     <when test="st.attr == 'job'">
-                        `job` #{st.order.type}
+                        t.`job` ${st.order.type}
                     </when>
                     <when test="st.attr == 'sal'">
-                        `sal` #{st.order.type}
+                        t.`sal` ${st.order.type}
                     </when>
                     <when test="st.attr == 'comm'">
-                        `comm` #{st.order.type}
+                        t.`comm` ${st.order.type}
                     </when>
                 </choose>
             </foreach>
@@ -178,15 +178,15 @@
     <select id="findById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from bonus
-        where `ename` = #{ename,jdbcType=VARCHAR}
+        from `bonus` t
+        where t.`ename` = #{ename,jdbcType=VARCHAR}
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
-    <select id="query">
+    <select id="query" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from bonus
+        from `bonus` t
         <include refid="Base_Where_Clause" />
     </select>
 
@@ -194,7 +194,7 @@
     <select id="findList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from bonus
+        from `bonus` t
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
@@ -202,19 +202,19 @@
     
     <!--根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.io.Serializable">
-        delete from bonus
-        where `ename` = #{ename,jdbcType=VARCHAR}
+        delete t from `bonus`
+        where t.`ename` = #{ename,jdbcType=VARCHAR}
     </delete>
     
     <!--根据实体对象删除数据-->
     <delete id="delete" parameterType="org.jboot.generator.entity.BonusVO">
-        delete from bonus
+        delete t from `bonus` t
         <include refid="Base_Where_Clause" />
     </delete>
 
     <!--根据实体对象删除数据-->
     <delete id="deletes" parameterType="org.jboot.generator.entity.BonusVO">
-        delete from bonus where `ename` in
+        delete t from `bonus` t where t.`ename` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item.attrName}
         </foreach>
@@ -225,7 +225,7 @@
         <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="ename">
             select uuid() 
         </selectKey>
-        insert into bonus
+        insert into `bonus`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="ename != null">
                 `ename`,
@@ -258,7 +258,7 @@
 
     <!--插入实体对象 -->
     <insert id="inserts" parameterType="org.jboot.generator.entity.BonusVO">
-        insert into bonus
+        insert into `bonus`
         <trim prefix="(" suffix=") values" suffixOverrides=",">
             `ename`,
             `job`,
@@ -268,35 +268,35 @@
         <foreach collection="list" item="item" index="index" separator=",">
             (
             UUID(),
-            #{job,jdbcType=VARCHAR},
-            #{sal,jdbcType=DECIMAL},
-            #{comm,jdbcType=DECIMAL}
+            #{item.job,jdbcType=VARCHAR},
+            #{item.sal,jdbcType=DECIMAL},
+            #{item.comm,jdbcType=DECIMAL}
             )
         </foreach>
     </insert>
 
     <!--更新实体对象 -->
     <update id="update">
-        update bonus
+        update `bonus` t
         <set>
             <if test="entity.job != null">
-                `job` = #{entity.job,jdbcType=VARCHAR},
+                t.`job` = #{entity.job,jdbcType=VARCHAR},
             </if>
             <if test="entity.sal != null">
-                `sal` = #{entity.sal,jdbcType=DECIMAL},
+                t.`sal` = #{entity.sal,jdbcType=DECIMAL},
             </if>
             <if test="entity.comm != null">
-                `comm` = #{entity.comm,jdbcType=DECIMAL},
+                t.`comm` = #{entity.comm,jdbcType=DECIMAL},
             </if>
         </set>
-        where `ename` = #{entity.ename,jdbcType=VARCHAR}
+        where t.`ename` = #{entity.ename,jdbcType=VARCHAR}
     </update>
 
     <!--构造器查询 -->
     <select id="queryByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from bonus
+        from `bonus` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
         </if>
@@ -306,7 +306,7 @@
     <select id="findByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from bonus
+        from `bonus` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
             <include refid="Wrapper_Order_Clause" />
@@ -315,19 +315,19 @@
 
     <!--更新实体对象 -->
     <update id="updateByWrapper">
-        update bonus
+        update `bonus` t
         <set>
             <if test="entity.ename != null">
-                `ename` = #{entity.ename,jdbcType=VARCHAR},
+                t.`ename` = #{entity.ename,jdbcType=VARCHAR},
             </if>
             <if test="entity.job != null">
-                `job` = #{entity.job,jdbcType=VARCHAR},
+                t.`job` = #{entity.job,jdbcType=VARCHAR},
             </if>
             <if test="entity.sal != null">
-                `sal` = #{entity.sal,jdbcType=DECIMAL},
+                t.`sal` = #{entity.sal,jdbcType=DECIMAL},
             </if>
             <if test="entity.comm != null">
-                `comm` = #{entity.comm,jdbcType=DECIMAL},
+                t.`comm` = #{entity.comm,jdbcType=DECIMAL},
             </if>
         </set>
         <include refid="Wrapper_Where_Clause" />
@@ -335,7 +335,7 @@
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
-        delete from bonus
+        delete t from `bonus` t
         <include refid="Wrapper_Where_Clause" />
     </delete>
 

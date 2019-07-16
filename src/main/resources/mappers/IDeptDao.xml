@@ -18,42 +18,42 @@
 
     <!--基础字段信息配置 -->
     <sql id="Base_Column_List">
-        `id`,`dept_code`,`dept_name`,`tenant_id`,`address`,
-        `describe`,`created_by`,`created_date`,`last_update_by`,`last_update_date`
+        t.`id`,t.`dept_code`,t.`dept_name`,t.`tenant_id`,t.`address`,
+        t.`describe`,t.`created_by`,t.`created_date`,t.`last_update_by`,t.`last_update_date`
     </sql>
 
     <!--基础条件查询配置 -->
     <sql id="Base_Where_Clause">
         <where>
             <if test="entity.id != null">
-                and `id` = #{entity.id,jdbcType=VARCHAR}
+                and t.`id` = #{entity.id,jdbcType=VARCHAR}
             </if>
             <if test="entity.deptCode != null">
-                and `dept_code` = #{entity.deptCode,jdbcType=VARCHAR}
+                and t.`dept_code` = #{entity.deptCode,jdbcType=VARCHAR}
             </if>
             <if test="entity.deptName != null">
-                and `dept_name` = #{entity.deptName,jdbcType=VARCHAR}
+                and t.`dept_name` = #{entity.deptName,jdbcType=VARCHAR}
             </if>
             <if test="entity.tenantId != null">
-                and `tenant_id` = #{entity.tenantId,jdbcType=VARCHAR}
+                and t.`tenant_id` = #{entity.tenantId,jdbcType=VARCHAR}
             </if>
             <if test="entity.address != null">
-                and `address` = #{entity.address,jdbcType=VARCHAR}
+                and t.`address` = #{entity.address,jdbcType=VARCHAR}
             </if>
             <if test="entity.describe != null">
-                and `describe` = #{entity.describe,jdbcType=VARCHAR}
+                and t.`describe` = #{entity.describe,jdbcType=VARCHAR}
             </if>
             <if test="entity.createdBy != null">
-                and `created_by` = #{entity.createdBy,jdbcType=VARCHAR}
+                and t.`created_by` = #{entity.createdBy,jdbcType=VARCHAR}
             </if>
             <if test="entity.createdDate != null">
-                and `created_date` = #{entity.createdDate,jdbcType=TIMESTAMP}
+                and t.`created_date` = #{entity.createdDate,jdbcType=TIMESTAMP}
             </if>
             <if test="entity.lastUpdateBy != null">
-                and `last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR}
+                and t.`last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR}
             </if>
             <if test="entity.lastUpdateDate != null">
-                and `last_update_date` = #{entity.lastUpdateDate,jdbcType=TIMESTAMP}
+                and t.`last_update_date` = #{entity.lastUpdateDate,jdbcType=TIMESTAMP}
             </if>
         </where>
     </sql>
@@ -77,43 +77,43 @@
             <when test="criterion.op.type == 'like' or criterion.op.type == 'notLike'">
                 <choose>
                     <when test="criterion.attr == 'id'">
-                        and LOWER(`id`)
+                        and LOWER(t.`id`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'deptCode'">
-                        and LOWER(`dept_code`)
+                        and LOWER(t.`dept_code`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'deptName'">
-                        and LOWER(`dept_name`)
+                        and LOWER(t.`dept_name`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'tenantId'">
-                        and LOWER(`tenant_id`)
+                        and LOWER(t.`tenant_id`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'address'">
-                        and LOWER(`address`)
+                        and LOWER(t.`address`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'describe'">
-                        and LOWER(`describe`)
+                        and LOWER(t.`describe`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'createdBy'">
-                        and LOWER(`created_by`)
+                        and LOWER(t.`created_by`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'createdDate'">
-                        and LOWER(`created_date`)
+                        and LOWER(t.`created_date`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'lastUpdateBy'">
-                        and LOWER(`last_update_by`)
+                        and LOWER(t.`last_update_by`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'lastUpdateDate'">
-                        and LOWER(`last_update_date`)
+                        and LOWER(t.`last_update_date`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <otherwise>
@@ -124,43 +124,43 @@
             <otherwise>
                 <choose>
                     <when test="criterion.attr == 'id'">
-                        and `id`
+                        and t.`id`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'deptCode'">
-                        and `dept_code`
+                        and t.`dept_code`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'deptName'">
-                        and `dept_name`
+                        and t.`dept_name`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'tenantId'">
-                        and `tenant_id`
+                        and t.`tenant_id`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'address'">
-                        and `address`
+                        and t.`address`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'describe'">
-                        and `describe`
+                        and t.`describe`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'createdBy'">
-                        and `created_by`
+                        and t.`created_by`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'createdDate'">
-                        and `created_date`
+                        and t.`created_date`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'lastUpdateBy'">
-                        and `last_update_by`
+                        and t.`last_update_by`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'lastUpdateDate'">
-                        and `last_update_date`
+                        and t.`last_update_date`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <otherwise>
@@ -198,11 +198,11 @@
             <when test="criterion.op.type == 'notLike'">
                 <![CDATA[ NOT LIKE CONCAT('%',LOWER(#{criterion.value}),'%') ]]>
             </when>
-            <when test="criterion.op.type == 'in'">
-                = #{criterion.value}
+            <when test="criterion.op.type == 'isNull'">
+                is null
             </when>
-            <when test="criterion.op.type == 'notIn'">
-                = #{criterion.value}
+            <when test="criterion.op.type == 'isNotNull'">
+                is not null
             </when>
             <when test="criterion.op.type == 'in'">
                 in
@@ -228,37 +228,37 @@
     <!--构造排序条件 -->
     <sql id="Wrapper_Order_Clause">
         <if test="wp.sorts != null">
-            <foreach collection="wp.sorts" item="st" separator=",">
+            <foreach collection="wp.sorts" open=" order by " item="st" separator=",">
                 <choose>
                     <when test="st.attr == 'id'">
-                        `id` #{st.order.type}
+                        t.`id` ${st.order.type}
                     </when>
                     <when test="st.attr == 'deptCode'">
-                        `dept_code` #{st.order.type}
+                        t.`dept_code` ${st.order.type}
                     </when>
                     <when test="st.attr == 'deptName'">
-                        `dept_name` #{st.order.type}
+                        t.`dept_name` ${st.order.type}
                     </when>
                     <when test="st.attr == 'tenantId'">
-                        `tenant_id` #{st.order.type}
+                        t.`tenant_id` ${st.order.type}
                     </when>
                     <when test="st.attr == 'address'">
-                        `address` #{st.order.type}
+                        t.`address` ${st.order.type}
                     </when>
                     <when test="st.attr == 'describe'">
-                        `describe` #{st.order.type}
+                        t.`describe` ${st.order.type}
                     </when>
                     <when test="st.attr == 'createdBy'">
-                        `created_by` #{st.order.type}
+                        t.`created_by` ${st.order.type}
                     </when>
                     <when test="st.attr == 'createdDate'">
-                        `created_date` #{st.order.type}
+                        t.`created_date` ${st.order.type}
                     </when>
                     <when test="st.attr == 'lastUpdateBy'">
-                        `last_update_by` #{st.order.type}
+                        t.`last_update_by` ${st.order.type}
                     </when>
                     <when test="st.attr == 'lastUpdateDate'">
-                        `last_update_date` #{st.order.type}
+                        t.`last_update_date` ${st.order.type}
                     </when>
                 </choose>
             </foreach>
@@ -269,15 +269,15 @@
     <select id="findById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from dept
-        where `id` = #{id,jdbcType=VARCHAR}
+        from `dept` t
+        where t.`id` = #{id,jdbcType=VARCHAR}
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
-    <select id="query">
+    <select id="query" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from dept
+        from `dept` t
         <include refid="Base_Where_Clause" />
     </select>
 
@@ -285,7 +285,7 @@
     <select id="findList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from dept
+        from `dept` t
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
@@ -293,19 +293,19 @@
     
     <!--根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.io.Serializable">
-        delete from dept
-        where `id` = #{id,jdbcType=VARCHAR}
+        delete t from `dept`
+        where t.`id` = #{id,jdbcType=VARCHAR}
     </delete>
     
     <!--根据实体对象删除数据-->
     <delete id="delete" parameterType="org.jboot.generator.entity.DeptVO">
-        delete from dept
+        delete t from `dept` t
         <include refid="Base_Where_Clause" />
     </delete>
 
     <!--根据实体对象删除数据-->
     <delete id="deletes" parameterType="org.jboot.generator.entity.DeptVO">
-        delete from dept where `id` in
+        delete t from `dept` t where t.`id` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item.attrName}
         </foreach>
@@ -316,7 +316,7 @@
         <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="id">
             select uuid() 
         </selectKey>
-        insert into dept
+        insert into `dept`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 `id`,
@@ -385,7 +385,7 @@
 
     <!--插入实体对象 -->
     <insert id="inserts" parameterType="org.jboot.generator.entity.DeptVO">
-        insert into dept
+        insert into `dept`
         <trim prefix="(" suffix=") values" suffixOverrides=",">
             `id`,
             `dept_code`,
@@ -401,14 +401,14 @@
         <foreach collection="list" item="item" index="index" separator=",">
             (
             UUID(),
-            #{deptCode,jdbcType=VARCHAR},
-            #{deptName,jdbcType=VARCHAR},
-            #{tenantId,jdbcType=VARCHAR},
-            #{address,jdbcType=VARCHAR},
-            #{describe,jdbcType=VARCHAR},
-            #{createdBy,jdbcType=VARCHAR},
+            #{item.deptCode,jdbcType=VARCHAR},
+            #{item.deptName,jdbcType=VARCHAR},
+            #{item.tenantId,jdbcType=VARCHAR},
+            #{item.address,jdbcType=VARCHAR},
+            #{item.describe,jdbcType=VARCHAR},
+            #{item.createdBy,jdbcType=VARCHAR},
             current_timestamp(),
-            #{lastUpdateBy,jdbcType=VARCHAR},
+            #{item.lastUpdateBy,jdbcType=VARCHAR},
             current_timestamp()
             )
         </foreach>
@@ -416,38 +416,38 @@
 
     <!--更新实体对象 -->
     <update id="update">
-        update dept
+        update `dept` t
         <set>
             <if test="entity.deptCode != null">
-                `dept_code` = #{entity.deptCode,jdbcType=VARCHAR},
+                t.`dept_code` = #{entity.deptCode,jdbcType=VARCHAR},
             </if>
             <if test="entity.deptName != null">
-                `dept_name` = #{entity.deptName,jdbcType=VARCHAR},
+                t.`dept_name` = #{entity.deptName,jdbcType=VARCHAR},
             </if>
             <if test="entity.tenantId != null">
-                `tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
+                t.`tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
             </if>
             <if test="entity.address != null">
-                `address` = #{entity.address,jdbcType=VARCHAR},
+                t.`address` = #{entity.address,jdbcType=VARCHAR},
             </if>
             <if test="entity.describe != null">
-                `describe` = #{entity.describe,jdbcType=VARCHAR},
+                t.`describe` = #{entity.describe,jdbcType=VARCHAR},
             </if>
             <if test="entity.lastUpdateBy != null">
-                `last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
+                t.`last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
             </if>
             <if test="entity.lastUpdateDate == null or entity.lastUpdateDate != null">
-                `last_update_date` = current_timestamp(),
+                t.`last_update_date` = current_timestamp(),
             </if>
         </set>
-        where `id` = #{entity.id,jdbcType=VARCHAR}
+        where t.`id` = #{entity.id,jdbcType=VARCHAR}
     </update>
 
     <!--构造器查询 -->
     <select id="queryByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from dept
+        from `dept` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
         </if>
@@ -457,7 +457,7 @@
     <select id="findByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from dept
+        from `dept` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
             <include refid="Wrapper_Order_Clause" />
@@ -466,31 +466,31 @@
 
     <!--更新实体对象 -->
     <update id="updateByWrapper">
-        update dept
+        update `dept` t
         <set>
             <if test="entity.id != null">
-                `id` = #{entity.id,jdbcType=VARCHAR},
+                t.`id` = #{entity.id,jdbcType=VARCHAR},
             </if>
             <if test="entity.deptCode != null">
-                `dept_code` = #{entity.deptCode,jdbcType=VARCHAR},
+                t.`dept_code` = #{entity.deptCode,jdbcType=VARCHAR},
             </if>
             <if test="entity.deptName != null">
-                `dept_name` = #{entity.deptName,jdbcType=VARCHAR},
+                t.`dept_name` = #{entity.deptName,jdbcType=VARCHAR},
             </if>
             <if test="entity.tenantId != null">
-                `tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
+                t.`tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
             </if>
             <if test="entity.address != null">
-                `address` = #{entity.address,jdbcType=VARCHAR},
+                t.`address` = #{entity.address,jdbcType=VARCHAR},
             </if>
             <if test="entity.describe != null">
-                `describe` = #{entity.describe,jdbcType=VARCHAR},
+                t.`describe` = #{entity.describe,jdbcType=VARCHAR},
             </if>
             <if test="entity.lastUpdateBy != null">
-                `last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
+                t.`last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
             </if>
             <if test="entity.lastUpdateDate == null or entity.lastUpdateDate != null">
-                `last_update_date` = current_timestamp(),
+                t.`last_update_date` = current_timestamp(),
             </if>
         </set>
         <include refid="Wrapper_Where_Clause" />
@@ -498,7 +498,7 @@
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
-        delete from dept
+        delete t from `dept` t
         <include refid="Wrapper_Where_Clause" />
     </delete>
 

@@ -11,20 +11,20 @@
 
     <!--基础字段信息配置 -->
     <sql id="Base_Column_List">
-        `grade`,`losal`,`hisal`
+        t.`grade`,t.`losal`,t.`hisal`
     </sql>
 
     <!--基础条件查询配置 -->
     <sql id="Base_Where_Clause">
         <where>
             <if test="entity.grade != null">
-                and `grade` = #{entity.grade,jdbcType=INTEGER}
+                and t.`grade` = #{entity.grade,jdbcType=INTEGER}
             </if>
             <if test="entity.losal != null">
-                and `losal` = #{entity.losal,jdbcType=INTEGER}
+                and t.`losal` = #{entity.losal,jdbcType=INTEGER}
             </if>
             <if test="entity.hisal != null">
-                and `hisal` = #{entity.hisal,jdbcType=INTEGER}
+                and t.`hisal` = #{entity.hisal,jdbcType=INTEGER}
             </if>
         </where>
     </sql>
@@ -48,15 +48,15 @@
             <when test="criterion.op.type == 'like' or criterion.op.type == 'notLike'">
                 <choose>
                     <when test="criterion.attr == 'grade'">
-                        and LOWER(`grade`)
+                        and LOWER(t.`grade`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'losal'">
-                        and LOWER(`losal`)
+                        and LOWER(t.`losal`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'hisal'">
-                        and LOWER(`hisal`)
+                        and LOWER(t.`hisal`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <otherwise>
@@ -67,15 +67,15 @@
             <otherwise>
                 <choose>
                     <when test="criterion.attr == 'grade'">
-                        and `grade`
+                        and t.`grade`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'losal'">
-                        and `losal`
+                        and t.`losal`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'hisal'">
-                        and `hisal`
+                        and t.`hisal`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <otherwise>
@@ -113,11 +113,11 @@
             <when test="criterion.op.type == 'notLike'">
                 <![CDATA[ NOT LIKE CONCAT('%',LOWER(#{criterion.value}),'%') ]]>
             </when>
-            <when test="criterion.op.type == 'in'">
-                = #{criterion.value}
+            <when test="criterion.op.type == 'isNull'">
+                is null
             </when>
-            <when test="criterion.op.type == 'notIn'">
-                = #{criterion.value}
+            <when test="criterion.op.type == 'isNotNull'">
+                is not null
             </when>
             <when test="criterion.op.type == 'in'">
                 in
@@ -143,16 +143,16 @@
     <!--构造排序条件 -->
     <sql id="Wrapper_Order_Clause">
         <if test="wp.sorts != null">
-            <foreach collection="wp.sorts" item="st" separator=",">
+            <foreach collection="wp.sorts" open=" order by " item="st" separator=",">
                 <choose>
                     <when test="st.attr == 'grade'">
-                        `grade` #{st.order.type}
+                        t.`grade` ${st.order.type}
                     </when>
                     <when test="st.attr == 'losal'">
-                        `losal` #{st.order.type}
+                        t.`losal` ${st.order.type}
                     </when>
                     <when test="st.attr == 'hisal'">
-                        `hisal` #{st.order.type}
+                        t.`hisal` ${st.order.type}
                     </when>
                 </choose>
             </foreach>
@@ -163,15 +163,15 @@
     <select id="findById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from salgrade
-        where `grade` = #{grade,jdbcType=INTEGER}
+        from `salgrade` t
+        where t.`grade` = #{grade,jdbcType=INTEGER}
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
-    <select id="query">
+    <select id="query" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from salgrade
+        from `salgrade` t
         <include refid="Base_Where_Clause" />
     </select>
 
@@ -179,7 +179,7 @@
     <select id="findList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from salgrade
+        from `salgrade` t
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
@@ -187,19 +187,19 @@
     
     <!--根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.io.Serializable">
-        delete from salgrade
-        where `grade` = #{grade,jdbcType=INTEGER}
+        delete t from `salgrade`
+        where t.`grade` = #{grade,jdbcType=INTEGER}
     </delete>
     
     <!--根据实体对象删除数据-->
     <delete id="delete" parameterType="org.jboot.generator.entity.SalgradeVO">
-        delete from salgrade
+        delete t from `salgrade` t
         <include refid="Base_Where_Clause" />
     </delete>
 
     <!--根据实体对象删除数据-->
     <delete id="deletes" parameterType="org.jboot.generator.entity.SalgradeVO">
-        delete from salgrade where `grade` in
+        delete t from `salgrade` t where t.`grade` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item.attrName}
         </foreach>
@@ -210,7 +210,7 @@
         <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="grade">
             select uuid() 
         </selectKey>
-        insert into salgrade
+        insert into `salgrade`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="grade != null">
                 `grade`,
@@ -237,7 +237,7 @@
 
     <!--插入实体对象 -->
     <insert id="inserts" parameterType="org.jboot.generator.entity.SalgradeVO">
-        insert into salgrade
+        insert into `salgrade`
         <trim prefix="(" suffix=") values" suffixOverrides=",">
             `grade`,
             `losal`,
@@ -246,31 +246,31 @@
         <foreach collection="list" item="item" index="index" separator=",">
             (
             UUID(),
-            #{losal,jdbcType=INTEGER},
-            #{hisal,jdbcType=INTEGER}
+            #{item.losal,jdbcType=INTEGER},
+            #{item.hisal,jdbcType=INTEGER}
             )
         </foreach>
     </insert>
 
     <!--更新实体对象 -->
     <update id="update">
-        update salgrade
+        update `salgrade` t
         <set>
             <if test="entity.losal != null">
-                `losal` = #{entity.losal,jdbcType=INTEGER},
+                t.`losal` = #{entity.losal,jdbcType=INTEGER},
             </if>
             <if test="entity.hisal != null">
-                `hisal` = #{entity.hisal,jdbcType=INTEGER},
+                t.`hisal` = #{entity.hisal,jdbcType=INTEGER},
             </if>
         </set>
-        where `grade` = #{entity.grade,jdbcType=INTEGER}
+        where t.`grade` = #{entity.grade,jdbcType=INTEGER}
     </update>
 
     <!--构造器查询 -->
     <select id="queryByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from salgrade
+        from `salgrade` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
         </if>
@@ -280,7 +280,7 @@
     <select id="findByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from salgrade
+        from `salgrade` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
             <include refid="Wrapper_Order_Clause" />
@@ -289,16 +289,16 @@
 
     <!--更新实体对象 -->
     <update id="updateByWrapper">
-        update salgrade
+        update `salgrade` t
         <set>
             <if test="entity.grade != null">
-                `grade` = #{entity.grade,jdbcType=INTEGER},
+                t.`grade` = #{entity.grade,jdbcType=INTEGER},
             </if>
             <if test="entity.losal != null">
-                `losal` = #{entity.losal,jdbcType=INTEGER},
+                t.`losal` = #{entity.losal,jdbcType=INTEGER},
             </if>
             <if test="entity.hisal != null">
-                `hisal` = #{entity.hisal,jdbcType=INTEGER},
+                t.`hisal` = #{entity.hisal,jdbcType=INTEGER},
             </if>
         </set>
         <include refid="Wrapper_Where_Clause" />
@@ -306,7 +306,7 @@
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
-        delete from salgrade
+        delete t from `salgrade` t
         <include refid="Wrapper_Where_Clause" />
     </delete>
 

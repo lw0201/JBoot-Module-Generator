@@ -14,8 +14,8 @@
 
     <!--基础字段信息配置 -->
     <sql id="Base_Column_List">
-        <#list fields as field><#if !((field_index > 1) && ((field_index+1) % 6 == 0))><#if !field_has_next>`${field.fieldName}`<#else>`${field.fieldName}`,</#if><#else>
-        <#if !field_has_next>`${field.fieldName}`<#else>`${field.fieldName}`,</#if></#if></#list>
+        <#list fields as field><#if !((field_index > 1) && ((field_index+1) % 6 == 0))><#if !field_has_next>t.`${field.fieldName}`<#else>t.`${field.fieldName}`,</#if><#else>
+        <#if !field_has_next>t.`${field.fieldName}`<#else>t.`${field.fieldName}`,</#if></#if></#list>
     </sql>
 
     <!--基础条件查询配置 -->
@@ -23,7 +23,7 @@
         <where>
             <#list fields as field>
             <if test="entity.${field.attrName} != null">
-                and `${field.fieldName}` = ${r'#{'}entity.${field.attrName},jdbcType=${field.em.jdbcType}${r'}'}
+                and t.`${field.fieldName}` = ${r'#{'}entity.${field.attrName},jdbcType=${field.em.jdbcType}${r'}'}
             </if>
             </#list>
         </where>
@@ -49,7 +49,7 @@
                 <choose>
                     <#list fields as field>
                     <when test="criterion.attr == '${field.attrName}'">
-                        and LOWER(`${field.fieldName}`)
+                        and LOWER(t.`${field.fieldName}`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     </#list>
@@ -62,7 +62,7 @@
                 <choose>
                     <#list fields as field>
                     <when test="criterion.attr == '${field.attrName}'">
-                        and `${field.fieldName}`
+                        and t.`${field.fieldName}`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     </#list>
@@ -101,11 +101,11 @@
             <when test="criterion.op.type == 'notLike'">
                 <![CDATA[ NOT LIKE CONCAT('%',LOWER(${r'#{'}criterion.value${r'}'}),'%') ]]>
             </when>
-            <when test="criterion.op.type == 'in'">
-                = ${r'#{'}criterion.value${r'}'}
+            <when test="criterion.op.type == 'isNull'">
+                is null
             </when>
-            <when test="criterion.op.type == 'notIn'">
-                = ${r'#{'}criterion.value${r'}'}
+            <when test="criterion.op.type == 'isNotNull'">
+                is not null
             </when>
             <when test="criterion.op.type == 'in'">
                 in
@@ -135,7 +135,7 @@
                 <choose>
                     <#list fields as field>
                     <when test="st.attr == '${field.attrName}'">
-                        `${field.fieldName}` ${st.order.type}
+                        t.`${field.fieldName}` ${r'${'}st.order.type${r'}'}
                     </when>
                     </#list>
                 </choose>
@@ -147,15 +147,15 @@
     <select id="findById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from ${tableName}
-        where `${pk.fieldName}` = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
+        from `${tableName}` t
+        where t.`${pk.fieldName}` = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
     <select id="query" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from ${tableName}
+        from `${tableName}` t
         <include refid="Base_Where_Clause" />
     </select>
 
@@ -163,7 +163,7 @@
     <select id="findList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from ${tableName}
+        from `${tableName}` t
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
@@ -171,19 +171,19 @@
     
     <!--根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.io.Serializable">
-        delete from ${tableName}
-        where `${pk.fieldName}` = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
+        delete t from `${tableName}`
+        where t.`${pk.fieldName}` = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
     </delete>
     
     <!--根据实体对象删除数据-->
     <delete id="delete" parameterType="${packageName}.entity.${entityName}VO">
-        delete from ${tableName}
+        delete t from `${tableName}` t
         <include refid="Base_Where_Clause" />
     </delete>
 
     <!--根据实体对象删除数据-->
     <delete id="deletes" parameterType="${packageName}.entity.${entityName}VO">
-        delete from ${tableName} where `${pk.fieldName}` in
+        delete t from `${tableName}` t where t.`${pk.fieldName}` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             ${r'#{'}item.attrName${r'}'}
         </foreach>
@@ -194,7 +194,7 @@
         <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="${pk.attrName}">
             select uuid() 
         </selectKey>
-        insert into ${tableName}
+        insert into `${tableName}`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#list fields as field>
             <#if field.attrName =='lastUpdateDate' || field.attrName =='createdDate'>
@@ -225,7 +225,7 @@
 
     <!--插入实体对象 -->
     <insert id="inserts" parameterType="${packageName}.entity.${entityName}VO">
-        insert into ${tableName}
+        insert into `${tableName}`
         <trim prefix="(" suffix=") values" suffixOverrides=",">
             <#list fields as field>
             `${field.fieldName}`<#if field_has_next>,</#if>
@@ -248,29 +248,29 @@
 
     <!--更新实体对象 -->
     <update id="update">
-        update ${tableName}
+        update `${tableName}` t
         <set>
             <#list fields as field>
             <#if field.attrName =='lastUpdateDate'>
             <if test="entity.${field.attrName} == null or entity.${field.attrName} != null">
-                `${field.fieldName}` = current_timestamp(),
+                t.`${field.fieldName}` = current_timestamp(),
             </if>
             <#elseif field.attrName =='createdDate' || field.attrName =='createdBy' || field.fieldName == pk.fieldName>
             <#else>
             <if test="entity.${field.attrName} != null">
-                `${field.fieldName}` = ${r'#{entity.'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
+                t.`${field.fieldName}` = ${r'#{entity.'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
             </if>
             </#if>
             </#list>
         </set>
-        where `${pk.fieldName}` = ${r'#{entity.'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
+        where t.`${pk.fieldName}` = ${r'#{entity.'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
     </update>
 
     <!--构造器查询 -->
     <select id="queryByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from ${tableName}
+        from `${tableName}` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
         </if>
@@ -280,7 +280,7 @@
     <select id="findByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from ${tableName}
+        from `${tableName}` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
             <include refid="Wrapper_Order_Clause" />
@@ -289,17 +289,17 @@
 
     <!--更新实体对象 -->
     <update id="updateByWrapper">
-        update ${tableName}
+        update `${tableName}` t
         <set>
             <#list fields as field>
             <#if field.attrName =='lastUpdateDate'>
             <if test="entity.${field.attrName} == null or entity.${field.attrName} != null">
-                `${field.fieldName}` = current_timestamp(),
+                t.`${field.fieldName}` = current_timestamp(),
             </if>
             <#elseif field.attrName =='createdDate' || field.attrName =='createdBy'>
             <#else>
             <if test="entity.${field.attrName} != null">
-                `${field.fieldName}` = ${r'#{entity.'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
+                t.`${field.fieldName}` = ${r'#{entity.'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
             </if>
             </#if>
             </#list>
@@ -309,7 +309,7 @@
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
-        delete from ${tableName}
+        delete t from `${tableName}` t
         <include refid="Wrapper_Where_Clause" />
     </delete>
 

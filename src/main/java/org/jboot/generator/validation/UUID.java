@@ -15,18 +15,29 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+/**
+ * UUID数据校验
+ * 
+ * @author liwen
+ * 
+ * @date 2019/07/16
+ */
 @Target({TYPE, METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RUNTIME)
 @Documented
 @Constraint(validatedBy = {MobileValidator.class})
 public @interface UUID {
 
-    boolean required() default true;// 是否校验
+    /** 是否校验 */
+    boolean required() default true;
 
-    String message() default "UUID格式错误"; // 约束注解验证时的输出消息
+    /** 约束注解验证时的输出消息 */
+    String message() default "UUID格式错误";
 
-    Class<?>[] groups() default {};// 约束注解在验证时所属的组别
+    /** 约束注解在验证时所属的组别 */
+    Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};// 约束注解的有效负载
+    /** 约束注解的有效负载 */
+    Class<? extends Payload>[] payload() default {};
 
 }
