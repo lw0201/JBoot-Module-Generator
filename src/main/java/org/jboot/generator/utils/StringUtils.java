@@ -3,6 +3,8 @@ package org.jboot.generator.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 /**
  * 字符串工具类操作
  * 
@@ -10,6 +12,22 @@ import java.util.regex.Pattern;
  *
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
+
+    /**
+     * 安全的进行字符串 format
+     *
+     * @param target
+     *            目标字符串
+     * @param params
+     *            format 参数
+     * @return format 后的
+     */
+    public static String format(String target, Object... params) {
+        if (target.contains("%s") && ArrayUtils.isNotEmpty(params)) {
+            return String.format(target, params);
+        }
+        return target;
+    }
 
     /**
      * 删除字符串后缀

@@ -2,10 +2,12 @@ package org.jboot.generator.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jboot.generator.base.Result;
 import org.jboot.generator.conditions.Wrapper;
 import org.jboot.generator.entity.SalgradeVO;
 import org.jboot.generator.service.ISalgradeService;
+import org.jboot.generator.utils.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +51,7 @@ public class SalgradeController {
      */
     @DeleteMapping("/v1/salgrade/delete/{id}")
     public Result<Integer> delete(@PathVariable("id") String id) {
+        Assert.isTrue(StringUtils.isNotBlank(id), "路径参数[id]错误。");
         return new Result<Integer>().success(iSalgradeService.deleteById(id));
     }
 
@@ -73,6 +76,7 @@ public class SalgradeController {
      */
     @GetMapping("/v1/salgrade/single/{id}")
     public Result<SalgradeVO> findById(@PathVariable("id") String id) {
+        Assert.isTrue(StringUtils.isNotBlank(id), "路径参数[id]错误。");
         return new Result<SalgradeVO>().success(iSalgradeService.findById(id));
     }
 

@@ -2,10 +2,12 @@ package org.jboot.generator.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jboot.generator.base.Result;
 import org.jboot.generator.conditions.Wrapper;
 import org.jboot.generator.entity.DeptVO;
 import org.jboot.generator.service.IDeptService;
+import org.jboot.generator.utils.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +51,7 @@ public class DeptController {
      */
     @DeleteMapping("/v1/dept/delete/{id}")
     public Result<Integer> delete(@PathVariable("id") String id) {
+        Assert.isTrue(StringUtils.isNotBlank(id), "路径参数[id]错误。");
         return new Result<Integer>().success(iDeptService.deleteById(id));
     }
 
@@ -73,6 +76,7 @@ public class DeptController {
      */
     @GetMapping("/v1/dept/single/{id}")
     public Result<DeptVO> findById(@PathVariable("id") String id) {
+        Assert.isTrue(StringUtils.isNotBlank(id), "路径参数[id]错误。");
         return new Result<DeptVO>().success(iDeptService.findById(id));
     }
 

@@ -2,10 +2,12 @@ package ${packageName}.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import ${packageName}.base.Result;
 import ${packageName}.conditions.Wrapper;
 import ${packageName}.entity.${entityName}VO;
 import ${packageName}.service.I${entityName}Service;
+import org.jboot.generator.utils.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +51,7 @@ public class ${entityName}Controller {
      */
     @DeleteMapping("/v1/${entityName?lower_case}/delete/{id}")
     public Result<Integer> delete(@PathVariable("id") String id) {
+        Assert.isTrue(StringUtils.isNotBlank(id), "路径参数[id]错误。");
         return new Result<Integer>().success(i${entityName}Service.deleteById(id));
     }
 
@@ -73,6 +76,7 @@ public class ${entityName}Controller {
      */
     @GetMapping("/v1/${entityName?lower_case}/single/{id}")
     public Result<${entityName}VO> findById(@PathVariable("id") String id) {
+        Assert.isTrue(StringUtils.isNotBlank(id), "路径参数[id]错误。");
         return new Result<${entityName}VO>().success(i${entityName}Service.findById(id));
     }
 
