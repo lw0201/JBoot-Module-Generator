@@ -45,6 +45,15 @@ public interface IBaseService<T> {
     int deleteById(Serializable id);
 
     /**
+     * 根据实体删除实体对象</li>
+     * 
+     * @param entity
+     *            实体
+     * @return int 返回删除实体影响的行
+     */
+    int delete(T entity);
+
+    /**
      * 批量删除
      * 
      * @param entitys

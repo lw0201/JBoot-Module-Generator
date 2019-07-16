@@ -51,6 +51,11 @@ public class BaseService<T> implements IBaseService<T> {
     }
 
     @Override
+    public int delete(T entity) {
+        return iBaseDao.delete(entity);
+    }
+
+    @Override
     public int deletes(List<T> entitys) {
         int result = 0;
         while (CollectionUtils.isNotEmpty(entitys) && entitys.size() > 100) {
