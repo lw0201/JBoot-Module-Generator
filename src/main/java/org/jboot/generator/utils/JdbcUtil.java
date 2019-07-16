@@ -81,7 +81,6 @@ public class JdbcUtil {
         List<TableInfo> tableInfos = new ArrayList<TableInfo>();
         try {
             DatabaseMetaData metaData = connection.getMetaData();
-            System.err.println(metaData.getSchemas());
             ResultSet tables = metaData.getTables(connection.getCatalog(), null, "%", new String[] {"TABLE"});
             while (tables.next()) {
                 TableInfo tableInfo = new TableInfo();
@@ -123,7 +122,6 @@ public class JdbcUtil {
                 tableInfos.add(tableInfo);
             }
         } catch (SQLException e) {
-            System.err.println(e);
             logger.error("db error:", e);
         } finally {
             close(connection);
