@@ -1,5 +1,5 @@
-#### JBoot-Module-Generator使用
-####修改连接数据库
+##### JBoot-Module-Generator使用
+##### 修改连接数据库
 ```yml
 spring:
    application:
@@ -11,22 +11,22 @@ spring:
       username: root
       password: 123456
 ```
-####修改代码生成路径
+##### 修改代码生成路径
 ```yml
 jboot:
    package: org.jboot.generator
    java: src/main/java
    resource: src/main/resources
 ```
-####运行application启动类
+##### 运行application启动类
 ```log
 auto code generator complete.......
 ```
 ```log
 出现以上表示已经启动完成
 ```
-####生成代码如下
-####实体类代码生成如下
+##### 生成代码如下
+##### 实体类代码生成如下
 ```java
 package org.jboot.generator.entity;
 
@@ -106,7 +106,7 @@ public class EmpVO extends BaseVO {
 
 }
 ```
-####Mapper代码生成如下
+##### Mapper代码生成如下
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -568,7 +568,7 @@ public class EmpVO extends BaseVO {
 
 </mapper>
 ```
-####Controller层代码生成如下，Dao、Service代码略...
+##### Controller层代码生成如下，Dao、Service代码略...
 ```java
 package org.jboot.generator.controller;
 

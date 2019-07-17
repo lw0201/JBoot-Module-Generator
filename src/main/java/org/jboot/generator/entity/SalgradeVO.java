@@ -1,10 +1,14 @@
 package org.jboot.generator.entity;
 
+
+import org.hibernate.validator.constraints.Length;
+
 import org.jboot.generator.base.BaseVO;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 
 /**
  * Salgrade 实体类
@@ -34,5 +38,6 @@ public class SalgradeVO extends BaseVO {
      */
     @ApiModelProperty("此等级的最高工资")
     private Integer hisal;
+
 
 }
