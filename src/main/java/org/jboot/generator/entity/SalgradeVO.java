@@ -1,7 +1,6 @@
 package org.jboot.generator.entity;
 
 
-import org.hibernate.validator.constraints.Length;
 
 import org.jboot.generator.base.BaseVO;
 
