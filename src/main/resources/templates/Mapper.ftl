@@ -171,7 +171,7 @@
     
     <!--根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.io.Serializable">
-        delete t from `${tableName}`
+        delete t from `${tableName}` t
         where t.`${pk.fieldName}` = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
     </delete>
     

@@ -21,8 +21,8 @@ public final class ExceptionUtils {
      *            异常消息
      * @return BusinessException 业务异常
      */
-    public static ApplicationException app(int code, String message) {
-        return new ApplicationException(code, message);
+    public static void application(int code, String message) {
+        throw new ApplicationException(code, message);
     }
 
     /**
@@ -34,8 +34,8 @@ public final class ExceptionUtils {
      *            异常信息
      * @return 返回异常
      */
-    public static ApplicationException app(int code, String msg, Throwable t, Object... params) {
-        return new ApplicationException(StringUtils.format(msg, params), t);
+    public static void application(int code, String msg, Throwable cause, Object... params) {
+        throw new ApplicationException(StringUtils.format(msg, params), cause);
     }
 
     /**
@@ -45,8 +45,8 @@ public final class ExceptionUtils {
      *            消息
      * @return 返回异常
      */
-    public static ApplicationException app(int code, String msg, Object... params) {
-        return new ApplicationException(StringUtils.format(msg, params));
+    public static void application(int code, String msg, Object... params) {
+        throw new ApplicationException(code, StringUtils.format(msg, params));
     }
 
     /**
@@ -56,21 +56,21 @@ public final class ExceptionUtils {
      *            异常
      * @return 返回异常
      */
-    public static ApplicationException app(Throwable t) {
-        return new ApplicationException(t);
+    public static void application(Throwable cause) {
+        throw new ApplicationException(cause);
     }
 
     /**
-     * 返回一个新的异常，统一构建，方便统一处理
-     *
+     * 返回一个新的异常，统一构建，方便统一处理 ExceptionUtils
+     * 
      * @param msg
      *            消息
      * @param t
      *            异常信息
      * @return 返回异常
      */
-    public static BusinessException busi(String msg, Throwable t, Object... params) {
-        return new BusinessException(StringUtils.format(msg, params), t);
+    public static void business(String msg, Throwable cause, Object... params) {
+        throw new BusinessException(StringUtils.format(msg, params), cause);
     }
 
     /**
@@ -80,8 +80,21 @@ public final class ExceptionUtils {
      *            消息
      * @return 返回异常
      */
-    public static BusinessException busi(String msg, Object... params) {
-        return new BusinessException(StringUtils.format(msg, params));
+    public static void business(String msg, Object... params) {
+        throw new BusinessException(StringUtils.format(msg, params));
+    }
+
+    /**
+     * 重载的方法
+     * 
+     * @param code
+     *            编码
+     * @param msg
+     *            消息
+     * @return 返回异常
+     */
+    public static void business(int code, String msg, Object... params) {
+        throw new BusinessException(code, StringUtils.format(msg, params));
     }
 
     /**
@@ -91,8 +104,8 @@ public final class ExceptionUtils {
      *            异常
      * @return 返回异常
      */
-    public static BusinessException busi(Throwable t) {
-        return new BusinessException(t);
+    public static void business(Throwable cause) {
+        throw new BusinessException(cause);
     }
 
 }

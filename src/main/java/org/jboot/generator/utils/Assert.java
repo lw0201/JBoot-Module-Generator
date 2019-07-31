@@ -28,7 +28,7 @@ public final class Assert {
      */
     public static void isTrue(boolean expression, String message, Object... params) {
         if (!expression) {
-            throw ExceptionUtils.app(ErrorCode.INTERNAL_SERVER_ERROR, message, params);
+            ExceptionUtils.application(ErrorCode.INTERNAL_SERVER_ERROR, message, params);
         }
     }
 
