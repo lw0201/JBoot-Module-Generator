@@ -87,7 +87,8 @@ public class JdbcUtil {
                 String table_name = tables.getString(TABLE_NAME);
                 String remarkes = tables.getString(REMARKS);
                 tableInfo.setTableName(table_name);
-                tableInfo.setEntityName(StringUtils.toUpperCaseFirst(StringUtils.underlineToCamel(table_name)));
+                tableInfo.setEntityName(
+                    StringUtils.toUpperCaseFirst(StringUtils.underlineToCamel(table_name.toLowerCase())));
                 tableInfo.setPackageName("");
                 tableInfo.setComments(remarkes);
                 ResultSet columns = metaData.getColumns(connection.getCatalog(), null, table_name, "%");
@@ -102,7 +103,7 @@ public class JdbcUtil {
                     if (null == tableInfo.getImportPackages()) {
                         tableInfo.setImportPackages(new HashSet<String>());
                     }
-                    String attrName = StringUtils.underlineToCamel(colName);
+                    String attrName = StringUtils.underlineToCamel(colName.toLowerCase());
                     if (!"createdDate".equals(attrName) && !"lastUpdateDate".equals(attrName)) {
                         tableInfo.getImportPackages().add(data.getJavaType());
                     }
