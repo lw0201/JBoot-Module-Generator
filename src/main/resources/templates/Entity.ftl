@@ -35,7 +35,7 @@ public class ${entityName}VO extends BaseVO {
     /**
      * ${fidld.comments}
      */
-    <#if fidld.em.javaType == 'String' && fidld.columnSize < 10000 >
+    <#if fidld.em.javaType == 'String' && fidld.columnSize < 1000 >
     @Length(max = ${fidld.columnSize})
     </#if>
     @ApiModelProperty("${fidld.comments}")
