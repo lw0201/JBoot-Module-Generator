@@ -185,7 +185,7 @@
     <delete id="deletes" parameterType="${packageName}.entity.${entityName}VO">
         delete t from `${tableName}` t where t.`${pk.fieldName}` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
-            ${r'#{'}item.attrName${r'}'}
+            ${r'#{'}item.${pk.attrName}${r'}'}
         </foreach>
     </delete>
 
