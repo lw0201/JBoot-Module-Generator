@@ -76,8 +76,8 @@ public class BaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public T findById(Serializable id) {
-        return iBaseDao.findById(id);
+    public T findById(Serializable id, String... columns) {
+        return iBaseDao.findById(id, columns);
     }
 
     @Override

@@ -78,7 +78,7 @@ public interface IBaseService<T> {
      *            业务实体ID
      * @return 返回业务实体的详细信息
      */
-    T findById(Serializable id);
+    T findById(Serializable id, String... columns);
 
     /**
      * 根据实体对象查询并返回单个实体对象</li>

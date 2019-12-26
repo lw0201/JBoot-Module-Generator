@@ -8,10 +8,12 @@ spring:
    datasource:
       driverClassName: com.mysql.cj.jdbc.Driver
       type: com.alibaba.druid.pool.DruidDataSource
-      url: jdbc:mysql://localhost:3306/scott?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+      url: jdbc:mysql://120.77.253.118:3306/erp-iam?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
       username: root
       password: 123456
 jboot:
+   generator:
+      enabled: false
    package: org.jboot.generator
    java: src/main/java
    resource: src/main/resources
@@ -24,7 +26,7 @@ swagger:
    enabled: true
    package: org.jboot.generator
 pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
-  params: count=countsql
+   helper-dialect: mysql
+   reasonable: true
+   support-methods-arguments: true
+   params: count=countsql

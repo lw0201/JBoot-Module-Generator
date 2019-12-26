@@ -14,8 +14,30 @@
 
     <!--基础字段信息配置 -->
     <sql id="Base_Column_List">
-        <#list fields as field><#if !((field_index > 1) && ((field_index+1) % 6 == 0))><#if !field_has_next>t.`${field.fieldName}`<#else>t.`${field.fieldName}`,</#if><#else>
-        <#if !field_has_next>t.`${field.fieldName}`<#else>t.`${field.fieldName}`,</#if></#if></#list>
+        <choose>
+            <when test="_parameter.containsKey('columns') and columns != null and columns.length>0">
+                <include refid="Base_Auto_Cloumns" />
+            </when>
+            <otherwise>
+                <#list fields as field><#if !((field_index > 1) && ((field_index+1) % 6 == 0))><#if !field_has_next>t.`${field.fieldName}`<#else>t.`${field.fieldName}`,</#if><#else>
+                <#if !field_has_next>t.`${field.fieldName}`<#else>t.`${field.fieldName}`,</#if></#if></#list>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!--自定义字段查询 -->
+    <sql id="Base_Auto_Cloumns">
+        <trim prefixOverrides=",">
+            <foreach collection="columns" item="column">
+                <choose>
+                    <#list fields as field>
+                    <when test="column == '${field.attrName}'">
+                        ,t.${field.fieldName}
+                    </when>
+                    </#list>
+                </choose>
+            </foreach>
+        </trim>
     </sql>
 
     <!--基础条件查询配置 -->
