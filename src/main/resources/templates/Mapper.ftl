@@ -11,6 +11,12 @@
         </#if>
         </#list>
     </resultMap>
+    
+    <!--基础字段信息配置用于扩展接口使用 -->
+    <sql id="Base_Columns">
+        <#list fields as field><#if !((field_index > 1) && ((field_index+1) % 6 == 0))><#if !field_has_next>t.`${field.fieldName}`<#else>t.`${field.fieldName}`,</#if><#else>
+        <#if !field_has_next>t.`${field.fieldName}`<#else>t.`${field.fieldName}`,</#if></#if></#list>
+    </sql>
 
     <!--基础字段信息配置 -->
     <sql id="Base_Column_List">
@@ -19,8 +25,7 @@
                 <include refid="Base_Auto_Cloumns" />
             </when>
             <otherwise>
-                <#list fields as field><#if !((field_index > 1) && ((field_index+1) % 6 == 0))><#if !field_has_next>t.`${field.fieldName}`<#else>t.`${field.fieldName}`,</#if><#else>
-                <#if !field_has_next>t.`${field.fieldName}`<#else>t.`${field.fieldName}`,</#if></#if></#list>
+                <include refid="Base_Columns" />
             </otherwise>
         </choose>
     </sql>
