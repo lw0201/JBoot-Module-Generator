@@ -13,7 +13,7 @@ spring:
       password: 123456
 jboot:
    generator:
-      enabled: false
+      enabled: true
    package: org.jboot.generator
    java: src/main/java
    resource: src/main/resources

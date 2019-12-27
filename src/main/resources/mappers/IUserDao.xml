@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jboot.generator.dao.IDeptDao">
+<mapper namespace="org.jboot.generator.dao.IUserDao">
 
     <!--基础字段返回信息配置 -->
-    <resultMap id="BaseResultMap" type="org.jboot.generator.entity.DeptVO">
+    <resultMap id="BaseResultMap" type="org.jboot.generator.entity.UserVO">
         <id column="id" jdbcType="VARCHAR" property="id" />
-        <result column="pid" jdbcType="VARCHAR" property="pid" />
-        <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
-        <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
-        <result column="tenant_id" jdbcType="VARCHAR" property="tenantId" />
-        <result column="address" jdbcType="VARCHAR" property="address" />
-        <result column="describe" jdbcType="VARCHAR" property="describe" />
+        <result column="user_account" jdbcType="VARCHAR" property="userAccount" />
+        <result column="real_name" jdbcType="VARCHAR" property="realName" />
+        <result column="real_name_ch" jdbcType="VARCHAR" property="realNameCh" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="sex" jdbcType="VARCHAR" property="sex" />
+        <result column="birth_date" jdbcType="TIMESTAMP" property="birthDate" />
+        <result column="user_types" jdbcType="VARCHAR" property="userTypes" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+        <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
         <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
         <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
@@ -24,8 +28,9 @@
                 <include refid="Base_Auto_Cloumns" />
             </when>
             <otherwise>
-                t.`id`,t.`pid`,t.`dept_code`,t.`dept_name`,t.`tenant_id`,
-                t.`address`,t.`describe`,t.`created_by`,t.`created_date`,t.`last_update_by`,t.`last_update_date`
+                t.`id`,t.`user_account`,t.`real_name`,t.`real_name_ch`,t.`phone`,
+                t.`password`,t.`sex`,t.`birth_date`,t.`user_types`,t.`state`,t.`last_login_time`,
+                t.`created_by`,t.`created_date`,t.`last_update_by`,t.`last_update_date`
             </otherwise>
         </choose>
     </sql>
@@ -38,23 +43,35 @@
                     <when test="column == 'id'">
                         ,t.id
                     </when>
-                    <when test="column == 'pid'">
-                        ,t.pid
+                    <when test="column == 'userAccount'">
+                        ,t.user_account
                     </when>
-                    <when test="column == 'deptCode'">
-                        ,t.dept_code
+                    <when test="column == 'realName'">
+                        ,t.real_name
                     </when>
-                    <when test="column == 'deptName'">
-                        ,t.dept_name
+                    <when test="column == 'realNameCh'">
+                        ,t.real_name_ch
                     </when>
-                    <when test="column == 'tenantId'">
-                        ,t.tenant_id
+                    <when test="column == 'phone'">
+                        ,t.phone
                     </when>
-                    <when test="column == 'address'">
-                        ,t.address
+                    <when test="column == 'password'">
+                        ,t.password
                     </when>
-                    <when test="column == 'describe'">
-                        ,t.describe
+                    <when test="column == 'sex'">
+                        ,t.sex
+                    </when>
+                    <when test="column == 'birthDate'">
+                        ,t.birth_date
+                    </when>
+                    <when test="column == 'userTypes'">
+                        ,t.user_types
+                    </when>
+                    <when test="column == 'state'">
+                        ,t.state
+                    </when>
+                    <when test="column == 'lastLoginTime'">
+                        ,t.last_login_time
                     </when>
                     <when test="column == 'createdBy'">
                         ,t.created_by
@@ -79,23 +96,35 @@
             <if test="entity.id != null">
                 and t.`id` = #{entity.id,jdbcType=VARCHAR}
             </if>
-            <if test="entity.pid != null">
-                and t.`pid` = #{entity.pid,jdbcType=VARCHAR}
+            <if test="entity.userAccount != null">
+                and t.`user_account` = #{entity.userAccount,jdbcType=VARCHAR}
             </if>
-            <if test="entity.deptCode != null">
-                and t.`dept_code` = #{entity.deptCode,jdbcType=VARCHAR}
+            <if test="entity.realName != null">
+                and t.`real_name` = #{entity.realName,jdbcType=VARCHAR}
             </if>
-            <if test="entity.deptName != null">
-                and t.`dept_name` = #{entity.deptName,jdbcType=VARCHAR}
+            <if test="entity.realNameCh != null">
+                and t.`real_name_ch` = #{entity.realNameCh,jdbcType=VARCHAR}
             </if>
-            <if test="entity.tenantId != null">
-                and t.`tenant_id` = #{entity.tenantId,jdbcType=VARCHAR}
+            <if test="entity.phone != null">
+                and t.`phone` = #{entity.phone,jdbcType=VARCHAR}
             </if>
-            <if test="entity.address != null">
-                and t.`address` = #{entity.address,jdbcType=VARCHAR}
+            <if test="entity.password != null">
+                and t.`password` = #{entity.password,jdbcType=VARCHAR}
             </if>
-            <if test="entity.describe != null">
-                and t.`describe` = #{entity.describe,jdbcType=VARCHAR}
+            <if test="entity.sex != null">
+                and t.`sex` = #{entity.sex,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.birthDate != null">
+                and t.`birth_date` = #{entity.birthDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.userTypes != null">
+                and t.`user_types` = #{entity.userTypes,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.state != null">
+                and t.`state` = #{entity.state,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.lastLoginTime != null">
+                and t.`last_login_time` = #{entity.lastLoginTime,jdbcType=TIMESTAMP}
             </if>
             <if test="entity.createdBy != null">
                 and t.`created_by` = #{entity.createdBy,jdbcType=VARCHAR}
@@ -134,28 +163,44 @@
                         and LOWER(t.`id`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'pid'">
-                        and LOWER(t.`pid`)
+                    <when test="criterion.attr == 'userAccount'">
+                        and LOWER(t.`user_account`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'deptCode'">
-                        and LOWER(t.`dept_code`)
+                    <when test="criterion.attr == 'realName'">
+                        and LOWER(t.`real_name`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'deptName'">
-                        and LOWER(t.`dept_name`)
+                    <when test="criterion.attr == 'realNameCh'">
+                        and LOWER(t.`real_name_ch`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'tenantId'">
-                        and LOWER(t.`tenant_id`)
+                    <when test="criterion.attr == 'phone'">
+                        and LOWER(t.`phone`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'address'">
-                        and LOWER(t.`address`)
+                    <when test="criterion.attr == 'password'">
+                        and LOWER(t.`password`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'describe'">
-                        and LOWER(t.`describe`)
+                    <when test="criterion.attr == 'sex'">
+                        and LOWER(t.`sex`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'birthDate'">
+                        and LOWER(t.`birth_date`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'userTypes'">
+                        and LOWER(t.`user_types`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'state'">
+                        and LOWER(t.`state`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastLoginTime'">
+                        and LOWER(t.`last_login_time`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'createdBy'">
@@ -185,28 +230,44 @@
                         and t.`id`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'pid'">
-                        and t.`pid`
+                    <when test="criterion.attr == 'userAccount'">
+                        and t.`user_account`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'deptCode'">
-                        and t.`dept_code`
+                    <when test="criterion.attr == 'realName'">
+                        and t.`real_name`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'deptName'">
-                        and t.`dept_name`
+                    <when test="criterion.attr == 'realNameCh'">
+                        and t.`real_name_ch`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'tenantId'">
-                        and t.`tenant_id`
+                    <when test="criterion.attr == 'phone'">
+                        and t.`phone`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'address'">
-                        and t.`address`
+                    <when test="criterion.attr == 'password'">
+                        and t.`password`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'describe'">
-                        and t.`describe`
+                    <when test="criterion.attr == 'sex'">
+                        and t.`sex`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'birthDate'">
+                        and t.`birth_date`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'userTypes'">
+                        and t.`user_types`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'state'">
+                        and t.`state`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'lastLoginTime'">
+                        and t.`last_login_time`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'createdBy'">
@@ -295,23 +356,35 @@
                     <when test="st.attr == 'id'">
                         t.`id` ${st.order.type}
                     </when>
-                    <when test="st.attr == 'pid'">
-                        t.`pid` ${st.order.type}
+                    <when test="st.attr == 'userAccount'">
+                        t.`user_account` ${st.order.type}
                     </when>
-                    <when test="st.attr == 'deptCode'">
-                        t.`dept_code` ${st.order.type}
+                    <when test="st.attr == 'realName'">
+                        t.`real_name` ${st.order.type}
                     </when>
-                    <when test="st.attr == 'deptName'">
-                        t.`dept_name` ${st.order.type}
+                    <when test="st.attr == 'realNameCh'">
+                        t.`real_name_ch` ${st.order.type}
                     </when>
-                    <when test="st.attr == 'tenantId'">
-                        t.`tenant_id` ${st.order.type}
+                    <when test="st.attr == 'phone'">
+                        t.`phone` ${st.order.type}
                     </when>
-                    <when test="st.attr == 'address'">
-                        t.`address` ${st.order.type}
+                    <when test="st.attr == 'password'">
+                        t.`password` ${st.order.type}
                     </when>
-                    <when test="st.attr == 'describe'">
-                        t.`describe` ${st.order.type}
+                    <when test="st.attr == 'sex'">
+                        t.`sex` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'birthDate'">
+                        t.`birth_date` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'userTypes'">
+                        t.`user_types` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'state'">
+                        t.`state` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'lastLoginTime'">
+                        t.`last_login_time` ${st.order.type}
                     </when>
                     <when test="st.attr == 'createdBy'">
                         t.`created_by` ${st.order.type}
@@ -334,7 +407,7 @@
     <select id="findById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `user` t
         where t.`id` = #{id,jdbcType=VARCHAR}
     </select>
 
@@ -342,7 +415,7 @@
     <select id="query" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `user` t
         <include refid="Base_Where_Clause" />
     </select>
 
@@ -350,7 +423,7 @@
     <select id="findList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `user` t
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
@@ -358,51 +431,63 @@
     
     <!--根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.io.Serializable">
-        delete t from `dept` t
+        delete t from `user` t
         where t.`id` = #{id,jdbcType=VARCHAR}
     </delete>
     
     <!--根据实体对象删除数据-->
-    <delete id="delete" parameterType="org.jboot.generator.entity.DeptVO">
-        delete t from `dept` t
+    <delete id="delete" parameterType="org.jboot.generator.entity.UserVO">
+        delete t from `user` t
         <include refid="Base_Where_Clause" />
     </delete>
 
     <!--根据实体对象删除数据-->
-    <delete id="deletes" parameterType="org.jboot.generator.entity.DeptVO">
-        delete t from `dept` t where t.`id` in
+    <delete id="deletes" parameterType="org.jboot.generator.entity.UserVO">
+        delete t from `user` t where t.`id` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item.id}
         </foreach>
     </delete>
 
     <!--插入实体对象 -->
-    <insert id="insert" parameterType="org.jboot.generator.entity.DeptVO">
+    <insert id="insert" parameterType="org.jboot.generator.entity.UserVO">
         <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="id">
             select uuid() 
         </selectKey>
-        insert into `dept`
+        insert into `user`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 `id`,
             </if>
-            <if test="pid != null">
-                `pid`,
+            <if test="userAccount != null">
+                `user_account`,
             </if>
-            <if test="deptCode != null">
-                `dept_code`,
+            <if test="realName != null">
+                `real_name`,
             </if>
-            <if test="deptName != null">
-                `dept_name`,
+            <if test="realNameCh != null">
+                `real_name_ch`,
             </if>
-            <if test="tenantId != null">
-                `tenant_id`,
+            <if test="phone != null">
+                `phone`,
             </if>
-            <if test="address != null">
-                `address`,
+            <if test="password != null">
+                `password`,
             </if>
-            <if test="describe != null">
-                `describe`,
+            <if test="sex != null">
+                `sex`,
+            </if>
+            <if test="birthDate != null">
+                `birth_date`,
+            </if>
+            <if test="userTypes != null">
+                `user_types`,
+            </if>
+            <if test="state != null">
+                `state`,
+            </if>
+            <if test="lastLoginTime != null">
+                `last_login_time`,
             </if>
             <if test="createdBy != null">
                 `created_by`,
@@ -421,23 +506,35 @@
             <if test="id != null">
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="pid != null">
-                #{pid,jdbcType=VARCHAR},
+            <if test="userAccount != null">
+                #{userAccount,jdbcType=VARCHAR},
             </if>
-            <if test="deptCode != null">
-                #{deptCode,jdbcType=VARCHAR},
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
             </if>
-            <if test="deptName != null">
-                #{deptName,jdbcType=VARCHAR},
+            <if test="realNameCh != null">
+                #{realNameCh,jdbcType=VARCHAR},
             </if>
-            <if test="tenantId != null">
-                #{tenantId,jdbcType=VARCHAR},
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
             </if>
-            <if test="address != null">
-                #{address,jdbcType=VARCHAR},
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
             </if>
-            <if test="describe != null">
-                #{describe,jdbcType=VARCHAR},
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="birthDate != null">
+                #{birthDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userTypes != null">
+                #{userTypes,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLoginTime,jdbcType=TIMESTAMP},
             </if>
             <if test="createdBy != null">
                 #{createdBy,jdbcType=VARCHAR},
@@ -455,16 +552,20 @@
     </insert>
 
     <!--插入实体对象 -->
-    <insert id="inserts" parameterType="org.jboot.generator.entity.DeptVO">
-        insert into `dept`
+    <insert id="inserts" parameterType="org.jboot.generator.entity.UserVO">
+        insert into `user`
         <trim prefix="(" suffix=") values" suffixOverrides=",">
             `id`,
-            `pid`,
-            `dept_code`,
-            `dept_name`,
-            `tenant_id`,
-            `address`,
-            `describe`,
+            `user_account`,
+            `real_name`,
+            `real_name_ch`,
+            `phone`,
+            `password`,
+            `sex`,
+            `birth_date`,
+            `user_types`,
+            `state`,
+            `last_login_time`,
             `created_by`,
             `created_date`,
             `last_update_by`,
@@ -473,12 +574,16 @@
         <foreach collection="list" item="item" index="index" separator=",">
             (
             UUID(),
-            #{item.pid,jdbcType=VARCHAR},
-            #{item.deptCode,jdbcType=VARCHAR},
-            #{item.deptName,jdbcType=VARCHAR},
-            #{item.tenantId,jdbcType=VARCHAR},
-            #{item.address,jdbcType=VARCHAR},
-            #{item.describe,jdbcType=VARCHAR},
+            #{item.userAccount,jdbcType=VARCHAR},
+            #{item.realName,jdbcType=VARCHAR},
+            #{item.realNameCh,jdbcType=VARCHAR},
+            #{item.phone,jdbcType=VARCHAR},
+            #{item.password,jdbcType=VARCHAR},
+            #{item.sex,jdbcType=VARCHAR},
+            #{item.birthDate,jdbcType=TIMESTAMP},
+            #{item.userTypes,jdbcType=VARCHAR},
+            #{item.state,jdbcType=VARCHAR},
+            #{item.lastLoginTime,jdbcType=TIMESTAMP},
             #{item.createdBy,jdbcType=VARCHAR},
             current_timestamp(),
             #{item.lastUpdateBy,jdbcType=VARCHAR},
@@ -489,25 +594,37 @@
 
     <!--更新实体对象 -->
     <update id="update">
-        update `dept` t
+        update `user` t
         <set>
-            <if test="entity.pid != null">
-                t.`pid` = #{entity.pid,jdbcType=VARCHAR},
+            <if test="entity.userAccount != null">
+                t.`user_account` = #{entity.userAccount,jdbcType=VARCHAR},
             </if>
-            <if test="entity.deptCode != null">
-                t.`dept_code` = #{entity.deptCode,jdbcType=VARCHAR},
+            <if test="entity.realName != null">
+                t.`real_name` = #{entity.realName,jdbcType=VARCHAR},
             </if>
-            <if test="entity.deptName != null">
-                t.`dept_name` = #{entity.deptName,jdbcType=VARCHAR},
+            <if test="entity.realNameCh != null">
+                t.`real_name_ch` = #{entity.realNameCh,jdbcType=VARCHAR},
             </if>
-            <if test="entity.tenantId != null">
-                t.`tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
+            <if test="entity.phone != null">
+                t.`phone` = #{entity.phone,jdbcType=VARCHAR},
             </if>
-            <if test="entity.address != null">
-                t.`address` = #{entity.address,jdbcType=VARCHAR},
+            <if test="entity.password != null">
+                t.`password` = #{entity.password,jdbcType=VARCHAR},
             </if>
-            <if test="entity.describe != null">
-                t.`describe` = #{entity.describe,jdbcType=VARCHAR},
+            <if test="entity.sex != null">
+                t.`sex` = #{entity.sex,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.birthDate != null">
+                t.`birth_date` = #{entity.birthDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="entity.userTypes != null">
+                t.`user_types` = #{entity.userTypes,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.state != null">
+                t.`state` = #{entity.state,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.lastLoginTime != null">
+                t.`last_login_time` = #{entity.lastLoginTime,jdbcType=TIMESTAMP},
             </if>
             <if test="entity.lastUpdateBy != null">
                 t.`last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
@@ -523,7 +640,7 @@
     <select id="queryByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `user` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
         </if>
@@ -533,7 +650,7 @@
     <select id="findByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `user` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
             <include refid="Wrapper_Order_Clause" />
@@ -542,28 +659,40 @@
 
     <!--更新实体对象 -->
     <update id="updateByWrapper">
-        update `dept` t
+        update `user` t
         <set>
             <if test="entity.id != null">
                 t.`id` = #{entity.id,jdbcType=VARCHAR},
             </if>
-            <if test="entity.pid != null">
-                t.`pid` = #{entity.pid,jdbcType=VARCHAR},
+            <if test="entity.userAccount != null">
+                t.`user_account` = #{entity.userAccount,jdbcType=VARCHAR},
             </if>
-            <if test="entity.deptCode != null">
-                t.`dept_code` = #{entity.deptCode,jdbcType=VARCHAR},
+            <if test="entity.realName != null">
+                t.`real_name` = #{entity.realName,jdbcType=VARCHAR},
             </if>
-            <if test="entity.deptName != null">
-                t.`dept_name` = #{entity.deptName,jdbcType=VARCHAR},
+            <if test="entity.realNameCh != null">
+                t.`real_name_ch` = #{entity.realNameCh,jdbcType=VARCHAR},
             </if>
-            <if test="entity.tenantId != null">
-                t.`tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
+            <if test="entity.phone != null">
+                t.`phone` = #{entity.phone,jdbcType=VARCHAR},
             </if>
-            <if test="entity.address != null">
-                t.`address` = #{entity.address,jdbcType=VARCHAR},
+            <if test="entity.password != null">
+                t.`password` = #{entity.password,jdbcType=VARCHAR},
             </if>
-            <if test="entity.describe != null">
-                t.`describe` = #{entity.describe,jdbcType=VARCHAR},
+            <if test="entity.sex != null">
+                t.`sex` = #{entity.sex,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.birthDate != null">
+                t.`birth_date` = #{entity.birthDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="entity.userTypes != null">
+                t.`user_types` = #{entity.userTypes,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.state != null">
+                t.`state` = #{entity.state,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.lastLoginTime != null">
+                t.`last_login_time` = #{entity.lastLoginTime,jdbcType=TIMESTAMP},
             </if>
             <if test="entity.lastUpdateBy != null">
                 t.`last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
@@ -577,7 +706,7 @@
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
-        delete t from `dept` t
+        delete t from `user` t
         <include refid="Wrapper_Where_Clause" />
     </delete>
 

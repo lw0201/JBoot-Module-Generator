@@ -7,7 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("org.jboot.generator.dao")
+@MapperScan(basePackages = {"org.jboot.generator.dao", "org.jboot.generator.base"})
 public class Application {
 
     private final static Logger logger = LoggerFactory.getLogger(Application.class);

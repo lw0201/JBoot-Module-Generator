@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jboot.generator.dao.IDeptDao">
+<mapper namespace="org.jboot.generator.dao.IDeptRoleDao">
 
     <!--基础字段返回信息配置 -->
-    <resultMap id="BaseResultMap" type="org.jboot.generator.entity.DeptVO">
+    <resultMap id="BaseResultMap" type="org.jboot.generator.entity.DeptRoleVO">
         <id column="id" jdbcType="VARCHAR" property="id" />
-        <result column="pid" jdbcType="VARCHAR" property="pid" />
-        <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
-        <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
-        <result column="tenant_id" jdbcType="VARCHAR" property="tenantId" />
-        <result column="address" jdbcType="VARCHAR" property="address" />
-        <result column="describe" jdbcType="VARCHAR" property="describe" />
+        <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+        <result column="role_id" jdbcType="VARCHAR" property="roleId" />
         <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
         <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
@@ -24,8 +20,8 @@
                 <include refid="Base_Auto_Cloumns" />
             </when>
             <otherwise>
-                t.`id`,t.`pid`,t.`dept_code`,t.`dept_name`,t.`tenant_id`,
-                t.`address`,t.`describe`,t.`created_by`,t.`created_date`,t.`last_update_by`,t.`last_update_date`
+                t.`id`,t.`dept_id`,t.`role_id`,t.`created_by`,t.`created_date`,
+                t.`last_update_by`,t.`last_update_date`
             </otherwise>
         </choose>
     </sql>
@@ -38,23 +34,11 @@
                     <when test="column == 'id'">
                         ,t.id
                     </when>
-                    <when test="column == 'pid'">
-                        ,t.pid
+                    <when test="column == 'deptId'">
+                        ,t.dept_id
                     </when>
-                    <when test="column == 'deptCode'">
-                        ,t.dept_code
-                    </when>
-                    <when test="column == 'deptName'">
-                        ,t.dept_name
-                    </when>
-                    <when test="column == 'tenantId'">
-                        ,t.tenant_id
-                    </when>
-                    <when test="column == 'address'">
-                        ,t.address
-                    </when>
-                    <when test="column == 'describe'">
-                        ,t.describe
+                    <when test="column == 'roleId'">
+                        ,t.role_id
                     </when>
                     <when test="column == 'createdBy'">
                         ,t.created_by
@@ -79,23 +63,11 @@
             <if test="entity.id != null">
                 and t.`id` = #{entity.id,jdbcType=VARCHAR}
             </if>
-            <if test="entity.pid != null">
-                and t.`pid` = #{entity.pid,jdbcType=VARCHAR}
+            <if test="entity.deptId != null">
+                and t.`dept_id` = #{entity.deptId,jdbcType=VARCHAR}
             </if>
-            <if test="entity.deptCode != null">
-                and t.`dept_code` = #{entity.deptCode,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.deptName != null">
-                and t.`dept_name` = #{entity.deptName,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.tenantId != null">
-                and t.`tenant_id` = #{entity.tenantId,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.address != null">
-                and t.`address` = #{entity.address,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.describe != null">
-                and t.`describe` = #{entity.describe,jdbcType=VARCHAR}
+            <if test="entity.roleId != null">
+                and t.`role_id` = #{entity.roleId,jdbcType=VARCHAR}
             </if>
             <if test="entity.createdBy != null">
                 and t.`created_by` = #{entity.createdBy,jdbcType=VARCHAR}
@@ -134,28 +106,12 @@
                         and LOWER(t.`id`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'pid'">
-                        and LOWER(t.`pid`)
+                    <when test="criterion.attr == 'deptId'">
+                        and LOWER(t.`dept_id`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'deptCode'">
-                        and LOWER(t.`dept_code`)
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'deptName'">
-                        and LOWER(t.`dept_name`)
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'tenantId'">
-                        and LOWER(t.`tenant_id`)
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'address'">
-                        and LOWER(t.`address`)
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'describe'">
-                        and LOWER(t.`describe`)
+                    <when test="criterion.attr == 'roleId'">
+                        and LOWER(t.`role_id`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'createdBy'">
@@ -185,28 +141,12 @@
                         and t.`id`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'pid'">
-                        and t.`pid`
+                    <when test="criterion.attr == 'deptId'">
+                        and t.`dept_id`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'deptCode'">
-                        and t.`dept_code`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'deptName'">
-                        and t.`dept_name`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'tenantId'">
-                        and t.`tenant_id`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'address'">
-                        and t.`address`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'describe'">
-                        and t.`describe`
+                    <when test="criterion.attr == 'roleId'">
+                        and t.`role_id`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'createdBy'">
@@ -295,23 +235,11 @@
                     <when test="st.attr == 'id'">
                         t.`id` ${st.order.type}
                     </when>
-                    <when test="st.attr == 'pid'">
-                        t.`pid` ${st.order.type}
+                    <when test="st.attr == 'deptId'">
+                        t.`dept_id` ${st.order.type}
                     </when>
-                    <when test="st.attr == 'deptCode'">
-                        t.`dept_code` ${st.order.type}
-                    </when>
-                    <when test="st.attr == 'deptName'">
-                        t.`dept_name` ${st.order.type}
-                    </when>
-                    <when test="st.attr == 'tenantId'">
-                        t.`tenant_id` ${st.order.type}
-                    </when>
-                    <when test="st.attr == 'address'">
-                        t.`address` ${st.order.type}
-                    </when>
-                    <when test="st.attr == 'describe'">
-                        t.`describe` ${st.order.type}
+                    <when test="st.attr == 'roleId'">
+                        t.`role_id` ${st.order.type}
                     </when>
                     <when test="st.attr == 'createdBy'">
                         t.`created_by` ${st.order.type}
@@ -334,7 +262,7 @@
     <select id="findById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `dept_role` t
         where t.`id` = #{id,jdbcType=VARCHAR}
     </select>
 
@@ -342,7 +270,7 @@
     <select id="query" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `dept_role` t
         <include refid="Base_Where_Clause" />
     </select>
 
@@ -350,7 +278,7 @@
     <select id="findList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `dept_role` t
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
@@ -358,51 +286,39 @@
     
     <!--根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.io.Serializable">
-        delete t from `dept` t
+        delete t from `dept_role` t
         where t.`id` = #{id,jdbcType=VARCHAR}
     </delete>
     
     <!--根据实体对象删除数据-->
-    <delete id="delete" parameterType="org.jboot.generator.entity.DeptVO">
-        delete t from `dept` t
+    <delete id="delete" parameterType="org.jboot.generator.entity.DeptRoleVO">
+        delete t from `dept_role` t
         <include refid="Base_Where_Clause" />
     </delete>
 
     <!--根据实体对象删除数据-->
-    <delete id="deletes" parameterType="org.jboot.generator.entity.DeptVO">
-        delete t from `dept` t where t.`id` in
+    <delete id="deletes" parameterType="org.jboot.generator.entity.DeptRoleVO">
+        delete t from `dept_role` t where t.`id` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item.id}
         </foreach>
     </delete>
 
     <!--插入实体对象 -->
-    <insert id="insert" parameterType="org.jboot.generator.entity.DeptVO">
+    <insert id="insert" parameterType="org.jboot.generator.entity.DeptRoleVO">
         <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="id">
             select uuid() 
         </selectKey>
-        insert into `dept`
+        insert into `dept_role`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 `id`,
             </if>
-            <if test="pid != null">
-                `pid`,
+            <if test="deptId != null">
+                `dept_id`,
             </if>
-            <if test="deptCode != null">
-                `dept_code`,
-            </if>
-            <if test="deptName != null">
-                `dept_name`,
-            </if>
-            <if test="tenantId != null">
-                `tenant_id`,
-            </if>
-            <if test="address != null">
-                `address`,
-            </if>
-            <if test="describe != null">
-                `describe`,
+            <if test="roleId != null">
+                `role_id`,
             </if>
             <if test="createdBy != null">
                 `created_by`,
@@ -421,23 +337,11 @@
             <if test="id != null">
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="pid != null">
-                #{pid,jdbcType=VARCHAR},
+            <if test="deptId != null">
+                #{deptId,jdbcType=VARCHAR},
             </if>
-            <if test="deptCode != null">
-                #{deptCode,jdbcType=VARCHAR},
-            </if>
-            <if test="deptName != null">
-                #{deptName,jdbcType=VARCHAR},
-            </if>
-            <if test="tenantId != null">
-                #{tenantId,jdbcType=VARCHAR},
-            </if>
-            <if test="address != null">
-                #{address,jdbcType=VARCHAR},
-            </if>
-            <if test="describe != null">
-                #{describe,jdbcType=VARCHAR},
+            <if test="roleId != null">
+                #{roleId,jdbcType=VARCHAR},
             </if>
             <if test="createdBy != null">
                 #{createdBy,jdbcType=VARCHAR},
@@ -455,16 +359,12 @@
     </insert>
 
     <!--插入实体对象 -->
-    <insert id="inserts" parameterType="org.jboot.generator.entity.DeptVO">
-        insert into `dept`
+    <insert id="inserts" parameterType="org.jboot.generator.entity.DeptRoleVO">
+        insert into `dept_role`
         <trim prefix="(" suffix=") values" suffixOverrides=",">
             `id`,
-            `pid`,
-            `dept_code`,
-            `dept_name`,
-            `tenant_id`,
-            `address`,
-            `describe`,
+            `dept_id`,
+            `role_id`,
             `created_by`,
             `created_date`,
             `last_update_by`,
@@ -473,12 +373,8 @@
         <foreach collection="list" item="item" index="index" separator=",">
             (
             UUID(),
-            #{item.pid,jdbcType=VARCHAR},
-            #{item.deptCode,jdbcType=VARCHAR},
-            #{item.deptName,jdbcType=VARCHAR},
-            #{item.tenantId,jdbcType=VARCHAR},
-            #{item.address,jdbcType=VARCHAR},
-            #{item.describe,jdbcType=VARCHAR},
+            #{item.deptId,jdbcType=VARCHAR},
+            #{item.roleId,jdbcType=VARCHAR},
             #{item.createdBy,jdbcType=VARCHAR},
             current_timestamp(),
             #{item.lastUpdateBy,jdbcType=VARCHAR},
@@ -489,25 +385,13 @@
 
     <!--更新实体对象 -->
     <update id="update">
-        update `dept` t
+        update `dept_role` t
         <set>
-            <if test="entity.pid != null">
-                t.`pid` = #{entity.pid,jdbcType=VARCHAR},
+            <if test="entity.deptId != null">
+                t.`dept_id` = #{entity.deptId,jdbcType=VARCHAR},
             </if>
-            <if test="entity.deptCode != null">
-                t.`dept_code` = #{entity.deptCode,jdbcType=VARCHAR},
-            </if>
-            <if test="entity.deptName != null">
-                t.`dept_name` = #{entity.deptName,jdbcType=VARCHAR},
-            </if>
-            <if test="entity.tenantId != null">
-                t.`tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
-            </if>
-            <if test="entity.address != null">
-                t.`address` = #{entity.address,jdbcType=VARCHAR},
-            </if>
-            <if test="entity.describe != null">
-                t.`describe` = #{entity.describe,jdbcType=VARCHAR},
+            <if test="entity.roleId != null">
+                t.`role_id` = #{entity.roleId,jdbcType=VARCHAR},
             </if>
             <if test="entity.lastUpdateBy != null">
                 t.`last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
@@ -523,7 +407,7 @@
     <select id="queryByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `dept_role` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
         </if>
@@ -533,7 +417,7 @@
     <select id="findByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `dept_role` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
             <include refid="Wrapper_Order_Clause" />
@@ -542,28 +426,16 @@
 
     <!--更新实体对象 -->
     <update id="updateByWrapper">
-        update `dept` t
+        update `dept_role` t
         <set>
             <if test="entity.id != null">
                 t.`id` = #{entity.id,jdbcType=VARCHAR},
             </if>
-            <if test="entity.pid != null">
-                t.`pid` = #{entity.pid,jdbcType=VARCHAR},
+            <if test="entity.deptId != null">
+                t.`dept_id` = #{entity.deptId,jdbcType=VARCHAR},
             </if>
-            <if test="entity.deptCode != null">
-                t.`dept_code` = #{entity.deptCode,jdbcType=VARCHAR},
-            </if>
-            <if test="entity.deptName != null">
-                t.`dept_name` = #{entity.deptName,jdbcType=VARCHAR},
-            </if>
-            <if test="entity.tenantId != null">
-                t.`tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
-            </if>
-            <if test="entity.address != null">
-                t.`address` = #{entity.address,jdbcType=VARCHAR},
-            </if>
-            <if test="entity.describe != null">
-                t.`describe` = #{entity.describe,jdbcType=VARCHAR},
+            <if test="entity.roleId != null">
+                t.`role_id` = #{entity.roleId,jdbcType=VARCHAR},
             </if>
             <if test="entity.lastUpdateBy != null">
                 t.`last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
@@ -577,7 +449,7 @@
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
-        delete t from `dept` t
+        delete t from `dept_role` t
         <include refid="Wrapper_Where_Clause" />
     </delete>
 

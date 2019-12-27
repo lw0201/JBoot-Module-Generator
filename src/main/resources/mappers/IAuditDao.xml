@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jboot.generator.dao.IDeptDao">
+<mapper namespace="org.jboot.generator.dao.IAuditDao">
 
     <!--基础字段返回信息配置 -->
-    <resultMap id="BaseResultMap" type="org.jboot.generator.entity.DeptVO">
+    <resultMap id="BaseResultMap" type="org.jboot.generator.entity.AuditVO">
         <id column="id" jdbcType="VARCHAR" property="id" />
-        <result column="pid" jdbcType="VARCHAR" property="pid" />
-        <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
-        <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
         <result column="tenant_id" jdbcType="VARCHAR" property="tenantId" />
-        <result column="address" jdbcType="VARCHAR" property="address" />
-        <result column="describe" jdbcType="VARCHAR" property="describe" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="module_name" jdbcType="VARCHAR" property="moduleName" />
+        <result column="service_name" jdbcType="VARCHAR" property="serviceName" />
+        <result column="message" jdbcType="VARCHAR" property="message" />
+        <result column="body" jdbcType="VARCHAR" property="body" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="ip" jdbcType="VARCHAR" property="ip" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+        <result column="result" jdbcType="VARCHAR" property="result" />
         <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
         <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
-        <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
-        <result column="last_update_date" jdbcType="TIMESTAMP" property="lastUpdateDate" />
     </resultMap>
 
     <!--基础字段信息配置 -->
     <sql id="Base_Column_List">
         <choose>
-            <when test="_parameter.containsKey('columns') and columns != null and columns.length>0">
+            <when test="_parameter.containsKey('columns')">
                 <include refid="Base_Auto_Cloumns" />
             </when>
             <otherwise>
-                t.`id`,t.`pid`,t.`dept_code`,t.`dept_name`,t.`tenant_id`,
-                t.`address`,t.`describe`,t.`created_by`,t.`created_date`,t.`last_update_by`,t.`last_update_date`
+                t.`id`,t.`tenant_id`,t.`name`,t.`module_name`,t.`service_name`,
+                t.`message`,t.`body`,t.`type`,t.`ip`,t.`url`,t.`result`,
+                t.`created_by`,t.`created_date`
             </otherwise>
         </choose>
     </sql>
@@ -38,35 +41,41 @@
                     <when test="column == 'id'">
                         ,t.id
                     </when>
-                    <when test="column == 'pid'">
-                        ,t.pid
-                    </when>
-                    <when test="column == 'deptCode'">
-                        ,t.dept_code
-                    </when>
-                    <when test="column == 'deptName'">
-                        ,t.dept_name
-                    </when>
                     <when test="column == 'tenantId'">
                         ,t.tenant_id
                     </when>
-                    <when test="column == 'address'">
-                        ,t.address
+                    <when test="column == 'name'">
+                        ,t.name
                     </when>
-                    <when test="column == 'describe'">
-                        ,t.describe
+                    <when test="column == 'moduleName'">
+                        ,t.module_name
+                    </when>
+                    <when test="column == 'serviceName'">
+                        ,t.service_name
+                    </when>
+                    <when test="column == 'message'">
+                        ,t.message
+                    </when>
+                    <when test="column == 'body'">
+                        ,t.body
+                    </when>
+                    <when test="column == 'type'">
+                        ,t.type
+                    </when>
+                    <when test="column == 'ip'">
+                        ,t.ip
+                    </when>
+                    <when test="column == 'url'">
+                        ,t.url
+                    </when>
+                    <when test="column == 'result'">
+                        ,t.result
                     </when>
                     <when test="column == 'createdBy'">
                         ,t.created_by
                     </when>
                     <when test="column == 'createdDate'">
                         ,t.created_date
-                    </when>
-                    <when test="column == 'lastUpdateBy'">
-                        ,t.last_update_by
-                    </when>
-                    <when test="column == 'lastUpdateDate'">
-                        ,t.last_update_date
                     </when>
                 </choose>
             </foreach>
@@ -79,35 +88,41 @@
             <if test="entity.id != null">
                 and t.`id` = #{entity.id,jdbcType=VARCHAR}
             </if>
-            <if test="entity.pid != null">
-                and t.`pid` = #{entity.pid,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.deptCode != null">
-                and t.`dept_code` = #{entity.deptCode,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.deptName != null">
-                and t.`dept_name` = #{entity.deptName,jdbcType=VARCHAR}
-            </if>
             <if test="entity.tenantId != null">
                 and t.`tenant_id` = #{entity.tenantId,jdbcType=VARCHAR}
             </if>
-            <if test="entity.address != null">
-                and t.`address` = #{entity.address,jdbcType=VARCHAR}
+            <if test="entity.name != null">
+                and t.`name` = #{entity.name,jdbcType=VARCHAR}
             </if>
-            <if test="entity.describe != null">
-                and t.`describe` = #{entity.describe,jdbcType=VARCHAR}
+            <if test="entity.moduleName != null">
+                and t.`module_name` = #{entity.moduleName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.serviceName != null">
+                and t.`service_name` = #{entity.serviceName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.message != null">
+                and t.`message` = #{entity.message,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.body != null">
+                and t.`body` = #{entity.body,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.type != null">
+                and t.`type` = #{entity.type,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.ip != null">
+                and t.`ip` = #{entity.ip,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.url != null">
+                and t.`url` = #{entity.url,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.result != null">
+                and t.`result` = #{entity.result,jdbcType=VARCHAR}
             </if>
             <if test="entity.createdBy != null">
                 and t.`created_by` = #{entity.createdBy,jdbcType=VARCHAR}
             </if>
             <if test="entity.createdDate != null">
                 and t.`created_date` = #{entity.createdDate,jdbcType=TIMESTAMP}
-            </if>
-            <if test="entity.lastUpdateBy != null">
-                and t.`last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.lastUpdateDate != null">
-                and t.`last_update_date` = #{entity.lastUpdateDate,jdbcType=TIMESTAMP}
             </if>
         </where>
     </sql>
@@ -134,28 +149,44 @@
                         and LOWER(t.`id`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'pid'">
-                        and LOWER(t.`pid`)
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'deptCode'">
-                        and LOWER(t.`dept_code`)
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'deptName'">
-                        and LOWER(t.`dept_name`)
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
                     <when test="criterion.attr == 'tenantId'">
                         and LOWER(t.`tenant_id`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'address'">
-                        and LOWER(t.`address`)
+                    <when test="criterion.attr == 'name'">
+                        and LOWER(t.`name`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'describe'">
-                        and LOWER(t.`describe`)
+                    <when test="criterion.attr == 'moduleName'">
+                        and LOWER(t.`module_name`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'serviceName'">
+                        and LOWER(t.`service_name`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'message'">
+                        and LOWER(t.`message`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'body'">
+                        and LOWER(t.`body`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'type'">
+                        and LOWER(t.`type`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'ip'">
+                        and LOWER(t.`ip`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'url'">
+                        and LOWER(t.`url`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'result'">
+                        and LOWER(t.`result`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'createdBy'">
@@ -164,14 +195,6 @@
                     </when>
                     <when test="criterion.attr == 'createdDate'">
                         and LOWER(t.`created_date`)
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'lastUpdateBy'">
-                        and LOWER(t.`last_update_by`)
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'lastUpdateDate'">
-                        and LOWER(t.`last_update_date`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <otherwise>
@@ -185,28 +208,44 @@
                         and t.`id`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'pid'">
-                        and t.`pid`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'deptCode'">
-                        and t.`dept_code`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'deptName'">
-                        and t.`dept_name`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
                     <when test="criterion.attr == 'tenantId'">
                         and t.`tenant_id`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'address'">
-                        and t.`address`
+                    <when test="criterion.attr == 'name'">
+                        and t.`name`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    <when test="criterion.attr == 'describe'">
-                        and t.`describe`
+                    <when test="criterion.attr == 'moduleName'">
+                        and t.`module_name`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'serviceName'">
+                        and t.`service_name`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'message'">
+                        and t.`message`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'body'">
+                        and t.`body`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'type'">
+                        and t.`type`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'ip'">
+                        and t.`ip`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'url'">
+                        and t.`url`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'result'">
+                        and t.`result`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <when test="criterion.attr == 'createdBy'">
@@ -215,14 +254,6 @@
                     </when>
                     <when test="criterion.attr == 'createdDate'">
                         and t.`created_date`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'lastUpdateBy'">
-                        and t.`last_update_by`
-                        <include refid="Wrapper_Op_Clause" />
-                    </when>
-                    <when test="criterion.attr == 'lastUpdateDate'">
-                        and t.`last_update_date`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
                     <otherwise>
@@ -295,35 +326,41 @@
                     <when test="st.attr == 'id'">
                         t.`id` ${st.order.type}
                     </when>
-                    <when test="st.attr == 'pid'">
-                        t.`pid` ${st.order.type}
-                    </when>
-                    <when test="st.attr == 'deptCode'">
-                        t.`dept_code` ${st.order.type}
-                    </when>
-                    <when test="st.attr == 'deptName'">
-                        t.`dept_name` ${st.order.type}
-                    </when>
                     <when test="st.attr == 'tenantId'">
                         t.`tenant_id` ${st.order.type}
                     </when>
-                    <when test="st.attr == 'address'">
-                        t.`address` ${st.order.type}
+                    <when test="st.attr == 'name'">
+                        t.`name` ${st.order.type}
                     </when>
-                    <when test="st.attr == 'describe'">
-                        t.`describe` ${st.order.type}
+                    <when test="st.attr == 'moduleName'">
+                        t.`module_name` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'serviceName'">
+                        t.`service_name` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'message'">
+                        t.`message` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'body'">
+                        t.`body` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'type'">
+                        t.`type` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'ip'">
+                        t.`ip` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'url'">
+                        t.`url` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'result'">
+                        t.`result` ${st.order.type}
                     </when>
                     <when test="st.attr == 'createdBy'">
                         t.`created_by` ${st.order.type}
                     </when>
                     <when test="st.attr == 'createdDate'">
                         t.`created_date` ${st.order.type}
-                    </when>
-                    <when test="st.attr == 'lastUpdateBy'">
-                        t.`last_update_by` ${st.order.type}
-                    </when>
-                    <when test="st.attr == 'lastUpdateDate'">
-                        t.`last_update_date` ${st.order.type}
                     </when>
                 </choose>
             </foreach>
@@ -334,7 +371,7 @@
     <select id="findById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `audit` t
         where t.`id` = #{id,jdbcType=VARCHAR}
     </select>
 
@@ -342,7 +379,7 @@
     <select id="query" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `audit` t
         <include refid="Base_Where_Clause" />
     </select>
 
@@ -350,7 +387,7 @@
     <select id="findList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `audit` t
         <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
@@ -358,51 +395,63 @@
     
     <!--根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.io.Serializable">
-        delete t from `dept` t
+        delete t from `audit` t
         where t.`id` = #{id,jdbcType=VARCHAR}
     </delete>
     
     <!--根据实体对象删除数据-->
-    <delete id="delete" parameterType="org.jboot.generator.entity.DeptVO">
-        delete t from `dept` t
+    <delete id="delete" parameterType="org.jboot.generator.entity.AuditVO">
+        delete t from `audit` t
         <include refid="Base_Where_Clause" />
     </delete>
 
     <!--根据实体对象删除数据-->
-    <delete id="deletes" parameterType="org.jboot.generator.entity.DeptVO">
-        delete t from `dept` t where t.`id` in
+    <delete id="deletes" parameterType="org.jboot.generator.entity.AuditVO">
+        delete t from `audit` t where t.`id` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item.id}
         </foreach>
     </delete>
 
     <!--插入实体对象 -->
-    <insert id="insert" parameterType="org.jboot.generator.entity.DeptVO">
+    <insert id="insert" parameterType="org.jboot.generator.entity.AuditVO">
         <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="id">
             select uuid() 
         </selectKey>
-        insert into `dept`
+        insert into `audit`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 `id`,
             </if>
-            <if test="pid != null">
-                `pid`,
-            </if>
-            <if test="deptCode != null">
-                `dept_code`,
-            </if>
-            <if test="deptName != null">
-                `dept_name`,
-            </if>
             <if test="tenantId != null">
                 `tenant_id`,
             </if>
-            <if test="address != null">
-                `address`,
+            <if test="name != null">
+                `name`,
             </if>
-            <if test="describe != null">
-                `describe`,
+            <if test="moduleName != null">
+                `module_name`,
+            </if>
+            <if test="serviceName != null">
+                `service_name`,
+            </if>
+            <if test="message != null">
+                `message`,
+            </if>
+            <if test="body != null">
+                `body`,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="ip != null">
+                `ip`,
+            </if>
+            <if test="url != null">
+                `url`,
+            </if>
+            <if test="result != null">
+                `result`,
             </if>
             <if test="createdBy != null">
                 `created_by`,
@@ -410,34 +459,40 @@
             <if test="createdDate != null or createdDate == null">
                 `created_date`,
             </if>
-            <if test="lastUpdateBy != null">
-                `last_update_by`,
-            </if>
-            <if test="lastUpdateDate != null or lastUpdateDate == null">
-                `last_update_date`,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 #{id,jdbcType=VARCHAR},
             </if>
-            <if test="pid != null">
-                #{pid,jdbcType=VARCHAR},
-            </if>
-            <if test="deptCode != null">
-                #{deptCode,jdbcType=VARCHAR},
-            </if>
-            <if test="deptName != null">
-                #{deptName,jdbcType=VARCHAR},
-            </if>
             <if test="tenantId != null">
                 #{tenantId,jdbcType=VARCHAR},
             </if>
-            <if test="address != null">
-                #{address,jdbcType=VARCHAR},
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
             </if>
-            <if test="describe != null">
-                #{describe,jdbcType=VARCHAR},
+            <if test="moduleName != null">
+                #{moduleName,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceName != null">
+                #{serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="message != null">
+                #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="body != null">
+                #{body,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=VARCHAR},
             </if>
             <if test="createdBy != null">
                 #{createdBy,jdbcType=VARCHAR},
@@ -445,43 +500,41 @@
             <if test="createdDate != null or createdDate == null">
                 current_timestamp(),
             </if>
-            <if test="lastUpdateBy != null">
-                #{lastUpdateBy,jdbcType=VARCHAR},
-            </if>
-            <if test="lastUpdateDate != null or lastUpdateDate == null">
-                current_timestamp(),
-            </if>
         </trim>
     </insert>
 
     <!--插入实体对象 -->
-    <insert id="inserts" parameterType="org.jboot.generator.entity.DeptVO">
-        insert into `dept`
+    <insert id="inserts" parameterType="org.jboot.generator.entity.AuditVO">
+        insert into `audit`
         <trim prefix="(" suffix=") values" suffixOverrides=",">
             `id`,
-            `pid`,
-            `dept_code`,
-            `dept_name`,
             `tenant_id`,
-            `address`,
-            `describe`,
+            `name`,
+            `module_name`,
+            `service_name`,
+            `message`,
+            `body`,
+            `type`,
+            `ip`,
+            `url`,
+            `result`,
             `created_by`,
-            `created_date`,
-            `last_update_by`,
-            `last_update_date`
+            `created_date`
         </trim>
         <foreach collection="list" item="item" index="index" separator=",">
             (
             UUID(),
-            #{item.pid,jdbcType=VARCHAR},
-            #{item.deptCode,jdbcType=VARCHAR},
-            #{item.deptName,jdbcType=VARCHAR},
             #{item.tenantId,jdbcType=VARCHAR},
-            #{item.address,jdbcType=VARCHAR},
-            #{item.describe,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.moduleName,jdbcType=VARCHAR},
+            #{item.serviceName,jdbcType=VARCHAR},
+            #{item.message,jdbcType=VARCHAR},
+            #{item.body,jdbcType=VARCHAR},
+            #{item.type,jdbcType=VARCHAR},
+            #{item.ip,jdbcType=VARCHAR},
+            #{item.url,jdbcType=VARCHAR},
+            #{item.result,jdbcType=VARCHAR},
             #{item.createdBy,jdbcType=VARCHAR},
-            current_timestamp(),
-            #{item.lastUpdateBy,jdbcType=VARCHAR},
             current_timestamp()
             )
         </foreach>
@@ -489,31 +542,37 @@
 
     <!--更新实体对象 -->
     <update id="update">
-        update `dept` t
+        update `audit` t
         <set>
-            <if test="entity.pid != null">
-                t.`pid` = #{entity.pid,jdbcType=VARCHAR},
-            </if>
-            <if test="entity.deptCode != null">
-                t.`dept_code` = #{entity.deptCode,jdbcType=VARCHAR},
-            </if>
-            <if test="entity.deptName != null">
-                t.`dept_name` = #{entity.deptName,jdbcType=VARCHAR},
-            </if>
             <if test="entity.tenantId != null">
                 t.`tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
             </if>
-            <if test="entity.address != null">
-                t.`address` = #{entity.address,jdbcType=VARCHAR},
+            <if test="entity.name != null">
+                t.`name` = #{entity.name,jdbcType=VARCHAR},
             </if>
-            <if test="entity.describe != null">
-                t.`describe` = #{entity.describe,jdbcType=VARCHAR},
+            <if test="entity.moduleName != null">
+                t.`module_name` = #{entity.moduleName,jdbcType=VARCHAR},
             </if>
-            <if test="entity.lastUpdateBy != null">
-                t.`last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
+            <if test="entity.serviceName != null">
+                t.`service_name` = #{entity.serviceName,jdbcType=VARCHAR},
             </if>
-            <if test="entity.lastUpdateDate == null or entity.lastUpdateDate != null">
-                t.`last_update_date` = current_timestamp(),
+            <if test="entity.message != null">
+                t.`message` = #{entity.message,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.body != null">
+                t.`body` = #{entity.body,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.type != null">
+                t.`type` = #{entity.type,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.ip != null">
+                t.`ip` = #{entity.ip,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.url != null">
+                t.`url` = #{entity.url,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.result != null">
+                t.`result` = #{entity.result,jdbcType=VARCHAR},
             </if>
         </set>
         where t.`id` = #{entity.id,jdbcType=VARCHAR}
@@ -523,7 +582,7 @@
     <select id="queryByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `audit` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
         </if>
@@ -533,7 +592,7 @@
     <select id="findByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `dept` t
+        from `audit` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
             <include refid="Wrapper_Order_Clause" />
@@ -542,34 +601,40 @@
 
     <!--更新实体对象 -->
     <update id="updateByWrapper">
-        update `dept` t
+        update `audit` t
         <set>
             <if test="entity.id != null">
                 t.`id` = #{entity.id,jdbcType=VARCHAR},
             </if>
-            <if test="entity.pid != null">
-                t.`pid` = #{entity.pid,jdbcType=VARCHAR},
-            </if>
-            <if test="entity.deptCode != null">
-                t.`dept_code` = #{entity.deptCode,jdbcType=VARCHAR},
-            </if>
-            <if test="entity.deptName != null">
-                t.`dept_name` = #{entity.deptName,jdbcType=VARCHAR},
-            </if>
             <if test="entity.tenantId != null">
                 t.`tenant_id` = #{entity.tenantId,jdbcType=VARCHAR},
             </if>
-            <if test="entity.address != null">
-                t.`address` = #{entity.address,jdbcType=VARCHAR},
+            <if test="entity.name != null">
+                t.`name` = #{entity.name,jdbcType=VARCHAR},
             </if>
-            <if test="entity.describe != null">
-                t.`describe` = #{entity.describe,jdbcType=VARCHAR},
+            <if test="entity.moduleName != null">
+                t.`module_name` = #{entity.moduleName,jdbcType=VARCHAR},
             </if>
-            <if test="entity.lastUpdateBy != null">
-                t.`last_update_by` = #{entity.lastUpdateBy,jdbcType=VARCHAR},
+            <if test="entity.serviceName != null">
+                t.`service_name` = #{entity.serviceName,jdbcType=VARCHAR},
             </if>
-            <if test="entity.lastUpdateDate == null or entity.lastUpdateDate != null">
-                t.`last_update_date` = current_timestamp(),
+            <if test="entity.message != null">
+                t.`message` = #{entity.message,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.body != null">
+                t.`body` = #{entity.body,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.type != null">
+                t.`type` = #{entity.type,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.ip != null">
+                t.`ip` = #{entity.ip,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.url != null">
+                t.`url` = #{entity.url,jdbcType=VARCHAR},
+            </if>
+            <if test="entity.result != null">
+                t.`result` = #{entity.result,jdbcType=VARCHAR},
             </if>
         </set>
         <include refid="Wrapper_Where_Clause" />
@@ -577,7 +642,7 @@
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
-        delete t from `dept` t
+        delete t from `audit` t
         <include refid="Wrapper_Where_Clause" />
     </delete>
 

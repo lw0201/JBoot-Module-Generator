@@ -77,26 +77,21 @@ public class BaseService<T> implements IBaseService<T> {
 
     @Override
     public T findById(Serializable id, String... columns) {
-        return iBaseDao.findById(id, columns);
+        return iBaseDao.findById(id);
     }
 
     @Override
-    public T query(T entity) {
+    public T query(T entity, String... columns) {
         return iBaseDao.query(entity);
     }
 
     @Override
-    public T query(Wrapper<T> wrapper) {
+    public T query(Wrapper<T> wrapper, String... columns) {
         return iBaseDao.queryByWrapper(wrapper);
     }
 
     @Override
-    public List<T> findList() {
-        return iBaseDao.findList();
-    }
-
-    @Override
-    public List<T> findList(T entity) {
+    public List<T> findList(T entity, String... columns) {
         return iBaseDao.findList(entity);
     }
 
@@ -107,7 +102,7 @@ public class BaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public List<T> findList(Wrapper<T> wrapper) {
+    public List<T> findByWrapper(Wrapper<T> wrapper) {
         return iBaseDao.findByWrapper(wrapper);
     }
 

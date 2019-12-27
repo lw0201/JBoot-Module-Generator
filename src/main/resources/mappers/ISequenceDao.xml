@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${packageName}.dao.I${entityName}Dao">
+<mapper namespace="org.jboot.generator.dao.ISequenceDao">
 
     <!--基础字段返回信息配置 -->
-    <resultMap id="BaseResultMap" type="${packageName}.entity.${entityName}VO">
-        <id column="${pk.fieldName}" jdbcType="${pk.em.jdbcType}" property="${pk.attrName}" />
-        <#list fields as field>
-        <#if field.fieldName != pk.fieldName >
-        <result column="${field.fieldName}" jdbcType="${field.em.jdbcType}" property="${field.attrName}" />
-        </#if>
-        </#list>
+    <resultMap id="BaseResultMap" type="org.jboot.generator.entity.SequenceVO">
+        <id column="name" jdbcType="VARCHAR" property="name" />
+        <result column="current_value" jdbcType="INTEGER" property="currentValue" />
+        <result column="increment" jdbcType="INTEGER" property="increment" />
     </resultMap>
-    
-    <!--基础字段信息配置用于扩展接口使用 -->
-    <sql id="Base_Columns">
-        <#list fields as field><#if !((field_index > 1) && ((field_index+1) % 6 == 0))><#if !field_has_next>t.`${field.fieldName}`<#else>t.`${field.fieldName}`,</#if><#else>
-        <#if !field_has_next>t.`${field.fieldName}`<#else>t.`${field.fieldName}`,</#if></#if></#list>
-    </sql>
 
     <!--基础字段信息配置 -->
     <sql id="Base_Column_List">
@@ -25,7 +16,7 @@
                 <include refid="Base_Auto_Cloumns" />
             </when>
             <otherwise>
-                <include refid="Base_Columns" />
+                t.`name`,t.`current_value`,t.`increment`
             </otherwise>
         </choose>
     </sql>
@@ -35,11 +26,15 @@
         <trim prefixOverrides=",">
             <foreach collection="columns" item="column">
                 <choose>
-                    <#list fields as field>
-                    <when test="column == '${field.attrName}'">
-                        ,t.${field.fieldName}
+                    <when test="column == 'name'">
+                        ,t.name
                     </when>
-                    </#list>
+                    <when test="column == 'currentValue'">
+                        ,t.current_value
+                    </when>
+                    <when test="column == 'increment'">
+                        ,t.increment
+                    </when>
                 </choose>
             </foreach>
         </trim>
@@ -48,11 +43,15 @@
     <!--基础条件查询配置 -->
     <sql id="Base_Where_Clause">
         <where>
-            <#list fields as field>
-            <if test="entity.${field.attrName} != null">
-                and t.`${field.fieldName}` = ${r'#{'}entity.${field.attrName},jdbcType=${field.em.jdbcType}${r'}'}
+            <if test="entity.name != null">
+                and t.`name` = #{entity.name,jdbcType=VARCHAR}
             </if>
-            </#list>
+            <if test="entity.currentValue != null">
+                and t.`current_value` = #{entity.currentValue,jdbcType=INTEGER}
+            </if>
+            <if test="entity.increment != null">
+                and t.`increment` = #{entity.increment,jdbcType=INTEGER}
+            </if>
         </where>
     </sql>
 
@@ -74,12 +73,18 @@
         <choose>
             <when test="criterion.op.type == 'like' or criterion.op.type == 'notLike'">
                 <choose>
-                    <#list fields as field>
-                    <when test="criterion.attr == '${field.attrName}'">
-                        and LOWER(t.`${field.fieldName}`)
+                    <when test="criterion.attr == 'name'">
+                        and LOWER(t.`name`)
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    </#list>
+                    <when test="criterion.attr == 'currentValue'">
+                        and LOWER(t.`current_value`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'increment'">
+                        and LOWER(t.`increment`)
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
                     <otherwise>
                         and false
                     </otherwise>
@@ -87,12 +92,18 @@
             </when>
             <otherwise>
                 <choose>
-                    <#list fields as field>
-                    <when test="criterion.attr == '${field.attrName}'">
-                        and t.`${field.fieldName}`
+                    <when test="criterion.attr == 'name'">
+                        and t.`name`
                         <include refid="Wrapper_Op_Clause" />
                     </when>
-                    </#list>
+                    <when test="criterion.attr == 'currentValue'">
+                        and t.`current_value`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
+                    <when test="criterion.attr == 'increment'">
+                        and t.`increment`
+                        <include refid="Wrapper_Op_Clause" />
+                    </when>
                     <otherwise>
                         and false
                     </otherwise>
@@ -105,28 +116,28 @@
     <sql id="Wrapper_Op_Clause">
         <choose>
             <when test="criterion.op.type == 'eq'">
-                = ${r'#{'}criterion.value${r'}'}
+                = #{criterion.value}
             </when>
             <when test="criterion.op.type == 'ne'">
-                != ${r'#{'}criterion.value${r'}'}
+                != #{criterion.value}
             </when>
             <when test="criterion.op.type == 'gt'">
-                <![CDATA[ > ${r'#{'}criterion.value${r'}'} ]]>
+                <![CDATA[ > #{criterion.value} ]]>
             </when>
             <when test="criterion.op.type == 'ge'">
-                <![CDATA[ >= ${r'#{'}criterion.value${r'}'} ]]>
+                <![CDATA[ >= #{criterion.value} ]]>
             </when>
             <when test="criterion.op.type == 'lt'">
-                <![CDATA[ < ${r'#{'}criterion.value${r'}'} ]]>
+                <![CDATA[ < #{criterion.value} ]]>
             </when>
             <when test="criterion.op.type == 'le'">
-                <![CDATA[ <= ${r'#{'}criterion.value${r'}'} ]]>
+                <![CDATA[ <= #{criterion.value} ]]>
             </when>
             <when test="criterion.op.type == 'like'">
-                <![CDATA[ LIKE CONCAT('%',LOWER(${r'#{'}criterion.value${r'}'}),'%')]]>
+                <![CDATA[ LIKE CONCAT('%',LOWER(#{criterion.value}),'%')]]>
             </when>
             <when test="criterion.op.type == 'notLike'">
-                <![CDATA[ NOT LIKE CONCAT('%',LOWER(${r'#{'}criterion.value${r'}'}),'%') ]]>
+                <![CDATA[ NOT LIKE CONCAT('%',LOWER(#{criterion.value}),'%') ]]>
             </when>
             <when test="criterion.op.type == 'isNull'">
                 is null
@@ -137,20 +148,20 @@
             <when test="criterion.op.type == 'in'">
                 in
                 <foreach collection="criterion.value" item="value" separator="," open="(" close=")">
-                    ${r'#{'}value${r'}'}
+                    #{value}
                 </foreach>
             </when>
             <when test="criterion.op.type == 'notIn'">
                 not in
                 <foreach collection="criterion.value" item="value" separator="," open="(" close=")">
-                    ${r'#{'}value${r'}'}
+                    #{value}
                 </foreach>
             </when>
             <when test="criterion.op.type == 'between'">
-                BETWEEN ${r'#{'}criterion.value${r'}'} and ${r'#{'}criterion.secondValue${r'}'}
+                BETWEEN #{criterion.value} and #{criterion.secondValue}
             </when>
             <when test="criterion.op.type == 'notBetween'">
-                NOT BETWEEN ${r'#{'}criterion.value${r'}'} and ${r'#{'}criterion.secondValue${r'}'}
+                NOT BETWEEN #{criterion.value} and #{criterion.secondValue}
             </when>
         </choose>
     </sql>
@@ -160,11 +171,15 @@
         <if test="wp.sorts != null">
             <foreach collection="wp.sorts" open=" order by " item="st" separator=",">
                 <choose>
-                    <#list fields as field>
-                    <when test="st.attr == '${field.attrName}'">
-                        t.`${field.fieldName}` ${r'${'}st.order.type${r'}'}
+                    <when test="st.attr == 'name'">
+                        t.`name` ${st.order.type}
                     </when>
-                    </#list>
+                    <when test="st.attr == 'currentValue'">
+                        t.`current_value` ${st.order.type}
+                    </when>
+                    <when test="st.attr == 'increment'">
+                        t.`increment` ${st.order.type}
+                    </when>
                 </choose>
             </foreach>
         </if>
@@ -174,15 +189,15 @@
     <select id="findById" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `${tableName}` t
-        where t.`${pk.fieldName}` = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
+        from `sequence` t
+        where t.`name` = #{name,jdbcType=VARCHAR}
     </select>
 
     <!--根据实体对象信息查询返回实体对象 -->
     <select id="query" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `${tableName}` t
+        from `sequence` t
         <include refid="Base_Where_Clause" />
     </select>
 
@@ -190,114 +205,98 @@
     <select id="findList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `${tableName}` t
-        <if test="entity != null">
+        from `sequence` t
+        <if test="_parameter != null">
             <include refid="Base_Where_Clause" />
         </if>
     </select>
     
     <!--根据主键信息删除实体对象 -->
     <delete id="deleteById" parameterType="java.io.Serializable">
-        delete t from `${tableName}` t
-        where t.`${pk.fieldName}` = ${r'#{'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
+        delete t from `sequence` t
+        where t.`name` = #{name,jdbcType=VARCHAR}
     </delete>
     
     <!--根据实体对象删除数据-->
-    <delete id="delete" parameterType="${packageName}.entity.${entityName}VO">
-        delete t from `${tableName}` t
+    <delete id="delete" parameterType="org.jboot.generator.entity.SequenceVO">
+        delete t from `sequence` t
         <include refid="Base_Where_Clause" />
     </delete>
 
     <!--根据实体对象删除数据-->
-    <delete id="deletes" parameterType="${packageName}.entity.${entityName}VO">
-        delete t from `${tableName}` t where t.`${pk.fieldName}` in
+    <delete id="deletes" parameterType="org.jboot.generator.entity.SequenceVO">
+        delete t from `sequence` t where t.`name` in
         <foreach collection="list" item="item" open="(" separator="," close=")">
-            ${r'#{'}item.${pk.attrName}${r'}'}
+            #{item.name}
         </foreach>
     </delete>
 
     <!--插入实体对象 -->
-    <insert id="insert" parameterType="${packageName}.entity.${entityName}VO">
-        <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="${pk.attrName}">
+    <insert id="insert" parameterType="org.jboot.generator.entity.SequenceVO">
+        <selectKey order="BEFORE" resultType="java.lang.String" keyProperty="name">
             select uuid() 
         </selectKey>
-        insert into `${tableName}`
+        insert into `sequence`
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <#list fields as field>
-            <#if field.attrName =='lastUpdateDate' || field.attrName =='createdDate'>
-            <if test="${field.attrName} != null or ${field.attrName} == null">
-                `${field.fieldName}`,
+            <if test="name != null">
+                `name`,
             </if>
-            <#else>
-            <if test="${field.attrName} != null">
-                `${field.fieldName}`,
+            <if test="currentValue != null">
+                `current_value`,
             </if>
-            </#if>
-            </#list>
+            <if test="increment != null">
+                `increment`,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <#list fields as field>
-            <#if field.attrName =='lastUpdateDate' || field.attrName =='createdDate'>
-            <if test="${field.attrName} != null or ${field.attrName} == null">
-                current_timestamp(),
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
             </if>
-            <#else>
-            <if test="${field.attrName} != null">
-                ${r'#{'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
+            <if test="currentValue != null">
+                #{currentValue,jdbcType=INTEGER},
             </if>
-            </#if>
-            </#list>
+            <if test="increment != null">
+                #{increment,jdbcType=INTEGER},
+            </if>
         </trim>
     </insert>
 
     <!--插入实体对象 -->
-    <insert id="inserts" parameterType="${packageName}.entity.${entityName}VO">
-        insert into `${tableName}`
+    <insert id="inserts" parameterType="org.jboot.generator.entity.SequenceVO">
+        insert into `sequence`
         <trim prefix="(" suffix=") values" suffixOverrides=",">
-            <#list fields as field>
-            `${field.fieldName}`<#if field_has_next>,</#if>
-            </#list>
+            `name`,
+            `current_value`,
+            `increment`
         </trim>
         <foreach collection="list" item="item" index="index" separator=",">
             (
-            <#list fields as field>
-            <#if field.attrName =='lastUpdateDate' || field.attrName =='createdDate'>
-            current_timestamp()<#if field_has_next>,</#if>
-            <#elseif field.fieldName == pk.fieldName >
-            UUID()<#if field_has_next>,</#if>
-            <#else>
-            ${r'#{item.'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'}<#if field_has_next>,</#if>
-            </#if>
-            </#list>
+            UUID(),
+            #{item.currentValue,jdbcType=INTEGER},
+            #{item.increment,jdbcType=INTEGER}
             )
         </foreach>
     </insert>
 
     <!--更新实体对象 -->
     <update id="update">
-        update `${tableName}` t
+        update `sequence` t
         <set>
-            <#list fields as field>
-            <#if field.attrName =='lastUpdateDate'>
-            <if test="entity.${field.attrName} == null or entity.${field.attrName} != null">
-                t.`${field.fieldName}` = current_timestamp(),
+            <if test="entity.currentValue != null">
+                t.`current_value` = #{entity.currentValue,jdbcType=INTEGER},
             </if>
-            <#elseif field.attrName =='createdDate' || field.attrName =='createdBy' || field.fieldName == pk.fieldName>
-            <#else>
-            <if test="entity.${field.attrName} != null">
-                t.`${field.fieldName}` = ${r'#{entity.'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
+            <if test="entity.increment != null">
+                t.`increment` = #{entity.increment,jdbcType=INTEGER},
             </if>
-            </#if>
-            </#list>
         </set>
-        where t.`${pk.fieldName}` = ${r'#{entity.'}${pk.attrName},jdbcType=${pk.em.jdbcType}${r'}'}
+        where t.`name` = #{entity.name,jdbcType=VARCHAR}
     </update>
 
     <!--构造器查询 -->
     <select id="queryByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `${tableName}` t
+        from `sequence` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
         </if>
@@ -307,7 +306,7 @@
     <select id="findByWrapper" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from `${tableName}` t
+        from `sequence` t
         <if test="wp != null">
             <include refid="Wrapper_Where_Clause" />
             <include refid="Wrapper_Order_Clause" />
@@ -316,27 +315,24 @@
 
     <!--更新实体对象 -->
     <update id="updateByWrapper">
-        update `${tableName}` t
+        update `sequence` t
         <set>
-            <#list fields as field>
-            <#if field.attrName =='lastUpdateDate'>
-            <if test="entity.${field.attrName} == null or entity.${field.attrName} != null">
-                t.`${field.fieldName}` = current_timestamp(),
+            <if test="entity.name != null">
+                t.`name` = #{entity.name,jdbcType=VARCHAR},
             </if>
-            <#elseif field.attrName =='createdDate' || field.attrName =='createdBy'>
-            <#else>
-            <if test="entity.${field.attrName} != null">
-                t.`${field.fieldName}` = ${r'#{entity.'}${field.attrName},jdbcType=${field.em.jdbcType}${r'}'},
+            <if test="entity.currentValue != null">
+                t.`current_value` = #{entity.currentValue,jdbcType=INTEGER},
             </if>
-            </#if>
-            </#list>
+            <if test="entity.increment != null">
+                t.`increment` = #{entity.increment,jdbcType=INTEGER},
+            </if>
         </set>
         <include refid="Wrapper_Where_Clause" />
     </update>
     
     <!--根据实体对象删除数据-->
     <delete id="deleteByWrapper">
-        delete t from `${tableName}` t
+        delete t from `sequence` t
         <include refid="Wrapper_Where_Clause" />
     </delete>
 
