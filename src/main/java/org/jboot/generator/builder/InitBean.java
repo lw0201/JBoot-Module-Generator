@@ -34,6 +34,7 @@ public class InitBean implements InitializingBean {
                 springDataSource.getPassword());
             List<TableInfo> talbes = JdbcUtil.getTables(conn);
             AutoGenerator builder = new AutoGenerator();
+            builder.generatorAttr(talbes, generator.getPackageName());
             builder.generatorEntity(talbes, generator.getPackageName());
             builder.generatorDao(talbes, generator.getPackageName());
             builder.generatorMapper(talbes, generator.getPackageName());

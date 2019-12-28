@@ -96,14 +96,14 @@ public class BaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public PageInfo<T> findPage(Wrapper<T> wrapper, int pageNo, int pageSize) {
+    public PageInfo<T> findPage(Wrapper<T> wrapper, int pageNo, int pageSize, String... columns) {
         PageHelper.startPage(pageNo, pageSize);
-        return new PageInfo<T>(iBaseDao.findByWrapper(wrapper));
+        return new PageInfo<T>(iBaseDao.findByWrapper(wrapper, columns));
     }
 
     @Override
-    public List<T> findByWrapper(Wrapper<T> wrapper) {
-        return iBaseDao.findByWrapper(wrapper);
+    public List<T> findByWrapper(Wrapper<T> wrapper, String... columns) {
+        return iBaseDao.findByWrapper(wrapper, columns);
     }
 
     @Override

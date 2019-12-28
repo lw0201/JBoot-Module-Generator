@@ -77,7 +77,7 @@ public interface IBaseDao<T> {
      * @param id
      *            业务实体ID
      * @param columns
-     *            自定义实体类列
+     *            自定义查询属性字段
      * @return T 返回业务实体的详细信息
      */
     T findById(Serializable id, @Param("columns") String... columns);
@@ -99,7 +99,7 @@ public interface IBaseDao<T> {
      * @param entity
      *            业务实体对象
      * @param columns
-     *            自定义实体类列
+     *            自定义查询属性字段
      * @return List<T> 返回业务实体对象集合
      */
     List<T> findList(@Param("entity") T entity, @Param("columns") String... columns);
@@ -110,7 +110,7 @@ public interface IBaseDao<T> {
      * @param entity
      *            业务实体
      * @param columns
-     *            自定义实体类列
+     *            自定义查询属性字段
      * @return T 返回单个业务实体对象详细信息
      */
     T queryByWrapper(@Param("wp") Wrapper<T> wrapper, @Param("columns") String... columns);
@@ -121,7 +121,7 @@ public interface IBaseDao<T> {
      * @param wrapper
      *            条件构造器
      * @param columns
-     *            自定义实体类列
+     *            自定义查询属性字段
      * @return List<T> 返回业务实体对象集合
      */
     List<T> findByWrapper(@Param("wp") Wrapper<T> wrapper, @Param("columns") String... columns);

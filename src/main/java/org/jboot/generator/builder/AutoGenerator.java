@@ -26,6 +26,28 @@ public class AutoGenerator {
 
     private final static Logger logger = LoggerFactory.getLogger(AutoGenerator.class);
 
+    public void generatorAttr(TableInfo tableInfo) {
+        FileWriter write = null;
+        try {
+            if (StringUtils.isNotBlank(tableInfo.getPackageName())) {
+                String path = tableInfo.getPackageName().replace(".", "/");
+                File file = new File(Constants.java + File.separator + path + "/attr");
+                if (!file.exists()) {
+                    file.mkdirs();
+                }
+                write =
+                    new FileWriter(new File(file, StringUtils.toUpperCaseFirst(tableInfo.getEntityName()) + ".java"));
+                Template template = FreemarkerUtil.getTemplate("Attr.ftl");
+                template.process(tableInfo, write);
+                write.flush();
+            }
+        } catch (IOException | TemplateException e) {
+            logger.error("auto dao fail:", e);
+        } finally {
+            IOUtils.close(write);
+        }
+    }
+
     public void generatorEntity(TableInfo tableInfo) {
         FileWriter write = null;
         try {
@@ -160,6 +182,13 @@ public class AutoGenerator {
     public void generatorMapper(List<TableInfo> talbes, String packageName) {
         for (TableInfo tableInfo : talbes) {
             generatorMapper(tableInfo);
+        }
+    }
+
+    public void generatorAttr(List<TableInfo> talbes, String packageName) {
+        for (TableInfo tableInfo : talbes) {
+            tableInfo.setPackageName(packageName);
+            generatorAttr(tableInfo);
         }
     }
 

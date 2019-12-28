@@ -3,7 +3,6 @@ package org.jboot.generator.base;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.jboot.generator.conditions.Wrapper;
 
 import com.github.pagehelper.PageInfo;
@@ -76,6 +75,8 @@ public interface IBaseService<T> {
      * 
      * @param id
      *            业务实体ID
+     * @param columns
+     *            自定义查询属性字段
      * @return 返回业务实体的详细信息
      */
     T findById(Serializable id, String... columns);
@@ -85,28 +86,33 @@ public interface IBaseService<T> {
      * 
      * @param entity
      *            业务实体
+     * @param columns
+     *            自定义查询属性字段
      * @return 返回单个业务实体对象详细信息
      */
-    T query(@Param("entity") T entity, String... columns);
+    T query(T entity, String... columns);
 
     /**
      * 根据实体对象查询并返回单个实体对象
      * 
      * @param entity
      *            业务实体
+     * @param columns
+     *            自定义查询属性字段
      * @return 返回单个业务实体对象详细信息
      */
-    T query(@Param("wp") Wrapper<T> wrapper, String... columns);
-
+    T query(Wrapper<T> wrapper, String... columns);
 
     /**
      * 根据实体对象返回实体集合</li>
      * 
      * @param entity
      *            业务实体对象
+     * @param columns
+     *            自定义查询属性字段
      * @return 返回业务实体对象集合
      */
-    List<T> findList(@Param("entity") T entity, String... columns);
+    List<T> findList(T entity, String... columns);
 
     /**
      * 实体分页操作</li>
@@ -117,17 +123,22 @@ public interface IBaseService<T> {
      *            分页起始页
      * @param pageSize
      *            分页每页显示的数据大小
+     * @param columns
+     *            自定义查询属性字段
      * @return 返回业务的实体的分页信息
      */
-    PageInfo<T> findPage(Wrapper<T> wrapper, int pageNo, int pageSize);
+    PageInfo<T> findPage(Wrapper<T> wrapper, int pageNo, int pageSize, String... columns);
 
     /**
      * 根据构造器来查询数据
      * 
      * @param wrapper
+     *            条件构造器
+     * @param columns
+     *            自定义查询属性字段
      * @return 返回业务实体对象集合
      */
-    List<T> findByWrapper(Wrapper<T> wrapper);
+    List<T> findByWrapper(Wrapper<T> wrapper, String... columns);
 
     /**
      * 根据构造器来修改对象
@@ -135,7 +146,7 @@ public interface IBaseService<T> {
      * @param entity
      *            实体对象
      * @param wrapper
-     *            构造器
+     *            条件构造器
      * @return 返回更新实体影响的行
      */
     int delete(Wrapper<T> wrapper);
