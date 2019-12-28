@@ -121,4 +121,84 @@ public class Criteria {
         addCriterion(attr, Operation.notBetween, value, secondValue);
         return this;
     }
+
+    public Criteria isNull(Enum<?> attr) {
+        addCriterion(attr.name(), Operation.isNull);
+        return this;
+    }
+
+    public Criteria isNotNull(Enum<?> attr) {
+        addCriterion(attr.name(), Operation.isNotNull);
+        return this;
+    }
+
+    public Criteria eq(Enum<?> attr, Object value) {
+        addCriterion(attr.name(), Operation.eq, value);
+        return this;
+    }
+
+    public Criteria ne(Enum<?> attr, Object value) {
+        addCriterion(attr.name(), Operation.ne, value);
+        return this;
+    }
+
+    public Criteria gt(Enum<?> attr, Object value) {
+        addCriterion(attr.name(), Operation.gt, value);
+        return this;
+    }
+
+    public Criteria ge(Enum<?> attr, Object value) {
+        addCriterion(attr.name(), Operation.ge, value);
+        return this;
+    }
+
+    public Criteria lt(Enum<?> attr, Object value) {
+        addCriterion(attr.name(), Operation.lt, value);
+        return this;
+    }
+
+    public Criteria le(Enum<?> attr, Object value) {
+        addCriterion(attr.name(), Operation.le, value);
+        return this;
+    }
+
+    public Criteria like(Enum<?> attr, Object value) {
+        addCriterion(attr.name(), Operation.like, value);
+        return this;
+    }
+
+    public Criteria notLike(Enum<?> attr, Object value) {
+        addCriterion(attr.name(), Operation.notLike, value);
+        return this;
+    }
+
+    public Criteria in(Enum<?> attr, Object... values) {
+        addCriterion(attr.name(), Operation.in, values);
+        return this;
+    }
+
+    public Criteria in(Enum<?> attr, List<Object> values) {
+        addCriterion(attr.name(), Operation.in, values.toArray());
+        return this;
+    }
+
+    public Criteria notIn(Enum<?> attr, Object... values) {
+        addCriterion(attr.name(), Operation.notIn, values);
+        return this;
+    }
+
+    public Criteria notIn(Enum<?> attr, List<Object> values) {
+        addCriterion(attr.name(), Operation.notIn, values.toArray());
+        return this;
+    }
+
+    public Criteria between(Enum<?> attr, Object value, Object secondValue) {
+        addCriterion(attr.name(), Operation.between, value, secondValue);
+        return this;
+    }
+
+    public Criteria notBetween(Enum<?> attr, Object value, Object secondValue) {
+        addCriterion(attr.name(), Operation.notBetween, value, secondValue);
+        return this;
+    }
 }
