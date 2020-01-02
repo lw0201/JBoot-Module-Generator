@@ -80,7 +80,7 @@ public interface IBaseDao<T> {
      *            自定义查询属性字段
      * @return T 返回业务实体的详细信息
      */
-    T findById(Serializable id, @Param("columns") String... columns);
+    T findById(@Param("id") Serializable id, @Param("columns") String... columns);
 
     /**
      * 根据实体对象查询并返回单个实体对象
