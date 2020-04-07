@@ -8,7 +8,7 @@ spring:
    datasource:
       driverClassName: com.mysql.cj.jdbc.Driver
       type: com.alibaba.druid.pool.DruidDataSource
-      url: jdbc:mysql://120.77.253.118:3306/erp-iam?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+      url: jdbc:mysql://localhost:3306/erp-iam?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
       username: root
       password: 123456
 jboot:
