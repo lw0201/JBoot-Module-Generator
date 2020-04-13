@@ -28,7 +28,7 @@ public enum EntityMapping {
     /**
      * Identifies the generic SQL type {@code BIGINT}.
      */
-    BIGINT(Types.BIGINT, "Long", "BIGINT"),
+    BIGINT(Types.BIGINT, "BIGINT", "Long"),
     /**
      * Identifies the generic SQL type {@code FLOAT}.
      */
