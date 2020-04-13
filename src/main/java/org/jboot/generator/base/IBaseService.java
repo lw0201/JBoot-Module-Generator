@@ -75,44 +75,36 @@ public interface IBaseService<T> {
      * 
      * @param id
      *            业务实体ID
-     * @param columns
-     *            自定义查询属性字段
      * @return 返回业务实体的详细信息
      */
-    T findById(Serializable id, String... columns);
+    T findById(Serializable id);
 
     /**
      * 根据实体对象查询并返回单个实体对象</li>
      * 
      * @param entity
      *            业务实体
-     * @param columns
-     *            自定义查询属性字段
      * @return 返回单个业务实体对象详细信息
      */
-    T query(T entity, String... columns);
+    T query(T entity);
 
     /**
      * 根据实体对象查询并返回单个实体对象
      * 
      * @param entity
      *            业务实体
-     * @param columns
-     *            自定义查询属性字段
      * @return 返回单个业务实体对象详细信息
      */
-    T query(Wrapper<T> wrapper, String... columns);
+    T query(Wrapper<T> wrapper);
 
     /**
      * 根据实体对象返回实体集合</li>
      * 
      * @param entity
      *            业务实体对象
-     * @param columns
-     *            自定义查询属性字段
      * @return 返回业务实体对象集合
      */
-    List<T> findList(T entity, String... columns);
+    List<T> findList(T entity);
 
     /**
      * 实体分页操作</li>
@@ -123,11 +115,9 @@ public interface IBaseService<T> {
      *            分页起始页
      * @param pageSize
      *            分页每页显示的数据大小
-     * @param columns
-     *            自定义查询属性字段
      * @return 返回业务的实体的分页信息
      */
-    PageInfo<T> findPage(Wrapper<T> wrapper, int pageNo, int pageSize, String... columns);
+    PageInfo<T> findPage(Wrapper<T> wrapper, int pageNo, int pageSize);
 
     /**
      * 根据构造器来查询数据
@@ -138,7 +128,7 @@ public interface IBaseService<T> {
      *            自定义查询属性字段
      * @return 返回业务实体对象集合
      */
-    List<T> findByWrapper(Wrapper<T> wrapper, String... columns);
+    List<T> findByWrapper(Wrapper<T> wrapper);
 
     /**
      * 根据构造器来修改对象

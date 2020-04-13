@@ -54,7 +54,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      */
     public static String rmPrefix(String str, String prefix) {
         if (str.toLowerCase().startsWith(prefix.toLowerCase())) {
-            return str.substring(str.length() - prefix.length() + 1, str.length());
+            return str.substring(prefix.length(), str.length());
         }
         return str;
     }

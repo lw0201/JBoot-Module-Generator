@@ -76,34 +76,34 @@ public class BaseService<T> implements IBaseService<T> {
     }
 
     @Override
-    public T findById(Serializable id, String... columns) {
+    public T findById(Serializable id) {
         return iBaseDao.findById(id);
     }
 
     @Override
-    public T query(T entity, String... columns) {
+    public T query(T entity) {
         return iBaseDao.query(entity);
     }
 
     @Override
-    public T query(Wrapper<T> wrapper, String... columns) {
+    public T query(Wrapper<T> wrapper) {
         return iBaseDao.queryByWrapper(wrapper);
     }
 
     @Override
-    public List<T> findList(T entity, String... columns) {
+    public List<T> findList(T entity) {
         return iBaseDao.findList(entity);
     }
 
     @Override
-    public PageInfo<T> findPage(Wrapper<T> wrapper, int pageNo, int pageSize, String... columns) {
+    public PageInfo<T> findPage(Wrapper<T> wrapper, int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
-        return new PageInfo<T>(iBaseDao.findByWrapper(wrapper, columns));
+        return new PageInfo<T>(iBaseDao.findByWrapper(wrapper));
     }
 
     @Override
-    public List<T> findByWrapper(Wrapper<T> wrapper, String... columns) {
-        return iBaseDao.findByWrapper(wrapper, columns);
+    public List<T> findByWrapper(Wrapper<T> wrapper) {
+        return iBaseDao.findByWrapper(wrapper);
     }
 
     @Override
