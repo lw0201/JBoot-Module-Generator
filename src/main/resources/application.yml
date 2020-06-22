@@ -11,20 +11,19 @@ spring:
       url: jdbc:mysql://localhost:3306/erp-iam?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
       username: root
       password: 123456
-jboot:
    generator:
       enabled: true
-   package: org.jboot.generator
-   java: src/main/java
-   resource: src/main/resources
+      package: org.jboot.generator
+      java: src/main/java
+      resource: src/main/resources
+   swagger:
+      enabled: true
+      package: com.zhuoxun.it
 mybatis:
    mapper-locations: classpath:mappers/*.xml
    type-aliases-package: org.jboot.generator.entity
    configuration:
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-swagger:
-   enabled: true
-   package: org.jboot.generator
 pagehelper:
    helper-dialect: mysql
    reasonable: true

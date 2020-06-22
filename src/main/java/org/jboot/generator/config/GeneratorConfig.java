@@ -13,13 +13,13 @@ import lombok.Data;
 @ConfigurationProperties
 public class GeneratorConfig {
 
-    @Value("${jboot.package}")
+    @Value("${spring.generator..package}")
     private String packageName;
 
-    @Value("${jboot.java}")
+    @Value("${spring.generator..java}")
     private String javaPath;
 
-    @Value("${jboot.resource}")
+    @Value("${spring.generator..resource}")
     private String resourcePath;
 
 }
